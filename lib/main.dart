@@ -1,8 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() {
   runApp(const MyApp());
 }
+/*
+	.s0 { fill: #808284 } 
+		.s1 { fill: #bbbdbf } 
+		.s2 { fill: #ec1c24 } 
+		.s3 { fill: #e6e7e8 } 
+*/
+class _MyColorMapper extends ColorMapper {
+  const _MyColorMapper();
+
+  @override
+  Color substitute(String? id, String elementName, String attributeName, Color color,) {
+    print("id: " +id.toString() + " elem: " + elementName + " att : " + attributeName + " col: " +color.toString());
+  
+    if(id == "calf-r-l"){
+      return Color(0xFFFF0000);
+    }
+    
+    return color;
+  }
+}
+
+final String assetName = '/images/man4.svg';
+final Widget svg = SvgPicture.asset(
+assetName,
+semanticsLabel: 'Man',
+width: 300,
+height: 300,
+colorMapper: const _MyColorMapper(),
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -104,6 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: .center,
           children: [
+            svg,
             const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
