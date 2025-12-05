@@ -10,22 +10,22 @@ void main() {
 		.s2 { fill: #ec1c24 } 
 		.s3 { fill: #e6e7e8 } 
 */
-  class _MyColorMapper extends ColorMapper {
+class _MyColorMapper extends ColorMapper {
   const _MyColorMapper();
 
   @override
   Color substitute(String? id, String elementName, String attributeName, Color color,) {
-        print("id: " +id.toString() + " elem: " + elementName + " att : " + attributeName + " col: " +color.toString());
+    print("id: " +id.toString() + " elem: " + elementName + " att : " + attributeName + " col: " +color.toString());
       
-        if(id == "calves_r_1" || id == "calves_r_2"){
-          return Color(0xFFFF0000);
-        }
-        
-        return color;
-      }
+    if(id == "calves_r_1" || id == "calves_r_2"){
+      return Color(0xFFFF0000);
     }
+        
+    return color;
+  }
+}
 
-  final String assetName = '/images/man4.svg';
+  final String assetName = 'man4.svg';
   final Widget svg = SvgPicture.asset(
   assetName,
   semanticsLabel: 'Man',
