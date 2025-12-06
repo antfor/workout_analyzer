@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'Data/import/csv.dart';
 
 void main() {
-  runApp(const MyApp());
+  await loadCsv();
+  //runApp(const MyApp());
 }
 /*
 	.s0 { fill: #808284 } 
