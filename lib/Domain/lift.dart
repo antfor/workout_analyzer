@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 
 //todo use factory...
+//todo make lazy
 class OrmData {
 
   int incrementIndex;
@@ -190,21 +191,21 @@ Iterable<T> getmaxOverTime<T extends num>(Iterable<T> data){
     return max;
   });
 }
-class MaxVolume {
+
+class ExerciseValue {
+
   final double weight;
   final int reps;
-  late final double volume;
+  late final double value;
 
-  MaxVolume(this.weight, this.reps){
-    volume = weight * reps;
-  }
+  ExerciseValue(this.weight, this.reps, this.value);
 }
 
 enum History {
     indevidual,
     period,
     complete,
-  }
+}
 
 class LiftHistory{
   //data 
@@ -213,14 +214,14 @@ class LiftHistory{
   
 
   //history
-  //final List<Exercise> lifts; //for history tab, maybe save workout set intead.
-  //final List<Workout> workouts; 
+  final List<Exercise> lifts;
 
   //values
-  final double orm;
-  final double maxWeight;
-  final MaxVolume maxVolume;
+  final ExerciseValue orm;
+  final ExerciseValue maxWeight;
+  final ExerciseValue maxVolume;
 
+  //Calculate graph data when needed?
   //Graphs, idevidual, period, complete
   final List<DateTime> time;
   final List<double> ormOverTime;
@@ -240,22 +241,63 @@ class LiftHistory{
   
 
   LiftHistory._({
+    //data 
+    required this.id,
+    //history
+    required this.lifts,
+    //values
+    required this.orm,
+    required this.maxWeight,
+    required this.maxVolume,
+    //Graphs
     required this.time,
     required this.ormOverTime,
     required this.weightOverTime,
     required this.volumeOverTime,
-
+    //Bucket graph
     required this.perWeightOverTime,
     required this.perVolumeOverTime,
     required this.repsOverTime,
+    required this.setsOverTime,
+    //tables 
+    required this.repMaxWeight,
+    required this.ormData,
+    required this.newOrmData,
+
   });
 
-  //Max over time
-  Iterable<double> maxOrmOverTime({int start=0, int? end}) => gatMaxOverTimeInRange(ormOverTime, start, end);
-  Iterable<double> maxWeightOverTime({int start=0, int? end}) => gatMaxOverTimeInRange(ormOverTime, start, end);
-  Iterable<double> maxVolumeOverTime({int start=0, int? end}) => gatMaxOverTimeInRange(ormOverTime, start, end);
-  Iterable<double> maxDurationOverTime({int start=0, int? end}) => gatMaxOverTimeInRange(ormOverTime, start, end);
+  //getGraphdata
+  Map<DateTime, T> getGraphdata<T extends num>(List<T> data, History type, {DateTime? startDate, DateTime? endDate}){
+    final start = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
+    final min = math.min(data.length, time.length);
+    final end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
 
+
+    final x = time.getRange(start, end); 
+
+    Iterable<T> y;
+
+    switch(type){
+      case History.indevidual: y=data.getRange(start, end); break;
+      case History.period: y=getmaxOverTime(data.getRange(start, end)); break;
+      case History.complete: y=getmaxOverTime(data).toList().getRange(start, end); break;
+    }
+
+    return Map.fromIterables(x, y);
+  }
+
+  //day, month, year
+  Map<DateTime, T> getLatestGraph<T extends num>(List<T> data, History type, {bool currentTime=true, int? days, int? months,int? years}){
+    final end = currentTime ?  DateTime.now() : time.last;
+
+    if([years,months,days].every((p) => 0 == (p ?? 0))){
+      return getGraphdata(data, type, endDate: end);
+    }
+
+    final start = DateTime(end.year - (years ?? 0), end.month - (months ?? 0), end.day - (days ?? 0));
+
+    return getGraphdata(data, type, startDate: start, endDate: end);
+  }
 
   factory LiftHistory(String id, List<Exercise> exercises){
     final filtered = exercises.where((e) => e.id == id).toList();
@@ -265,17 +307,15 @@ class LiftHistory{
     List<double> ormOverTime = [];
     List<double> weightOverTime = [];
     List<double> volumeOverTime = [];
-    List<double> durationOverTime = [];
 
     List<double> perWeightOverTime = [];
     List<double> perVolumeOverTime = [];
-    List<double> perDurationOverTime = [];
     List<int> repsOverTime = [];
+    List<int> setsOverTime = [];
 
     double maxOrm = 0;
     double maxWeigh = 0;
     double maxVolume = 0;
-    double maxDuration = 0;
 
     Set<Workout> workouts = filtered.map((e) => e.workout).toSet();
 
@@ -283,33 +323,35 @@ class LiftHistory{
       double orm = 0;
       double weigh = 0;
       double volume = 0;
-      double duration = 0;
 
       final exercises = w.exercises.where((e) => e.id==id);
       for(Exercise e in exercises){
         orm = math.max(orm, epleyORM(e.weightKg, e.reps));
         weigh = math.max(weigh, e.weightKg);
-        volume = math.max(volume, e.volume);
-        duration = math.max(duration, e.durationSec);   
+        volume = math.max(volume, e.volume); 
       }
 
+      //Graphs
       time.add(w.endTime);
       ormOverTime.add(orm);
       weightOverTime.add(weigh);
       volumeOverTime.add(volume);
-      durationOverTime.add(duration);
 
+      if(orm > maxOrm){
+
+      }
+
+      //valuses
       maxOrm = math.max(maxOrm, orm);
       maxWeigh = math.max(maxWeigh, weigh);
       maxVolume = math.max(maxVolume, volume);
-      maxDuration = math.max(maxDuration, duration);
 
+      //Bucket Graphs
+      setsOverTime.add(exercises.length);
       for(Exercise e in exercises){
 
         perWeightOverTime.add(e.weightKg/maxOrm);
         perVolumeOverTime.add(e.volume/maxVolume);
-        perDurationOverTime.add(e.durationSec/maxDuration);
-
         repsOverTime.add(e.reps);
       }
 
@@ -317,11 +359,28 @@ class LiftHistory{
 
 
     return LiftHistory._(
+      //data
+      id: id,
+      //history
+      lifts: filtered,
+      //values
+      orm: ,
+      maxWeight: ,
+      maxVolume: ,
+      //Graphs
       time: time,
       ormOverTime: ormOverTime,
       weightOverTime: weightOverTime,
       volumeOverTime: volumeOverTime,
+      //Bucket Graph
       perWeightOverTime: perWeightOverTime,
+      perVolumeOverTime: perVolumeOverTime,
+      repsOverTime: repsOverTime,
+      setsOverTime: setsOverTime,
+      //tables
+      repMaxWeight: ,
+      ormData: OrmData(),
+      newOrmData: NewOrmData(),
     );
   }
   
