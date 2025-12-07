@@ -8,7 +8,7 @@ import 'workout.dart';
 
 //"exercise_title","set_index","weight_kg",""reps", "duration_seconds"
 
-class Exercise {
+class Exercise implements Comparable<Exercise> {
   final Workout workout;
   
   final String id; //exercise_title
@@ -28,6 +28,12 @@ class Exercise {
   }): volume = reps * weightKg;
   
 
+  @override
+  int compareTo(Exercise other) {
+    int cmpW = workout.compareTo(other.workout);
+    return cmpW == 0 ? setIndex.compareTo(other.setIndex) : cmpW;
+  }
+  
   @override
   String toString() =>
       'Exercise($id, set $setIndex, $weightKg kg, $reps reps, $durationSec sec)';

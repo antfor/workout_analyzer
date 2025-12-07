@@ -22,7 +22,7 @@ workout.exercises.add(squat);
 */
 
 //"title","start_time","end_time"
-class Workout {
+class Workout implements Comparable<Workout>{
 
   final String title;
   final DateTime startTime;
@@ -41,6 +41,31 @@ class Workout {
   Duration get totalDuration => endTime.difference(startTime);
 
   @override
+  int compareTo(Workout other) {
+    
+    throw endTime.compareTo(other.endTime);
+  }
+  @override
   String toString() =>
       'Workout($title, from $startTime to $endTime, duration: ${totalDuration.inMinutes} min)';
+      
+        
+}
+
+class ExersiceWorkout{
+  Workout workout;
+  String id;
+  int sets;
+  int reps;
+  double volume;
+  double maxWeight;
+}
+
+
+//get cardio, exersise dates for month, week, year, custom?
+class Calender {
+
+  List<Workout> workouts;
+
+  Calender(this.workouts);
 }
