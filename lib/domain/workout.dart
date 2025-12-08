@@ -51,6 +51,21 @@ class Workout implements Comparable<Workout>{
     
     return endTime.compareTo(other.endTime);
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true; // same instance
+    return other is Workout &&
+        other.title == title &&
+        other.startTime == startTime &&
+        other.endTime == endTime &&
+        other.cardio == cardio &&
+        other.exercises == exercises;
+  }
+
+  @override
+  int get hashCode => Object.hash(title, startTime, endTime, cardio.hashCode, exercises.hashCode);
+
   @override
   String toString() =>
       'Workout($title, from $startTime to $endTime, duration: ${totalDuration.inMinutes} min)';

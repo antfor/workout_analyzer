@@ -1,9 +1,10 @@
+import 'package:test_flutter/domain/info/i_info.dart';
 import 'package:test_flutter/domain/orm/epely.dart';
 
 part 'value.dart';
 
 
-abstract  class ExerciseValue {
+abstract  class ExerciseValue implements IUpdate {
 
   double _weight;
   int _reps;
@@ -19,6 +20,7 @@ abstract  class ExerciseValue {
       update(_weight, _reps);
   }
 
+ @override
  void update(double weight, int reps);
 
  void _set(double weight, int reps, double value){

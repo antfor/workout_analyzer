@@ -1,11 +1,11 @@
 part of 'abstract_value.dart';
 
 
-class OrmV extends ExerciseValue {
+class OrmValue extends ExerciseValue {
   
-  OrmV.empty() : super.empty();
+  OrmValue.empty() : super.empty();
 
-  OrmV(super.weight, super.reps);
+  OrmValue(super.weight, super.reps);
 
 
   @override
@@ -18,12 +18,12 @@ class OrmV extends ExerciseValue {
   }
 }
 
-class VolumeV extends ExerciseValue {
+class VolumeValue extends ExerciseValue {
 
-  VolumeV.empty() : super.empty();
+  VolumeValue.empty() : super.empty();
 
 
-  VolumeV(super.weight, super.reps);
+  VolumeValue(super.weight, super.reps);
 
   @override
   void update(double weight, int reps) {
@@ -34,11 +34,11 @@ class VolumeV extends ExerciseValue {
   }
 }
 
-class WeightV extends ExerciseValue {
+class WeightValue extends ExerciseValue {
 
-  WeightV.empty() : super.empty();
+  WeightValue.empty() : super.empty();
 
-  WeightV(super.weight, super.reps);
+  WeightValue(super.weight, super.reps);
 
   @override
   void update(double weight, int reps) {
