@@ -58,7 +58,7 @@ class NewOrmData extends OrmData{
 
   late Iterable<double> dif;
   late Iterable<double> newOrm;
-  static const int _maxReps = 20;
+  //static const int _maxReps = 20;
 
   NewOrmData(super.orm, {super.incrementIndex}){
     

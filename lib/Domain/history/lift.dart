@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'exercise.dart';
 import 'workout.dart';
 import 'Orm/epely.dart';
@@ -35,6 +37,8 @@ class ExerciseValue {
       'ExerciseValue(value: $value, weight: $weight kg, reps: $reps)';
 }
 
+class ExerciseValues {}
+
 enum History {
     indevidual,
     period,
@@ -50,29 +54,17 @@ class LiftHistory{
   final List<Exercise> lifts;
 
   //values
-  final ExerciseValue orm;
-  final ExerciseValue maxWeight;
-  final ExerciseValue maxVolume;
+  final ExerciseValues values;
 
-  //Calculate graph data when needed?
   //Graphs, idevidual, period, complete
-  final List<DateTime> time;
-  final List<double> ormOverTime;
-  final List<double> weightOverTime;
-  final List<double> volumeOverTime;
+  final Graphs graphs;
 
-  //Calculate as needed?
   //Bucket graph
-  final List<double> perWeightOverTime;
-  final List<double> perVolumeOverTime;
-  final List<int> repsOverTime;
-  final List<int> setsOverTime;
+  final BucketGraphs bucketGraphs;
 
-  //Calculate as needed?
   //tables  
-  final Map<int, double> repMaxWeight;
-  final OrmData ormData;
-  final NewOrmData newOrmData;
+  final Tables tables;
+ 
   
 
   LiftHistory._({
@@ -81,58 +73,16 @@ class LiftHistory{
     //history
     required this.lifts,
     //values
-    required this.orm,
-    required this.maxWeight,
-    required this.maxVolume,
+    required this.values,
     //Graphs
-    required this.time,
-    required this.ormOverTime,
-    required this.weightOverTime,
-    required this.volumeOverTime,
+    required this.graphs,
     //Bucket graph
-    required this.perWeightOverTime,
-    required this.perVolumeOverTime,
-    required this.repsOverTime,
-    required this.setsOverTime,
+    required this.bucketGraphs,
     //tables 
-    required this.repMaxWeight,
-    required this.ormData,
-    required this.newOrmData,
-
+    required this.tables,
   });
 
-  //getGraphdata
-  Map<DateTime, T> getGraphdata<T extends num>(List<T> data, History type, {DateTime? startDate, DateTime? endDate}){
-    final start = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
-    final min = math.min(data.length, time.length);
-    final end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
-
-
-    final x = time.getRange(start, end); 
-
-    Iterable<T> y;
-
-    switch(type){
-      case History.indevidual: y=data.getRange(start, end); break;
-      case History.period: y=getmaxOverTime(data.getRange(start, end)); break;
-      case History.complete: y=getmaxOverTime(data).toList().getRange(start, end); break;
-    }
-
-    return Map.fromIterables(x, y);
-  }
-
-  //day, month, year
-  Map<DateTime, T> getLatestGraph<T extends num>(List<T> data, History type, {bool currentTime=true, int? days, int? months,int? years}){
-    final end = currentTime ?  DateTime.now() : time.last;
-
-    if([years,months,days].every((p) => 0 == (p ?? 0))){
-      return getGraphdata(data, type, endDate: end);
-    }
-
-    final start = DateTime(end.year - (years ?? 0), end.month - (months ?? 0), end.day - (days ?? 0));
-
-    return getGraphdata(data, type, startDate: start, endDate: end);
-  }
+  
 
   factory LiftHistory(String id, Iterable<Exercise> exercises){
     final filtered = exercises.where((e) => e.id == id).toList();
@@ -208,23 +158,13 @@ class LiftHistory{
       //history
       lifts: filtered,
       //values
-      orm: maxOrm,
-      maxWeight: maxWeigh,
-      maxVolume: maxVolume,
+      exerciseValues: exerciseValues,
       //Graphs
-      time: time,
-      ormOverTime: ormOverTime,
-      weightOverTime: weightOverTime,
-      volumeOverTime: volumeOverTime,
+      graphs: graphs,
       //Bucket Graph
-      perWeightOverTime: perWeightOverTime,
-      perVolumeOverTime: perVolumeOverTime,
-      repsOverTime: repsOverTime,
-      setsOverTime: setsOverTime,
+      bucketGraphs: bucketGraphs,
       //tables
-      repMaxWeight: repMaxWeight,
-      ormData: OrmData(maxOrm.value),
-      newOrmData: NewOrmData(maxOrm.value),
+      tables: tables,
     );
   }
   

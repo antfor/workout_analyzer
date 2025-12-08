@@ -1,5 +1,4 @@
 import 'exercise.dart';
-import 'workout.dart';
 import 'Orm/epely.dart';
 import 'dart:math' as math;
 
@@ -53,7 +52,7 @@ class Lift {
 
       orm = math.max(orm, epleyORM(e.weightKg, e.reps));
       maxWeight = math.max(maxWeight, e.weightKg);
-      maxDuration = math.max(maxDuration, e.durationSec);
+      //maxDuration = math.max(maxDuration, e.durationSec);
 
       if (e.volume > maxVolume.volume) maxVolume = e;
 

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'Data/import/csv.dart';
+import 'package:test_flutter/Domain/lift.dart';
+import 'Repository/import.dart';
 
-void main() {
-  await loadCsv();
-  //runApp(const MyApp());
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized(); //todo remove?
+  runApp(const MyApp()); 
+
+  final domain = await importMockData();
+  const bench = "Bench Press (Barbell)";
+  final history = LiftHistory(bench,domain.exerciseMap[bench]);
+  print(history.orm);
 }
 /*
 	.s0 { fill: #808284 } 
@@ -17,7 +24,8 @@ class _MyColorMapper extends ColorMapper {
 
   @override
   Color substitute(String? id, String elementName, String attributeName, Color color,) {
-    print("id: " +id.toString() + " elem: " + elementName + " att : " + attributeName + " col: " +color.toString());
+     //print("id: $id elem: $elementName att : $attributeName col: $color");
+     //print(id);
       
     if(id == "calves_r_1" || id == "calves_r_2"){
       return Color(0xFFFF0000);
@@ -27,7 +35,7 @@ class _MyColorMapper extends ColorMapper {
   }
 }
 
-  final String assetName = 'man4.svg';
+  final String assetName = 'assets/images/man4.svg';
   final Widget svg = SvgPicture.asset(
   assetName,
   semanticsLabel: 'Man',

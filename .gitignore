@@ -12,6 +12,10 @@
 .swiftpm/
 migrate_working_dir/
 
+#Cmake
+CMakeCache.txt
+CMakeFiles/
+
 # IntelliJ related
 *.iml
 *.ipr

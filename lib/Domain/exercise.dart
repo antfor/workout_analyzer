@@ -9,13 +9,13 @@ import 'workout.dart';
 //"exercise_title","set_index","weight_kg",""reps", "duration_seconds"
 
 class Exercise implements Comparable<Exercise> {
+  
   final Workout workout;
   
   final String id; //exercise_title
   final int setIndex; //set_index[]
   final double weightKg; //weight_kg[]
   final int reps; //reps[]
-  final double durationSec; //duration_seconds
   final double volume;
 
   Exercise({
@@ -23,7 +23,6 @@ class Exercise implements Comparable<Exercise> {
     required this.setIndex,
     required this.weightKg,
     required this.reps,
-    required this.durationSec,
     required this.workout,
   }): volume = reps * weightKg;
   
@@ -36,6 +35,6 @@ class Exercise implements Comparable<Exercise> {
   
   @override
   String toString() =>
-      'Exercise($id, set $setIndex, $weightKg kg, $reps reps, $durationSec sec)';
+      'Exercise($id, set $setIndex, $weightKg kg, $reps reps)';
 
 }
