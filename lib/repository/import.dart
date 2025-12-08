@@ -1,7 +1,7 @@
-import 'package:test_flutter/Domain/domain.dart';
-import 'package:test_flutter/Domain/exercise.dart';
-import 'package:test_flutter/Domain/workout.dart';
-import 'package:test_flutter/Data/import/csv.dart';
+import 'package:test_flutter/domain/domain.dart';
+import 'package:test_flutter/domain/exercise.dart';
+import 'package:test_flutter/domain/workout.dart';
+import 'package:test_flutter/data/import/csv.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/collection.dart';
 

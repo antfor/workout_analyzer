@@ -1,6 +1,6 @@
-import 'package:test_flutter/Domain/Orm/epely.dart';
+import 'package:test_flutter/domain/orm/epely.dart';
 
-part './exersise_value.dart';
+part 'value.dart';
 
 
 abstract  class ExerciseValue {

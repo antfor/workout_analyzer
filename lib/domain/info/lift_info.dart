@@ -1,17 +1,17 @@
 import 'dart:math' as math;
-import 'package:test_flutter/Domain/Orm/epely.dart';
-import 'package:test_flutter/Domain/exercise.dart';
-import 'package:test_flutter/Domain/history/values/exercise_values.dart';
-import 'package:test_flutter/Domain/workout.dart';
+import 'package:test_flutter/domain/orm/epely.dart';
+import 'package:test_flutter/domain/exercise.dart';
+import 'package:test_flutter/domain/info/values/exercise_values.dart';
+import 'package:test_flutter/domain/workout.dart';
 
 
-class LiftHistory{
+class LiftInfo{
   //data 
   final String id;
   //final MuscleGrups = Map<Muscle, double>
   
   //history
-  final List<Exercise> lifts;
+  final List<Exercise> history;
 
   //values
   final ExerciseValues values;
@@ -27,11 +27,11 @@ class LiftHistory{
  
   
 
-  LiftHistory._({
+  LiftInfo._({
     //data 
     required this.id,
     //history
-    required this.lifts,
+    required this.history,
     //values
     required this.values,
     //Graphs
@@ -44,20 +44,22 @@ class LiftHistory{
 
   
 
-  factory LiftHistory(String id, Iterable<Exercise> exercises){
+  factory LiftInfo(String id, Iterable<Exercise> exercises){
     final filtered = exercises.where((e) => e.id == id).toList();
     filtered.sort();
 
     final values = ExerciseValues();
 
-    for(Exercise exercise in exercises){
+    for(Exercise e in exercises){
+
+      values.update(e.weightKg, e.reps);
 
     }
 
 
-    return LiftHistory._(
+    return LiftInfo._(
       id: id,
-      lifts: filtered,
+      history: filtered,
       values: values,
       graphs: graphs,
       bucketGraphs: bucketGraphs,

@@ -1,5 +1,5 @@
 
-import 'package:test_flutter/Domain/history/values/value/abstract_exercise_value.dart';
+import 'package:test_flutter/domain/info/values/value/abstract_value.dart';
 
 
 class ExerciseValues {

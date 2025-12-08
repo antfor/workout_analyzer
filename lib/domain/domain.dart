@@ -1,6 +1,6 @@
 import 'package:quiver/collection.dart';
-import 'package:test_flutter/Domain/exercise.dart';
-import 'package:test_flutter/Domain/workout.dart';
+import 'package:test_flutter/domain/exercise.dart';
+import 'package:test_flutter/domain/workout.dart';
 
 class Domain {
 

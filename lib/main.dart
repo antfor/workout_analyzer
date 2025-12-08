@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_flutter/Domain/lift.dart';
-import 'Repository/import.dart';
+import 'package:test_flutter/domain/lift.dart';
+import 'repository/import.dart';
 
 void main() async {
 

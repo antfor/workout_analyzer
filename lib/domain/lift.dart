@@ -1,7 +1,7 @@
 import 'exercise.dart';
 import 'workout.dart';
-import 'Orm/epely.dart';
-import 'Table/orm.dart';
+import 'orm/epely.dart';
+import 'table/orm.dart';
 import 'dart:math' as math;
 
 

@@ -1,4 +1,4 @@
-part of 'abstract_exercise_value.dart';
+part of 'abstract_value.dart';
 
 
 class OrmV extends ExerciseValue {
