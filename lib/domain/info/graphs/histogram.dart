@@ -11,7 +11,15 @@ class Histogram{
   final int _under;
   final Iterable<int> _histogram;
 
- Histogram({
+  Histogram.empty()
+    : _max = 0,
+      _min = 0,
+      _binWidth = 0,
+      _over = 0,
+      _under = 0,
+      _histogram = {};
+
+  Histogram({
     required double max,
     required double min,
     required double binWidth,
@@ -25,29 +33,24 @@ class Histogram{
         _under = under,
         _histogram = histogram;
 
-  double get max => _max;
-  double get min => _min;
-  double get binWidth => _binWidth;
+  bool get isEmpty => _histogram.isEmpty;
 
-  int get over => _over;
-  int get under => _under;
-
-  int get total => _histogram.reduce((a,b) => a+b);
+  int get _total => _histogram.reduce((a,b) => a+b);
 
   ({List<(double?, double?)> x, Iterable<double> y})getData({bool over=false, bool under=false, bool percentage = false}){
     
-    final N = total  + (over ? this.over : 0) + (under ? this.under : 0);
+    final N = _total  + (over ? _over : 0) + (under ? _under : 0);
     
 
-    final x =[if(under) (null, min),
-              ...(List.generate(total, (i) => (min + binWidth * i, math.min(min + binWidth * (i+1), max)))),
-              if(over) (max, null)
+    final x =[if(under) (null, _min),
+              ...(List.generate(_total, (i) => (_min + _binWidth * i, math.min(_min + _binWidth * (i+1), _max)))),
+              if(over) (_max, null)
             ];
 
 
-    final v =[if (under) this.under.toDouble(),
+    final v =[if (under) _under.toDouble(),
               ...(_histogram.map((i)=>i.toDouble())),
-              if (over) this.over.toDouble()
+              if (over) _over.toDouble()
              ];
       
     final y = percentage ? v.map((v)=>v/N) : v;
