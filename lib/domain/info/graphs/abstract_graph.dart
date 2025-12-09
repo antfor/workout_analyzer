@@ -14,9 +14,17 @@ abstract class Graph implements IExerciseUpdate{
   final List<DateTime> time = [];
 
   Map<DateTime, T> getGraphData<T extends num>(List<T> data, History type, {DateTime? startDate, DateTime? endDate}){
-    final start = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
+    int start = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
     final min = math.min(data.length, time.length);
-    final end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
+    int end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
+    
+    if(start == -1 && end == -1){
+      return {};
+    }else if((start == -1 && end != -1) || end < start){
+      //return {}; //TODO just return empty?
+      throw GraphError('start: $startDate  bigger then end: $endDate');
+    }
+    end = end == -1 ? min : end;
 
 
     final x = time.getRange(start, end); 
@@ -58,4 +66,10 @@ Iterable<T> _getMaxOverTime<T extends num>(Iterable<T> data){
     max = math.max(max, value);
     return max;
   });
+}
+
+class GraphError implements Exception {
+  final String message;
+  GraphError(this.message);
+  @override String toString() => 'GraphError: $message';
 }
