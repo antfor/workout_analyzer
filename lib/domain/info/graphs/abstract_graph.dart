@@ -18,12 +18,10 @@ abstract class Graph implements IExerciseUpdate{
     final min = math.min(data.length, time.length);
     int end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
     
-    if(start == -1 && end == -1){
+    if(start == -1 || end < start){
       return {};
-    }else if((start == -1 && end != -1) || end < start){
-      //return {}; //TODO just return empty?
-      throw GraphError('start: $startDate  bigger then end: $endDate');
     }
+    
     end = end == -1 ? min : end;
 
 
