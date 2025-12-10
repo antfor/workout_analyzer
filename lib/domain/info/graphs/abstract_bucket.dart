@@ -1,18 +1,16 @@
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
 import 'package:test_flutter/domain/info/graphs/abstract_graph.dart';
 import 'package:test_flutter/domain/info/graphs/histogram.dart';
 
 
-enum {
+enum AggregationLevel{
   workout,
-  week,
+  week ,
   month,
   year,
 }
 
-//TODO per Month, per week. per year
-//now only per workout
-//can be done by looking a time, to shorten and taking avrages
 abstract class Bucket extends Graph{
 
   Histogram _getHistogram<T extends num>(Iterable<T> data, double? start, double? end, double? bin){
@@ -43,10 +41,47 @@ abstract class Bucket extends Graph{
     );
   }  
 
+  List<num> aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level){
+    bool Function(DateTime a, DateTime b) isSame; 
 
-  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate}){
+    switch(level){
+      case AggregationLevel.week: 
+        isSame = (DateTime a, DateTime b)
+              {final wa= getWeekNumber(a);
+               final wb= getWeekNumber(b);
+              return (wa.weekYear == wb.weekYear && wa.week == wb.week);};
+        break; 
+      case AggregationLevel.month: 
+        isSame = (DateTime a, DateTime b)=> (a.year == b.year && a.month == b.month);  
+        break; 
+      case AggregationLevel.year: 
+        isSame = (DateTime a, DateTime b)=> a.year == b.year;  
+        break; 
+      default: return data;
+    }
 
-    //DateTime? startDate, DateTime? endDate
+    final List<double> aggregated = [];
+    List<T> group = [];
+    double mean (Iterable<T> l)=> l.reduce((a,b) => (a + b) as T)/l.length;
+
+    for(int i = start; i < end; i++){
+      if (group.isEmpty || isSame(time[i], time[i - 1])) {
+       group.add(data[i]);
+      } else {
+        aggregated.add(mean(group));
+        group = [data[i]];
+      }
+    }
+
+    if (group.isNotEmpty) {
+      aggregated.add(mean(group));
+    }
+    
+    return aggregated;
+  }
+
+  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout}){
+
     final low = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
     final len = math.min(data.length, time.length);
     int high = endDate == null ?  len :  time.indexWhere((d) => d.isAfter(endDate));
@@ -56,19 +91,20 @@ abstract class Bucket extends Graph{
     }
     high = high == -1 ? len : high;
 
-    return _getHistogram(data.getRange(low, high),start,end,bin);
+    final list = aggregateData(data, low, high, level);
+    return _getHistogram(list,start,end,bin);
   } 
 
-  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0}){
+  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout}){
     final endDate = currentTime ?  DateTime.now() : time.last;
 
     if([years,months,days].every((p) => 0 == p)){
-      return getHistogram(data, start:start, end:end, bin:bin, endDate:endDate);
+      return getHistogram(data, start:start, end:end, bin:bin, endDate:endDate, level:level);
     }
 
     final startDate =DateTime(endDate.year - years, endDate.month - months, endDate.day - days);
 
-    return getHistogram(data, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate);
+    return getHistogram(data, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate, level:level);
   } 
 
 }
@@ -89,3 +125,28 @@ double _sampleStandardDeviation<T extends num>(Iterable<T> data) {
             .reduce((a, b) => a + b) / (data.length - 1));
 
 }
+
+({int week, int weekYear}) getWeekNumber(DateTime date) {
+  int doy = int.parse(DateFormat("D").format(date));
+  int w =  ((10 + doy - date.weekday) / 7).floor();
+  int woy = w;
+  int weekYear = date.year;
+  if (w < 1) {
+    woy = weeksInYear(date.year - 1);
+    weekYear -= 1; 
+  } else if (w > weeksInYear(date.year)) {
+    woy = 1;
+    weekYear += 1;
+  }
+  return (week:woy, weekYear:weekYear);
+}
+
+int weeksInYear(int year){
+  p(int y) => (y + (y/4).floor() - (y/100).floor() + (y/400).floor()) % 7;
+
+  if(p(year) == 4 || p(year - 1) == 3){
+    return 53;
+  }
+  return 52;
+}
+
