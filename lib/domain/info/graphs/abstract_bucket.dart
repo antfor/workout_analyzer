@@ -6,6 +6,7 @@ import 'package:test_flutter/domain/info/graphs/histogram.dart';
 
 enum AggregationLevel{
   workout,
+  day,
   week ,
   month,
   year,
@@ -41,21 +42,24 @@ abstract class Bucket extends Graph{
     );
   }  
 
-  List<num> aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level){
+  List<num> _aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level){
     bool Function(DateTime a, DateTime b) isSame; 
 
     switch(level){
+      case AggregationLevel.day:
+        isSame = (DateTime a, DateTime b) => (a.year == b.year && a.month == b.month && a.day == b.day);
+        break;
       case AggregationLevel.week: 
         isSame = (DateTime a, DateTime b)
-              {final wa= getWeekNumber(a);
-               final wb= getWeekNumber(b);
+              {final wa = getWeekNumber(a);
+               final wb = getWeekNumber(b);
               return (wa.weekYear == wb.weekYear && wa.week == wb.week);};
         break; 
       case AggregationLevel.month: 
-        isSame = (DateTime a, DateTime b)=> (a.year == b.year && a.month == b.month);  
+        isSame = (DateTime a, DateTime b) => (a.year == b.year && a.month == b.month);  
         break; 
       case AggregationLevel.year: 
-        isSame = (DateTime a, DateTime b)=> a.year == b.year;  
+        isSame = (DateTime a, DateTime b) => a.year == b.year;  
         break; 
       default: return data;
     }
@@ -91,7 +95,7 @@ abstract class Bucket extends Graph{
     }
     high = high == -1 ? len : high;
 
-    final list = aggregateData(data, low, high, level);
+    final list = _aggregateData(data, low, high, level);
     return _getHistogram(list,start,end,bin);
   } 
 

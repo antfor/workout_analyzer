@@ -4,14 +4,24 @@ import 'package:test_flutter/domain/orm/epely.dart';
 import 'package:test_flutter/domain/workout.dart';
 import 'dart:math' as math;
 
-
+enum Data {
+  weight,
+  volume,
+  reps,
+  set,
+  duration,
+  count,
+}
 
 class BucketGraphs extends Bucket {
 
-  final List<double> _perWeightOverTime = [];
-  final List<double> _perVolumeOverTime = [];
-  final List<int> _repsOverTime = [];
-  final List<int> _setsOverTime = [];
+  final List<double> perWeightOverTime = [];
+  final List<double> perVolumeOverTime = [];
+  final List<int> repsOverTime = [];
+  final List<int> setsOverTime = [];
+  final List<Duration> duration = [];
+
+  List<int> get workoutCount => List.generate(time.length, (i) => 1);
 
   Workout? _workout;
   double _maxOrm = 0;
@@ -26,12 +36,13 @@ class BucketGraphs extends Bucket {
       final exercises = _workout!.exercises.where((ex) => ex.id==e.id);
       
       time.add(_workout!.startTime);
-      _setsOverTime.add(exercises.length);
+      duration.add(_workout!.startTime.difference(_workout!.endTime));
+      setsOverTime.add(exercises.length);
 
       for(Exercise we in exercises){
-        _perWeightOverTime.add(we.weightKg/_maxOrm);
-        _perVolumeOverTime.add(we.volume/_maxVolume);
-        _repsOverTime.add(we.reps);
+        perWeightOverTime.add(we.weightKg/_maxOrm);
+        perVolumeOverTime.add(we.volume/_maxVolume);
+        repsOverTime.add(we.reps);
       }
 
       _workout = e.workout;

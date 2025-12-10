@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_flutter/domain/lift.dart';
+import 'package:test_flutter/domain/info/lift_info.dart';
 import 'repository/import.dart';
 
 void main() async {
@@ -10,8 +10,8 @@ void main() async {
 
   final domain = await importMockData();
   const bench = "Bench Press (Barbell)";
-  final history = LiftHistory(bench,domain.exerciseMap[bench]);
-  print(history.orm);
+  final history = LiftInfo(bench, domain.exerciseMap[bench]);
+  print(history.values.orm);
 }
 /*
 	.s0 { fill: #808284 } 

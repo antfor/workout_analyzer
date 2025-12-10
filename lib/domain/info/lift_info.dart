@@ -42,7 +42,6 @@ class LiftInfo{
       tables.update(weight, reps);
       graphs.update(e);
       bucket.update(e);
-
     }
 
     return LiftInfo._(
