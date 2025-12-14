@@ -55,7 +55,7 @@ Future<Map<String, int>> importExersises() async{
   final count = rows[0].indexOf(ColumnName.count.string);
   final Map<String, int> map = {};
   for(List<dynamic> row in rows.skip(1)){
-    map.putIfAbsent(row[exersise].toString(), () => safeIntParse(row[count]));
+    map.putIfAbsent(row[exersise].toString(), () => safeIntParse(row[count].toString()));
   }
 
   return map;

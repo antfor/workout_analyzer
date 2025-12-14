@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/man4.svg
     - assets/data/test_workout_data.csv
+    - assets/data/standards/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
