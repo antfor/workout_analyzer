@@ -90,7 +90,7 @@ Future<Domain> importMockData() async {
 }
 
 
-int safeIntParse(String i, {defaultValue = 0}){
+int safeIntParse(String i, {int defaultValue = 0}){
   return int.tryParse(i) ?? defaultValue;
 }
 
