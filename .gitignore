@@ -1,3 +1,6 @@
+#csv
+*.csv
+
 # Miscellaneous
 *.class
 *.log
