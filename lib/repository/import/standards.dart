@@ -87,7 +87,7 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
   List<int> elite = [];
 
   
-  String current = rows[1][iExersise];
+  String current = rows[1][iExersise].toString();
 
   for(List<dynamic> row in rows.skip(1)){
     final exercise = row[iExersise].toString();
@@ -103,13 +103,13 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
       elite = [];
     }
 
-    bw.add(safeIntParse(row[ibw]));
+    bw.add(safeIntParse(row[ibw].toString()));
     
-    beginner.add(parse(row[ib]));//TODO do parse(row, i) and make sure it it not out of bound in parse
-    novice.add(parse(row[ino]));
-    intermediate.add(parse(row[ii]));
-    advanced.add(parse(row[ia]));
-    elite.add(parse(row[ie]));
+    beginner.add(parse(row[ib].toString()));//TODO do parse(row, i) and make sure it it not out of bound in parse
+    novice.add(parse(row[ino].toString()));
+    intermediate.add(parse(row[ii].toString()));
+    advanced.add(parse(row[ia].toString()));
+    elite.add(parse(row[ie].toString()));
   }
 
 
@@ -135,7 +135,7 @@ Future<List<StandardRatio>> importRatio(String file) async{
   Map<Level, double> map = {};
   
   
-  String current = rows[1][iExersise];
+  String current = rows[1][iExersise].toString();
 
   const double defaultValue = -1;
   getValue(Level l) => map[l] ?? defaultValue;
