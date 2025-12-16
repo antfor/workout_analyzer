@@ -19,7 +19,7 @@ enum ColumnName{
 
   const ColumnName(this.string);
 
-  static ColumnName getColumn(String name) => ColumnName.values.byName(name);
+  static ColumnName getColumn(String name) => ColumnName.values.firstWhere((v)=>v.string==name);
 }
 
 const _path = 'assets/data/standards/';
@@ -78,7 +78,7 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
   final ia = rows[0].indexOf(ColumnName.advanced.string);
   final ie = rows[0].indexOf(ColumnName.elite.string);
 
-  const List<StandardTable> tables = [];
+  final List<StandardTable> tables = [];
   List<int> bw = [];
   List<int> beginner = [];
   List<int> novice = [];
@@ -130,7 +130,7 @@ Future<List<StandardRatio>> importRatio(String file) async{
   final iRatio = rows[0].indexOf(ColumnName.ratio.string);
   final iLevel = rows[0].indexOf(ColumnName.level.string);
 
-  const List<StandardRatio> tables = [];
+  final List<StandardRatio> tables = [];
  
   Map<Level, double> map = {};
   

@@ -1,0 +1,74 @@
+
+
+//"tibialis", "front delt", "rear delt", "side delt","obliques"
+enum Muscle{
+  abdominals("Abdominals"),
+  biceps("Biceps"),
+  triceps("Triceps"),
+  chest("Chest"),
+  shoulders("Shoulders"),
+  lowerBack("Lower Back"),
+  upperBack("Upper Back"),
+  lats("Lats"),
+  traps("Traps"),
+  forearms("Forearms"),
+  quadriceps("Quadriceps"),
+  hamstrings("Hamstrings"),
+  glutes("Glutes"),
+  calves("Calves"),
+  adductors("Adductors"),
+  abductors("Abductors"),
+  neck("Neck"),
+
+  fullBody("Full Body"),
+  cardio("Cardio"),
+  other("Other");
+
+  final String string;
+
+  const Muscle(this.string);
+
+  static Muscle fromString(String s){
+    return Muscle.values.firstWhere((m)=> cmpS(m.string,s), orElse: () => Muscle.other);
+  }
+}
+
+bool cmpS(String a, String b){
+  return a.toLowerCase().trim() == b.toLowerCase().trim();
+}
+
+enum Equipment{
+  assisted("Assisted"),
+  cable("Cable"),
+  dumbbell("Dumbbell"),
+  barbell("Barbell"),
+  machine("Machine"),
+  smithMachine("Smith Machine"),
+  weighted("Weighted"),
+  bodyweight("Bodyweight");
+
+  final String string;
+  const Equipment(this.string);
+}
+/*
+//
+ "Abdominals", "Biceps", "Triceps", "Chest", "Shoulders",
+    "Lower Back","Upper Back",, "Lats", "Traps", "Forearms",
+    "Quadriceps", "Hamstrings", "Glutes", "Calves",
+    "Adductors", "Abductors", "Neck",
+    "Cardio", "Full Body", "Other"
+
+//not added
+    "tibialis", "front delt", "rear delt", "side delt","obliques"
+*/
+
+
+/* Eqipmenrt
+
+Assisted, Cable, Dumbbell, Barbell, Machine, Smith Machine, Weighted
+Bodyweight
+*/
+
+class MuscleGroup {
+  
+}
