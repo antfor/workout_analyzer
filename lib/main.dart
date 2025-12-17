@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:test_flutter/domain/domain.dart';
 import 'package:test_flutter/repository/import/map.dart';
 import 'package:test_flutter/repository/import/muscle.dart';
 import 'package:test_flutter/repository/import/standards.dart';
+import 'package:test_flutter/ui/exersises/list.dart';
 import 'repository/import.dart';
 
 void main() async {
@@ -10,12 +12,38 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //todo remove?
   runApp(const MyApp()); 
 
-  final domain = await importMockData();
   final muscles = await importMuscle();
   final mapNames = await importMap();
-  final strenghtExerises = await importExersises();
-  final male = await importMale();
-  final female = await importFemale();
+  final male = await importMale(mapNames);
+  final female = await importFemale(mapNames);
+
+  final domain = await importMockData(muscles,male,female);
+  
+  //final strenghtExerises = await importExersises();
+}
+
+class WorkoutAnalyzer extends StatelessWidget{
+
+  late Domain domain;
+  
+  WorkoutAnalyzer(this.domain,{super.key});
+
+  static Future<WorkoutAnalyzer> create() async {
+
+    final muscles = await importMuscle();
+    final mapNames = await importMap();
+    final male = await importMale(mapNames);
+    final female = await importFemale(mapNames);
+    final domain = await importMockData(muscles,male,female);
+    return WorkoutAnalyzer(domain);
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return ExersiseList(domain.exercises.toList());
+  }
 }
 /*
 	.s0 { fill: #808284 } 

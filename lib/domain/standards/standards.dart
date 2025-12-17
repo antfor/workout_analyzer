@@ -1,5 +1,3 @@
-
-
 import 'dart:math' as math;
 
 const eliteIndex = 4;
@@ -40,39 +38,69 @@ enum Sex {
 Standards? _male;
 Standards? _female;
 
+class Standard{
+  final String id;
+  final Sex sex;
+  final StandardTable? weight;
+  final StandardTable? reps;
+  final StandardRatio? ratio;
+
+  Standard(this.id, this.sex, this.weight, this.reps, this.ratio);
+}
+
 class Standards{
 
   final Sex sex;
-  final List<StandardTable> weight;
+  final List<StandardTable> weights;
   final List<StandardTable> reps;
-  final List<StandardRatio> ratio;
+  final List<StandardRatio> ratios;
+  final Map<String, String> mapNames;
 
-  Standards._male({required this.weight, required this.reps, required this.ratio}):sex=Sex.male;
-  Standards._female({required this.weight, required this.reps, required this.ratio}):sex=Sex.female;
+  Standards._male({required this.weights, required this.reps, required this.ratios, required this.mapNames}):sex=Sex.male;
+  Standards._female({required this.weights, required this.reps, required this.ratios, required this.mapNames}):sex=Sex.female;
 
-  factory Standards(Sex sex, {required weight, required reps, required ratio}){
+  factory Standards(Sex sex, {required weight, required reps, required ratio, required Map<String, String> mapNames}){
     if(sex == Sex.male){
-      _male ??= Standards._male(weight: weight, reps: reps, ratio: ratio);
+      _male ??= Standards._male(weights: weight, reps: reps, ratios: ratio, mapNames: mapNames);
       return _male!; 
     }else{
-      _female ??= Standards._female(weight: weight, reps: reps, ratio: ratio);
+      _female ??= Standards._female(weights: weight, reps: reps, ratios: ratio, mapNames: mapNames);
        return _female!; 
     }
   }
 
-  factory Standards.male({required List<StandardTable> weight, required List<StandardTable> reps, required List<StandardRatio> ratio}){
+  factory Standards.male({required List<StandardTable> weight, required List<StandardTable> reps, required List<StandardRatio> ratio, required Map<String, String> mapNames}){
 
-    _male ??= Standards._male(weight: weight, reps: reps, ratio: ratio);
+    _male ??= Standards._male(weights: weight, reps: reps, ratios: ratio, mapNames: mapNames);
 
     return _male!;
   }
 
-  factory Standards.female({required List<StandardTable> weight, required List<StandardTable> reps, required List<StandardRatio> ratio}){
+  factory Standards.female({required List<StandardTable> weight, required List<StandardTable> reps, required List<StandardRatio> ratio, required Map<String, String> mapNames}){
 
-    _female ??= Standards._female(weight: weight, reps: reps, ratio: ratio);
+    _female ??= Standards._female(weights: weight, reps: reps, ratios: ratio, mapNames: mapNames);
     
     return _female!; 
   }
+
+  Standard getStandard(String workoutName){
+
+      String name = mapNames[workoutName] ?? workoutName;
+      
+      final wi = weights.indexWhere((w)=> cmpS(w.id,name));
+      final ri = reps.indexWhere((w)=> cmpS(w.id,name));
+      final ir = ratios.indexWhere((w)=> cmpS(w.id,name));
+
+      final weight = wi == -1 ? null : weights[wi];
+      final rep = wi == -1 ? null : reps[ri];
+      final ratio = wi == -1 ? null : ratios[ir];
+
+      return Standard(name, sex, weight, rep, ratio);
+  }
+}
+
+bool cmpS(String a, String b){
+  return a.toLowerCase().trim() == b.toLowerCase().trim();
 }
 
 class StandardRatio {
@@ -116,7 +144,7 @@ class StandardTable {
 
   final Iterable<int> bodyweight;
 
-  final String id; //TODO: Exersise? or put in exersise
+  final String id;
   final List<int> beginner;
   final List<int> novice;
   final List<int> intermediate;

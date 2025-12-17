@@ -1,5 +1,7 @@
 import 'package:test_flutter/domain/domain.dart';
 import 'package:test_flutter/domain/exercise.dart';
+import 'package:test_flutter/domain/standards/muscle_group.dart';
+import 'package:test_flutter/domain/standards/standards.dart';
 import 'package:test_flutter/domain/workout.dart';
 import 'package:test_flutter/data/import/csv.dart';
 import 'package:intl/intl.dart';
@@ -28,11 +30,11 @@ enum ColumnName{
   const ColumnName(this.string);
 }
 
-Future<Domain> importMockData() async {
+Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Standards female) async {
   final rows = await loadCsv(_mockData);
 
   if(rows.length < 2){
-    return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>());
+    return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
   }
 
   final title = rows[0].indexOf(ColumnName.title.string);
@@ -85,8 +87,7 @@ Future<Domain> importMockData() async {
     }//else if(isCardio(row)){}
   }
 
-  
-  return Domain(workouts: workouts, exerciseMap: exerciseMap);
+  return Domain(workouts: workouts, exerciseMap: exerciseMap, maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
 }
 
 

@@ -25,22 +25,22 @@ enum ColumnName{
 const _path = 'assets/data/standards/';
 
 
-Future<Standards> importMale() async{
+Future<Standards> importMale(Map<String, String> mapNames) async{
 
   final reps = await importTable("male_standards_reps.csv", safeRepParse);
   final weight = await importTable("male_standards_weight.csv", safeIntParse);
   final ratio = await importRatio("male_standards_ratio.csv");
 
-  return Standards.male(reps:reps, weight: weight, ratio: ratio);
+  return Standards.male(reps:reps, weight: weight, ratio: ratio, mapNames: mapNames);
 }
 
-Future<Standards> importFemale() async{
+Future<Standards> importFemale(Map<String, String> mapNames) async{
 
   final reps = await importTable("female_standards_reps.csv", safeRepParse);
   final weight = await importTable("female_standards_weight.csv", safeIntParse);
   final ratio = await importRatio("female_standards_ratio.csv");
 
-  return Standards.female(reps:reps, weight: weight, ratio: ratio);
+  return Standards.female(reps:reps, weight: weight, ratio: ratio, mapNames: mapNames);
 }
 
 Future<Map<String, int>> importExersises() async{
