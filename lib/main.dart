@@ -4,7 +4,7 @@ import 'package:test_flutter/domain/domain.dart';
 import 'package:test_flutter/repository/import/map.dart';
 import 'package:test_flutter/repository/import/muscle.dart';
 import 'package:test_flutter/repository/import/standards.dart';
-import 'package:test_flutter/ui/exersises/list.dart';
+import 'package:test_flutter/ui/exercises/list.dart';
 import 'repository/import.dart';
 
 void main() async {
@@ -38,7 +38,7 @@ class WorkoutAnalyzer extends StatelessWidget{
         useMaterial3: true,
         colorScheme: .fromSeed(seedColor: Colors.blue),
       ),
-      home:ExersiseList(basic));
+      home:ExerciseList(basic));
   }
 }
 /*

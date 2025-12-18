@@ -43,19 +43,19 @@ Future<Standards> importFemale(Map<String, String> mapNames) async{
   return Standards.female(reps:reps, weight: weight, ratio: ratio, mapNames: mapNames);
 }
 
-Future<Map<String, int>> importExersises() async{
-  final file = "exersises.csv";
+Future<Map<String, int>> importExercises() async{
+  final file = "exercises.csv";
   final rows = await loadCsv(_path + file);
 
   if(rows.length < 2){
     return {};
   }
   
-  final exersise = rows[0].indexOf(ColumnName.exercise.string);
+  final exercise = rows[0].indexOf(ColumnName.exercise.string);
   final count = rows[0].indexOf(ColumnName.count.string);
   final Map<String, int> map = {};
   for(List<dynamic> row in rows.skip(1)){
-    map.putIfAbsent(row[exersise].toString(), () => safeIntParse(row[count].toString()));
+    map.putIfAbsent(row[exercise].toString(), () => safeIntParse(row[count].toString()));
   }
 
   return map;
@@ -69,7 +69,7 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
     return [];
   }
 
-  final iExersise = rows[0].indexOf(ColumnName.exercise.string);
+  final iExercise = rows[0].indexOf(ColumnName.exercise.string);
 
   final ibw = rows[0].indexOf(ColumnName.bodyweight.string); //TODO look that it is not -1, then throw
   final ib = rows[0].indexOf(ColumnName.beginner.string);
@@ -87,10 +87,10 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
   List<int> elite = [];
 
   
-  String current = rows[1][iExersise].toString();
+  String current = rows[1][iExercise].toString();
 
   for(List<dynamic> row in rows.skip(1)){
-    final exercise = row[iExersise].toString();
+    final exercise = row[iExercise].toString();
 
     if(exercise != current){
       current = exercise;
@@ -126,7 +126,7 @@ Future<List<StandardRatio>> importRatio(String file) async{
     return [];
   }
 
-  final iExersise = rows[0].indexOf(ColumnName.exercise.string);
+  final iExercise = rows[0].indexOf(ColumnName.exercise.string);
   final iRatio = rows[0].indexOf(ColumnName.ratio.string);
   final iLevel = rows[0].indexOf(ColumnName.level.string);
 
@@ -135,13 +135,13 @@ Future<List<StandardRatio>> importRatio(String file) async{
   Map<Level, double> map = {};
   
   
-  String current = rows[1][iExersise].toString();
+  String current = rows[1][iExercise].toString();
 
   const double defaultValue = -1;
   getValue(Level l) => map[l] ?? defaultValue;
 
   for(List<dynamic> row in rows.skip(1)){
-    final exercise = row[iExersise].toString();
+    final exercise = row[iExercise].toString();
 
     if(exercise != current){
       current = exercise;

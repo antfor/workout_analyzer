@@ -26,17 +26,17 @@ class Search extends StatelessWidget {
   
 }
 
-class ExersiseList extends StatefulWidget {
+class ExerciseList extends StatefulWidget {
 
   final Iterable<LiftBasicInfo> lifts;
 
-  const ExersiseList(this.lifts, {super.key});
+  const ExerciseList(this.lifts, {super.key});
 
   @override
-  State<ExersiseList> createState() => _ExersiseList();
+  State<ExerciseList> createState() => _ExerciseList();
 }
 
-class _ExersiseList extends State<ExersiseList> {
+class _ExerciseList extends State<ExerciseList> {
 
   String query = '';
 
