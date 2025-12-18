@@ -9,40 +9,36 @@ import 'repository/import.dart';
 
 void main() async {
 
-  WidgetsFlutterBinding.ensureInitialized(); //todo remove?
-  runApp(const MyApp()); 
+  WidgetsFlutterBinding.ensureInitialized();
 
   final muscles = await importMuscle();
   final mapNames = await importMap();
   final male = await importMale(mapNames);
   final female = await importFemale(mapNames);
-
   final domain = await importMockData(muscles,male,female);
-  
-  //final strenghtExerises = await importExersises();
+
+  runApp(WorkoutAnalyzer(domain)); 
 }
 
 class WorkoutAnalyzer extends StatelessWidget{
 
-  late Domain domain;
+  final Domain domain;
   
-  WorkoutAnalyzer(this.domain,{super.key});
-
-  static Future<WorkoutAnalyzer> create() async {
-
-    final muscles = await importMuscle();
-    final mapNames = await importMap();
-    final male = await importMale(mapNames);
-    final female = await importFemale(mapNames);
-    final domain = await importMockData(muscles,male,female);
-    return WorkoutAnalyzer(domain);
-  }
-
-
+  const WorkoutAnalyzer(this.domain,{super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ExersiseList(domain.exercises.toList());
+    
+    final basic = domain.getBasicInfo.toList();
+    basic.sort();
+
+    return MaterialApp(
+      title:'Exerise analyzer',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: .fromSeed(seedColor: Colors.blue),
+      ),
+      home:ExersiseList(basic));
   }
 }
 /*
