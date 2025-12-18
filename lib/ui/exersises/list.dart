@@ -2,35 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 
 class Search extends StatelessWidget {
-  const Search({super.key});
+
+  final void Function(String) setQuery; 
+
+  const Search(this.setQuery, {super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    return SearchBar(
-          hintText: 'Search...',
-          onChanged: (query) {
-            // Handle search input here
-            debugPrint('User typed: $query');
-          },
-          leading: const Icon(Icons.search),);
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child:
+          SearchBar(
+            hintText: 'Search...',
+            onChanged: (query) {
+              //debugPrint('User typed: $query');
+              setQuery(query);
+            },
+            leading: const Icon(Icons.search),
+            ),
+      );
   }
   
 }
 
-class ExersiseList extends StatelessWidget {
+class ExersiseList extends StatefulWidget {
 
   final Iterable<LiftBasicInfo> lifts;
 
   const ExersiseList(this.lifts, {super.key});
 
   @override
+  State<ExersiseList> createState() => _ExersiseList();
+}
+
+class _ExersiseList extends State<ExersiseList> {
+
+  String query = '';
+
+  Iterable<LiftBasicInfo> search(){
+    return widget.lifts
+        .where((lift) => lift.id.toLowerCase().contains(query.toLowerCase()));
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    final filtered = search();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Lifts')),
-      body: ListView(
-        children: lifts.map((e) => Tile(e)).toList()
-      ),
+      body:
+        Column(
+          children: [   
+            Search((text) => setState(() => query = text)),
+            Expanded(
+              child:
+                 ListView(children: filtered.map((e) => Tile(e)).toList()),
+            )
+          ],
+        ),
     );
   }
 }
