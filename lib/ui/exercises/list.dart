@@ -66,7 +66,10 @@ class _ExerciseList extends State<ExerciseList> {
       Column(
         children: [   
           Search((text) => setState(() => query = text)),
-          MuscleFilter(muscleFilter, widget.muscles, (value) => setState(() => muscleFilter = value)),
+          Align(
+            alignment: Alignment.centerRight,
+            child: MuscleFilter(muscleFilter, widget.muscles, (value) => setState(() => muscleFilter = value)),
+          ),
           Expanded(
             child:
               ListView.builder(
@@ -94,7 +97,7 @@ class MuscleFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
       Padding(
-        padding: const EdgeInsets.only(bottom:8),
+        padding: const EdgeInsets.only(bottom:8, right: 16, left:16),
         child:
             DropdownMenu<Muscle?>(
               initialSelection: muscleFilter,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/ui/app_page.dart';
 import 'package:test_flutter/ui/exercises/list.dart';
+import 'package:test_flutter/ui/util.dart' as util;
 
 AppPage getExersisePage(List<LiftBasicInfo> lifts){
   return AppPage(title: _title, body: _ExercisePage(lifts), navIcon: _icon);
@@ -25,11 +26,17 @@ class _ExercisePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > util.desktop) {
           return Row(
             children: [
-              Expanded(child:ExerciseList(lifts)),
-              Expanded(child:ExerciseList(lifts))
+              Flexible(flex: 1, child:ExerciseList(lifts)),
+              Flexible(flex: 2, child:ExerciseList(lifts))
+            ],);
+        } else if (constraints.maxWidth > util.tablet) {
+          return Row(
+            children: [
+              Flexible(flex: 1, child:ExerciseList(lifts)),
+              Flexible(flex: 1, child:ExerciseList(lifts))
             ],);
         }
 
