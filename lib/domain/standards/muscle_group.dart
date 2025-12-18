@@ -2,26 +2,28 @@
 
 //"tibialis", "front delt", "rear delt", "side delt","obliques"
 enum Muscle{
+  
+  cardio("Cardio"),
+  fullBody("Full Body"),
+  
+  abductors("Abductors"),
+  adductors("Adductors"),
   abdominals("Abdominals"),
   biceps("Biceps"),
-  triceps("Triceps"),
-  chest("Chest"),
-  shoulders("Shoulders"),
-  lowerBack("Lower Back"),
-  upperBack("Upper Back"),
-  lats("Lats"),
-  traps("Traps"),
-  forearms("Forearms"),
-  quadriceps("Quadriceps"),
-  hamstrings("Hamstrings"),
-  glutes("Glutes"),
   calves("Calves"),
-  adductors("Adductors"),
-  abductors("Abductors"),
+  chest("Chest"),
+  forearms("Forearms"),
+  glutes("Glutes"),
+  hamstrings("Hamstrings"),
+  lats("Lats"),
+  lowerBack("Lower Back"),
   neck("Neck"),
-
-  fullBody("Full Body"),
-  cardio("Cardio"),
+  quadriceps("Quadriceps"),
+  shoulders("Shoulders"),
+  traps("Traps"),
+  triceps("Triceps"),
+  upperBack("Upper Back"),
+  
   other("Other");
 
   final String string;
