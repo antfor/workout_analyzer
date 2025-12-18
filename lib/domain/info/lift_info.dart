@@ -6,6 +6,20 @@ import 'package:test_flutter/domain/info/values/exercise_values.dart';
 import 'package:test_flutter/domain/standards/muscle_group.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
 
+class LiftBasicInfo implements Comparable<LiftBasicInfo>{
+  final String id;
+  final Muscle muscle;
+  final LiftInfo Function () getInfo;
+  //final maleStandard;
+  //final femaleStandard;
+
+  LiftBasicInfo(this.id, this.muscle, this.getInfo);
+  
+  @override
+  int compareTo(LiftBasicInfo other) {
+    return id.compareTo(other.id);
+  }
+}
 
 class LiftInfo{
 
