@@ -17,7 +17,6 @@ class Search extends StatelessWidget {
           SearchBar(
             hintText: 'Search...',
             onChanged: (query) {
-              //debugPrint('User typed: $query');
               setQuery(query);
             },
             leading: const Icon(Icons.search),
@@ -32,9 +31,8 @@ class ExerciseList extends StatefulWidget {
   final List<LiftBasicInfo> lifts;
   final List<Muscle> muscles;
 
-  ExerciseList(this.lifts, {super.key}):muscles = lifts.map((v)=>v.muscle).toSet().toList(){
-    muscles.sort((a, b) => a.index.compareTo(b.index));
-  }
+  ExerciseList(this.lifts, {super.key}):
+    muscles = lifts.map((v)=>v.muscle).toSet().toList()..sort((a, b) => a.index.compareTo(b.index));
 
   @override
   State<ExerciseList> createState() => _ExerciseList();
@@ -85,6 +83,7 @@ class _ExerciseList extends State<ExerciseList> {
   }
 }
 
+typedef Entries = List<DropdownMenuEntry<Muscle?>>;
 class MuscleFilter extends StatelessWidget {
   
   final Muscle? muscleFilter;
@@ -99,31 +98,27 @@ class MuscleFilter extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(bottom:8),
         child:
-            DropdownButton<Muscle>(
-              value: muscleFilter,
-              hint: const Text('Filter by muscle'),
-              isExpanded: true,
-              items: muscles.map((m) {
-                return DropdownMenuItem(
-                  value: m,
-                  child: ListTile(
-                    leading: FlutterLogo(),
-                    title: Text(m.string),
-                  ),
-                );
-              }).toList()
-                ..insert(
-                  0,
-                  const DropdownMenuItem(
-                    value: null,
-                    child: ListTile(
-                     title: Text('All muscles'),
-                    )
-                  ),
-                ),
-              onChanged: (value) => setMuscle(value),
+            DropdownMenu<Muscle?>(
+              initialSelection: muscleFilter,
+              hintText: 'Filter by muscle',
+              menuHeight: 400,
+              onSelected: setMuscle,
+              dropdownMenuEntries:  entries()
             ),
       );
+  }
+
+  
+  Entries entries(){
+    final Entries all = [const DropdownMenuEntry(value: null,label: 'All muscles')];
+    final Entries muscleEntries = 
+          muscles.map((m) => DropdownMenuEntry(
+                value: m,
+                  leadingIcon: FlutterLogo(),
+                  label: m.string
+                )).toList();
+
+    return all..addAll(muscleEntries);
   }
 }
 

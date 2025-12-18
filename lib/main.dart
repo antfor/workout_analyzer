@@ -36,7 +36,7 @@ class WorkoutAnalyzer extends StatelessWidget{
       title:'Exerise analyzer',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: .fromSeed(seedColor: Colors.blue),
+        colorScheme: .fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
       ),
       home:ExerciseList(basic));
   }
