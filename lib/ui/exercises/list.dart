@@ -32,7 +32,8 @@ class ExerciseList extends StatefulWidget {
   final List<Muscle> muscles;
 
   ExerciseList(this.lifts, {super.key}):
-    muscles = lifts.map((v)=>v.muscle).toSet().toList()..sort((a, b) => a.index.compareTo(b.index));
+    muscles = lifts.map((v)=>v.muscle).toSet().toList()
+      ..sort((a, b) => a.index.compareTo(b.index));
 
   @override
   State<ExerciseList> createState() => _ExerciseList();
@@ -61,25 +62,22 @@ class _ExerciseList extends State<ExerciseList> {
 
     final filtered = search(filter(widget.lifts));
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Lifts')),
-      body:
-        Column(
-          children: [   
-            Search((text) => setState(() => query = text)),
-            MuscleFilter(muscleFilter, widget.muscles, (value) => setState(() => muscleFilter = value)),
-            Expanded(
-              child:
-                ListView.builder(
-                  itemCount: filtered.length,
-                  itemBuilder: (context, index) {
-                    return Tile(filtered[index]);
-                  },
-                ),
-            ),
-          ],
-        ),
-    );
+    return 
+      Column(
+        children: [   
+          Search((text) => setState(() => query = text)),
+          MuscleFilter(muscleFilter, widget.muscles, (value) => setState(() => muscleFilter = value)),
+          Expanded(
+            child:
+              ListView.builder(
+                itemCount: filtered.length,
+                itemBuilder: (context, index) {
+                  return Tile(filtered[index]);
+                },
+              ),
+          ),
+        ],
+      );
   }
 }
 
