@@ -28,7 +28,7 @@ class _NavigationState extends State<Navigation> {
             currentPageIndex = index;
           });
         },
-        //indicatorColor: Colors.amber,
+        //indicatorColor: Colors.blue,
         selectedIndex: currentPageIndex,
         destinations: destinations,
       ),

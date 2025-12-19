@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/ui/app_page.dart';
+import 'package:test_flutter/ui/exercises/exercises.dart';
 import 'package:test_flutter/ui/exercises/list.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
 AppPage getExersisePage(List<LiftBasicInfo> lifts){
-  return AppPage(title: _title, body: _ExercisePage(lifts), navIcon: _icon);
+  return AppPage(title: _title, body: _ExerciseState(lifts), navIcon: _icon);
 }
 
 NavigationDestination _icon = NavigationDestination(
@@ -16,31 +17,49 @@ NavigationDestination _icon = NavigationDestination(
 
 Widget _title = Text('Exercises');
 
-class _ExercisePage extends StatelessWidget {
+class _ExerciseState extends StatefulWidget{
+ final List<LiftBasicInfo> lifts;
 
-  final List<LiftBasicInfo> lifts;
+  const _ExerciseState(this.lifts);
 
-  const _ExercisePage(this.lifts);
+  @override
+  State<_ExerciseState> createState() => _ExercisePage();
+}
+
+
+class _ExercisePage extends State<_ExerciseState>  {
+
+  LiftInfo? selectedLift;
 
   @override
   Widget build(BuildContext context) {
+
+    final listPage = ExerciseList(widget.lifts);
+    //final lift = selectedLift ?? lifts.first.getInfo();
+    final lift = selectedLift ?? listPage.lifts.first.getInfo();
+    final infoPage = ExerciseInfo(lift);
+
     return  LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > util.desktop) {
           return Row(
             children: [
-              Flexible(flex: 1, child:ExerciseList(lifts)),
-              Flexible(flex: 2, child:ExerciseList(lifts))
+              Flexible(flex: 1, child:listPage),
+              Flexible(flex: 2, child:infoPage)
             ],);
         } else if (constraints.maxWidth > util.tablet) {
           return Row(
             children: [
-              Flexible(flex: 1, child:ExerciseList(lifts)),
-              Flexible(flex: 1, child:ExerciseList(lifts))
+              Flexible(flex: 1, child:listPage),
+              Flexible(flex: 1, child:infoPage)
             ],);
         }
 
-        return ExerciseList(lifts);
+        if(selectedLift != null){
+          return infoPage;
+        }else{
+          return listPage;
+        }
         
       });
   }

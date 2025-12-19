@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:test_flutter/domain/domain.dart';
 import 'package:test_flutter/navigation.dart';
 import 'package:test_flutter/repository/import/map.dart';
 import 'package:test_flutter/repository/import/muscle.dart';
 import 'package:test_flutter/repository/import/standards.dart';
-import 'package:test_flutter/ui/exercises/list.dart';
 import 'package:test_flutter/ui/exercises/page.dart';
 import 'repository/import.dart';
 
