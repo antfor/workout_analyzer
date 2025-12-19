@@ -30,8 +30,10 @@ class ExerciseList extends StatefulWidget {
 
   final List<LiftBasicInfo> lifts;
   final List<Muscle> muscles;
+  final void Function(LiftBasicInfo) setLiftInfo;
+  final LiftBasicInfo? selected;
 
-  ExerciseList(this.lifts, {super.key}):
+  ExerciseList(this.lifts, this.selected, this.setLiftInfo, {super.key}):
     muscles = lifts.map((v)=>v.muscle).toSet().toList()
       ..sort((a, b) => a.index.compareTo(b.index));
 
@@ -75,7 +77,7 @@ class _ExerciseList extends State<ExerciseList> {
               ListView.builder(
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
-                  return Tile(filtered[index]);
+                  return Tile(filtered[index], widget.selected, widget.setLiftInfo);
                 },
               ),
           ),
@@ -124,14 +126,19 @@ class MuscleFilter extends StatelessWidget {
 }
 
 class Tile extends StatelessWidget{
+
     final LiftBasicInfo lift;
-    const Tile(this.lift, {super.key});
-    
+    final LiftBasicInfo? selected;
+    final void Function(LiftBasicInfo) setLiftInfo;
+
+    const Tile(this.lift, this.selected, this.setLiftInfo, {super.key});
       
     @override
     Widget build(BuildContext context) {
         return Card(
             child: ListTile(
+              selected: selected == lift,
+              onTap: () => setLiftInfo(lift),
               leading: FlutterLogo(size: 56.0),
               title: Text(lift.id),
               subtitle: Text(lift.muscle.string),

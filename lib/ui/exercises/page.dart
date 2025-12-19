@@ -29,15 +29,15 @@ class _ExerciseState extends StatefulWidget{
 
 class _ExercisePage extends State<_ExerciseState>  {
 
-  LiftInfo? selectedLift;
+  LiftBasicInfo? selectedLift;
 
   @override
   Widget build(BuildContext context) {
 
-    final listPage = ExerciseList(widget.lifts);
-    //final lift = selectedLift ?? lifts.first.getInfo();
-    final lift = selectedLift ?? listPage.lifts.first.getInfo();
-    final infoPage = ExerciseInfo(lift);
+    final listPage = ExerciseList(widget.lifts, selectedLift, (lift) => setState(() => selectedLift = lift));
+
+    final loading = Text('');
+    final infoPage = selectedLift == null ? loading : ExerciseInfo(selectedLift!.getInfo());
 
     return  LayoutBuilder(
       builder: (context, constraints) {
@@ -56,7 +56,7 @@ class _ExercisePage extends State<_ExerciseState>  {
         }
 
         if(selectedLift != null){
-          return infoPage;
+          return infoPage;//TODO: mark info page as subpage (make so yuo can turn back on subpage)
         }else{
           return listPage;
         }

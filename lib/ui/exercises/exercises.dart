@@ -32,16 +32,14 @@ class _LiftPbTable extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columns: const [
-        DataColumn(label: Text('Reps')),
-        DataColumn(label: Text('Personal Best')),
-      ],
-      rows: getRows(),
-    );
+    return ListView( 
+      children: [
+          repPbTable(),
+      ]);
   }
 
-  List<DataRow> getRows(){
+  DataTable repPbTable(){
+    
     final len = table.weight.length;
     final reps = table.reps.toList();
     final weight = table.weight.toList();
@@ -49,7 +47,14 @@ class _LiftPbTable extends StatelessWidget{
     zip.sort((a,b) => a.$1.compareTo(b.$1));
     final list = zip.map( (v)=> DataRow(cells: 
           [DataCell(Text('${v.$1}')),DataCell(Text('${v.$2}kg'))]));
-    return list.toList();
+
+    return DataTable(
+            columns: const [
+              DataColumn(label: Text('Reps')),
+              DataColumn(label: Text('Personal Best')),
+            ],
+            rows: list.toList(),
+          );
   } 
   
 }
