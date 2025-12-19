@@ -63,10 +63,10 @@ Widget? strengthLevel(Standard standard, double bodyWeight, double orm){
     final level = Level.byIndex(i).label;
     final limit = '$weight kg';
 
-    if(weight <= orm){
+    if(next <= orm){
       bars.add(bar(1, level, limit));
     }else if(belowLevel){
-      bars.add(bar(orm/next, level, limit)); //TODO orm or max reps
+      bars.add(bar((orm-weight)/(next-weight), level, limit)); //TODO orm or max reps
       belowLevel=false;
     }else{
       bars.add(bar(0, level, limit));
