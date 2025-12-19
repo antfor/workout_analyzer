@@ -135,7 +135,8 @@ class Tile extends StatelessWidget{
       
     @override
     Widget build(BuildContext context) {
-        return Card(
+        return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
+          child: Card(
             child: ListTile(
               selected: selected == lift,
               onTap: () => setLiftInfo(lift),
@@ -143,7 +144,7 @@ class Tile extends StatelessWidget{
               title: Text(lift.id),
               subtitle: Text(lift.muscle.string),
             ),
-          );
+          ));
     }
 
 }

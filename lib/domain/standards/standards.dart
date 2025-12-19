@@ -3,14 +3,16 @@ import 'dart:math' as math;
 const eliteIndex = 4;
 
 enum Level {
-  beginner(0.05),
-  novice(0.2),
-  intermediate(0.5),
-  advanced(0.8),
-  elite(0.95);
+  beginner("Beginner","Beg",0.05),
+  novice("Novice","Nov",0.2),
+  intermediate("Intermediate","Int",0.5),
+  advanced("Advanced","Adv",0.8),
+  elite("Elite","Elite",0.95);
 
   final double percentage;
-  const Level(this.percentage);
+  final String label;
+  final String shortLabel;
+  const Level(this.label, this.shortLabel, this.percentage);
 
   static Level byIndex(int i){
     final index = math.min(math.max(0,i),eliteIndex);
@@ -166,13 +168,14 @@ class StandardTable {
     }
   }
 
-  List<int> standrads(int bw) => [beginner, novice, intermediate, advanced, elite].map((l)=>l.toList()[bw]).toList();
+  List<int> standrads(int index) => [beginner, novice, intermediate, advanced, elite].map((l)=>l[index]).toList();
   
   Level level(double bw, double lift){
     int wclass = bodyweight.firstWhere((b) => bw <= b);
     wclass = wclass == -1 ? bodyweight.last : wclass;
+    final iwclass = bodyweight.toList().indexOf(wclass);
 
-    int index = standrads(wclass).indexWhere((sd) => lift < sd);
+    int index = standrads(iwclass).indexWhere((sd) => lift < sd);
     index = index == -1 ? eliteIndex : index-1;
 
     return Level.byIndex(index);

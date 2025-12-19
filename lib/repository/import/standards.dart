@@ -93,14 +93,15 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
     final exercise = row[iExercise].toString();
 
     if(exercise != current){
-      current = exercise;
-      tables.add(StandardTable(exercise, bw, beginner, novice, intermediate, advanced, elite));
+      
+      tables.add(StandardTable(current, bw, beginner, novice, intermediate, advanced, elite));
       bw = [];
       beginner = [];
       novice = [];
       intermediate = [];
       advanced = [];
       elite = [];
+      current = exercise;
     }
 
     bw.add(safeIntParse(row[ibw].toString()));
