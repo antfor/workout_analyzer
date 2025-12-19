@@ -92,8 +92,8 @@ class Standards{
       final ir = ratios.indexWhere((w)=> cmpS(w.id,name));
 
       final weight = wi == -1 ? null : weights[wi];
-      final rep = wi == -1 ? null : reps[ri];
-      final ratio = wi == -1 ? null : ratios[ir];
+      final rep = ri == -1 ? null : reps[ri];
+      final ratio = ir == -1 ? null : ratios[ir];
 
       return Standard(name, sex, weight, rep, ratio);
   }
