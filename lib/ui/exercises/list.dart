@@ -112,7 +112,7 @@ class MuscleFilter extends StatelessWidget {
   }
 
   
-  Entries entries(){
+Entries entries(){
     final Entries all = [const DropdownMenuEntry(value: null,label: 'All muscles')];
     final Entries muscleEntries = 
           muscles.map((m) => DropdownMenuEntry(

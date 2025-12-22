@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 const int desktop = 1024;
 const int tablet = 700;
+
+  double _roundTo(double n, [int d = 0]) {
+    final pow = math.pow(10, d);
+    return (n * pow).round() / pow;
+  }
+
+  String simplifyValue(double value, int decimals) {
+    final rounded = _roundTo(value, decimals);
+
+    return NumberFormat.decimalPattern('en_US').format(rounded + 0);
+  }
 
 class H1 extends StatelessWidget{
 
@@ -11,7 +24,7 @@ class H1 extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: Theme.of(context).textTheme.displayLarge);
+    return Text(text, style: Theme.of(context).textTheme.headlineLarge);
   }
 }
 
@@ -23,7 +36,7 @@ class H2 extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: Theme.of(context).textTheme.displayMedium);
+    return Text(text, style: Theme.of(context).textTheme.headlineMedium);
   }
 }
 
@@ -35,6 +48,6 @@ class H3 extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: Theme.of(context).textTheme.displaySmall);
+    return Text(text, style: Theme.of(context).textTheme.headlineSmall);
   }
 }
