@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/info/tables/tables.dart';
+import 'package:test_flutter/domain/info/values/exercise_values.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
+import 'package:test_flutter/ui/exercises/components/strength_level.dart';
 import 'package:test_flutter/ui/util.dart';
 
 final double bodyWeight = 75;
@@ -16,25 +18,59 @@ class ExerciseInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final repPB = info.tables.repPB;
     final standard = sex == Sex.male ? info.maleStandard : info.femaleStandard;
-    final orm = info.tables.ormValue;
-    final strength =  strengthLevel(standard, bodyWeight, orm.value);
-  
+    final strength =  StrengthLevel(standard, bodyWeight, info.values.orm.value);
+    
 
     final maxWidth = const BoxConstraints(maxWidth: 500);
     final padding = EdgeInsetsGeometry.symmetric(vertical: 8, horizontal: 16);
-    container(w) => Center(child:Container(constraints: maxWidth, padding: padding, child:w));
+    pad(w) => Container(padding:padding , child: w,);
+    constrain(w) => Center(child:Container(constraints: maxWidth, padding: padding, child:w));
 
     return ListView(children: [
-      Container(padding:padding ,child:H3(info.id)),
-      if(strength != null) container(strength) ,
-      container(repPbTable(repPB))
+      pad(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [H1(info.id),Text('Muscle: ${info.muscle.string}', style: TextStyle(color: Colors.grey,),)])),
+      //pad(H3('Records')),
+      pad(valueTable(info.values)),
+      constrain(strength) ,
+      //pad(H3("PR's")),
+      constrain(repPbTable(info.tables.repPB))
     ]);
     
   }
 }
 
+Widget valueTable(ExerciseValues levels){
+  final wv = levels.maxWeight;
+  final vv = levels.maxVolume;
+  final ov = levels.orm;
+
+  final weight = DataRow(cells:[
+    DataCell(Text('Heaviest Weight')),
+    DataCell(Text('${wv.reps}x${wv.weight}kg')),
+    DataCell(Text('${wv.value}kg'))]);
+
+  final volume = DataRow(cells:[
+    DataCell(Text('Max Volume')),
+    DataCell(Text('${vv.reps}x${vv.weight}kg')),
+    DataCell(Text('${vv.value}kg'))]);
+
+  final orm = DataRow(cells:[
+    DataCell(Text('One Rep Max')),
+    DataCell(Text('${ov.reps}x${ov.weight}kg')),
+    DataCell(Text('${ov.simplifyValue(2)}kg'))]);
+
+  final rows =[weight, volume, orm];
+
+  return DataTable(
+      columns: const [
+        DataColumn(label: Center(child:Text('Record'))),
+        DataColumn(label: Center(child:Text('Set'))),
+        DataColumn(label: Center(child:Text('Weight'))),
+      ],
+      rows: rows,
+      border: TableBorder.symmetric(outside: BorderSide()),
+    );
+}
 
 Widget? strengthLevel(Standard standard, double bodyWeight, double orm){
   
@@ -91,6 +127,6 @@ DataTable repPbTable(RepPb table){
         DataColumn(label: Center(child:Text('Personal Best'))),
       ],
       rows: list.toList(),
-      border: TableBorder.symmetric(outside: BorderSide()),
+      //border: TableBorder.symmetric(outside: BorderSide()),
   );
 } 
