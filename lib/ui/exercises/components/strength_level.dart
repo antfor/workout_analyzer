@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'package:test_flutter/domain/standards/standards.dart';
+import 'package:test_flutter/ui/util.dart';
+
+class StrengthLevel extends StatefulWidget{
+
+  final Standard standard;
+  final double realBodyWeight;
+  final double orm;
+
+  const StrengthLevel(this.standard, this.realBodyWeight, this.orm, {super.key});
+
+  
+  @override
+  State<StatefulWidget> createState() => _StrengthLevel();
+}
+
+class _StrengthLevel extends State<StrengthLevel>{
+
+  double? bodyWeight;
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    final bw = bodyWeight ?? widget.realBodyWeight;
+    final level = _strengthLevel(widget.standard, bw, widget.orm);
+    final standard = widget.standard.weight ??  widget.standard.reps;
+    setWeight(bw) => setState(() => bodyWeight = bw);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5,
+      children: [
+      if(level != null && standard != null) H3('Strenght Level'),
+      if(level != null && standard != null) level,
+      if(level != null && standard != null) Align(alignment: AlignmentGeometry.centerRight, 
+          child:dropdownWeight(bodyWeight, widget.realBodyWeight, standard.bodyweight, setWeight)),
+    ],);
+  }
+
+}
+
+Widget dropdownWeight(double? bodyWeight, double realBw, Iterable<int> bws, void Function(double?) setWeight){
+
+  final controller = TextEditingController(text:'${bodyWeight ?? realBw} kg');
+
+  return DropdownMenu<double>(
+              controller: controller,
+              requestFocusOnTap: false, // prevents keyboard from opening
+              onSelected: (value) {
+                //controller.text = '$value kg'; 
+                setWeight(value);
+              },
+              initialSelection: realBw,
+              menuHeight: 200,
+              dropdownMenuEntries: entries([realBw, ...bws.map((i)=>i.toDouble())]),
+            );
+}
+
+List<DropdownMenuEntry<T>> entries<T extends num>(List<T> list){
+  
+    return list.map((m) => DropdownMenuEntry<T>(
+                  value: m,
+                  label:'$m kg',
+                )).toList();
+}
+
+Widget? _strengthLevel(Standard standard, double bodyWeight, double orm){
+  
+  final table = standard.weight ?? standard.reps;
+  final double height = 10;
+
+  if(table == null){
+    return Text('');
+  }
+
+  int index = table.bodyweight.toList().lastIndexWhere((i) => i <= bodyWeight);
+  index = index == -1 ? 0 : index;
+  final bwStandard = table.standrads(index);
+
+  bar(double v, String level, String weight) => Expanded(child:
+    Column(crossAxisAlignment: CrossAxisAlignment.start, 
+      children:[Text(level, maxLines: 1, overflow: TextOverflow.ellipsis),
+      LinearProgressIndicator(value: v, minHeight: height), 
+      Text(weight,maxLines: 1, overflow: TextOverflow.ellipsis)],));
+
+  final List<Widget> bars = [];
+  bool belowLevel = true;
+  for(int i = 0; i < bwStandard.length; i++ ){
+    final weight = bwStandard[i];
+    final next = i+1 < bwStandard.length ? bwStandard[i+1] : bwStandard[i] / Level.elite.percentage;
+    final level = Level.byIndex(i).label;
+    final limit = '$weight kg';
+
+    if(next <= orm){
+      bars.add(bar(1, level, limit));
+    }else if(belowLevel){
+      bars.add(bar((orm-weight)/(next-weight), level, limit)); //TODO orm or max reps
+      belowLevel=false;
+    }else{
+      bars.add(bar(0, level, limit));
+    }
+  }
+  return Row(spacing: 5, children: bars,);
+}
