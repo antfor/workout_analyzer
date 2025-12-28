@@ -31,11 +31,13 @@ enum ColumnName{
 }
 
 Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Standards female) async {
-  final rows = await loadCsv(_mockData);
+  final csv = await loadCsv(_mockData);
 
-  if(rows.length < 2){
+  if(csv.length < 2){
     return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
   }
+
+  final rows = [csv.first, ...csv.skip(1).toList().reversed];
 
   final title = rows[0].indexOf(ColumnName.title.string);
   final start = rows[0].indexOf(ColumnName.start.string);

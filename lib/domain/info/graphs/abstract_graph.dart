@@ -14,16 +14,19 @@ abstract class Graph implements IExerciseUpdate{
   final List<DateTime> time = [];
 
   Map<DateTime, T> getGraphData<T extends num>(List<T> data, History type, {DateTime? startDate, DateTime? endDate}){
-    final start = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
+    if(data.isEmpty || time.isEmpty){
+      return {};
+    }
+    
+    final start = startDate == null ? 0 : time.indexWhere((d) => 0 >= startDate.compareTo(d));
+    
     final min = math.min(data.length, time.length);
     int end = endDate == null ?  min :  time.indexWhere((d) => d.isAfter(endDate));
-    
+    end = end == -1 ? min : end;
+
     if(start == -1 || end < start){
       return {};
     }
-
-    end = end == -1 ? min : end;
-
 
     final x = time.getRange(start, end); 
 
@@ -40,8 +43,12 @@ abstract class Graph implements IExerciseUpdate{
 
   //day, month, year
   Map<DateTime, T> getLatestGraphData<T extends num>(List<T> data, History type, {bool currentTime=true, int days=0, int months=0, int years=0}){
+    if(data.isEmpty || time.isEmpty){
+      return {};
+    }
+    
     final end = currentTime ?  DateTime.now() : time.last;
-
+ 
     if([years,months,days].every((p) => 0 == p)){
       return getGraphData(data, type, endDate: end);
     }
