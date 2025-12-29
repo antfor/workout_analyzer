@@ -3,6 +3,8 @@ import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/info/tables/tables.dart';
 import 'package:test_flutter/domain/info/values/exercise_values.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
+import 'package:test_flutter/ui/chart/chart.dart';
+import 'package:test_flutter/ui/chart/line_chart.dart';
 import 'package:test_flutter/ui/exercises/components/strength_level.dart';
 import 'package:test_flutter/ui/util.dart';
 
@@ -26,10 +28,12 @@ class ExerciseInfo extends StatelessWidget {
     final padding = EdgeInsetsGeometry.symmetric(vertical: 8, horizontal: 16);
     pad(w) => Container(padding:padding , child: w,);
     constrain(w) => Center(child:Container(constraints: maxWidth, padding: padding, child:w));
+    
 
     return ListView(children: [
       pad(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [H1(info.id),Text('Muscle: ${info.muscle.string}', style: TextStyle(color: Colors.grey,),)])),
       //pad(H3('Records')),
+      pad(Chart(info.graphs)),
       pad(valueTable(info.values)),
       constrain(strength) ,
       //pad(H3("PR's")),
