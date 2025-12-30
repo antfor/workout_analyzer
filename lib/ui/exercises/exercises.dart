@@ -4,7 +4,7 @@ import 'package:test_flutter/domain/info/tables/tables.dart';
 import 'package:test_flutter/domain/info/values/exercise_values.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
 import 'package:test_flutter/ui/chart/chart.dart';
-import 'package:test_flutter/ui/chart/line_chart.dart';
+import 'package:test_flutter/ui/exercises/components/rep_pb.dart';
 import 'package:test_flutter/ui/exercises/components/strength_level.dart';
 import 'package:test_flutter/ui/util.dart';
 
@@ -37,7 +37,8 @@ class ExerciseInfo extends StatelessWidget {
       pad(valueTable(info.values)),
       constrain(strength) ,
       //pad(H3("PR's")),
-      constrain(repPbTable(info.tables.repPB))
+      constrain(repPbTableFiltered(info.tables.repPB))
+      
     ]);
     
   }
@@ -114,23 +115,3 @@ Widget? strengthLevel(Standard standard, double bodyWeight, double orm){
   }
   return Row(spacing: 5, children: bars,);
 }
-
-DataTable repPbTable(RepPb table){
-
-  final len = table.weight.length;
-  final reps = table.reps.toList();
-  final weight = table.weight.toList();
-  final zip = List.generate(len,(i)=>(reps[i], weight[i]));
-  zip.sort((a,b) => a.$1.compareTo(b.$1));
-  final list = zip.map( (v)=> DataRow(cells: 
-        [DataCell(Center(child:Text('${v.$1}'))),DataCell(Center(child:Text('${v.$2}kg')))]));
-
-  return DataTable(
-      columns: const [
-        DataColumn(label: Center(child:Text('Reps'))),
-        DataColumn(label: Center(child:Text('Personal Best'))),
-      ],
-      rows: list.toList(),
-      //border: TableBorder.symmetric(outside: BorderSide()),
-  );
-} 
