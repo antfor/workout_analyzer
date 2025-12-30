@@ -6,7 +6,15 @@ import 'package:test_flutter/domain/info/i_info.dart';
 enum History {
       indevidual,
       period,
-      complete,
+      complete;
+
+  String get label {
+    switch(this){
+      case History.indevidual : return"Indevidual";
+      case History.period : return"Period";
+      case History.complete : return"Complete";
+    }
+  }
 }
 
 abstract class Graph implements IExerciseUpdate{

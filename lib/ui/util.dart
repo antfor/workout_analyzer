@@ -51,3 +51,19 @@ class H3 extends StatelessWidget{
     return Text(text, style: Theme.of(context).textTheme.headlineSmall);
   }
 }
+
+
+Widget dropdown<T>({required List<DropdownMenuEntry<T>> entries, T? selection, String? hintText, double? menuHeight, void Function(T?)? onSelected,required String Function(T?) label }){
+  
+  final controller = TextEditingController(text: label(selection));
+  
+  return DropdownMenu(
+    initialSelection: selection,
+    requestFocusOnTap: false,
+    controller: controller,
+    hintText: hintText,
+    menuHeight: menuHeight,
+    onSelected:(value) => onSelected == null ? null : onSelected(value),
+    dropdownMenuEntries:  entries
+  );
+}
