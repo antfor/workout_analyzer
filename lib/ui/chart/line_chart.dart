@@ -40,6 +40,7 @@ class BasicLineChart extends StatelessWidget {
                   ), 
                 ), 
               ),
+              lineTouchData: lineTouch()
             ),
           )
     );
@@ -49,6 +50,28 @@ class BasicLineChart extends StatelessWidget {
 List<FlSpot> getSpots(List<DateTime> x, List<num> y){
 
   final len = math.min(x.length, y.length);
-  
-  return List.generate(len, (i)=> FlSpot(x[i].millisecondsSinceEpoch.toDouble(), y[i].toDouble()));
+  final spots = List.generate(len, (i)=> FlSpot(x[i].millisecondsSinceEpoch.toDouble(), y[i].toDouble()));
+  spots.sort((a,b) => a.x.compareTo(b.x));
+  return spots;
+}
+
+LineTouchData lineTouch(){
+  return LineTouchData(
+    getTouchedSpotIndicator: (barData, indicators) {
+      if (indicators.isEmpty) return [];
+
+      final index = indicators.first;
+
+      if (index < 0 || index >= barData.spots.length) {
+        return [];
+      }
+
+      return [
+        TouchedSpotIndicatorData(
+          FlLine(color: Colors.blueGrey, strokeWidth: 2),
+          FlDotData(show: true),
+        )
+      ];
+    },
+  );
 }
