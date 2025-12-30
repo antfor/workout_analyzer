@@ -38,7 +38,7 @@ dependencies:
   csv: ^6.0.0
   intl: ^0.20.2
   quiver: ^3.2.2
-  fl_chart: ^1.1.1
+  fl_chart: ^0.66.0
 
 dev_dependencies:
   flutter_test:

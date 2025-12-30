@@ -40,7 +40,6 @@ class BasicLineChart extends StatelessWidget {
                   ), 
                 ), 
               ),
-              lineTouchData: lineTouch()
             ),
           )
     );
@@ -55,23 +54,3 @@ List<FlSpot> getSpots(List<DateTime> x, List<num> y){
   return spots;
 }
 
-LineTouchData lineTouch(){
-  return LineTouchData(
-    getTouchedSpotIndicator: (barData, indicators) {
-      if (indicators.isEmpty) return [];
-
-      final index = indicators.first;
-
-      if (index < 0 || index >= barData.spots.length) {
-        return [];
-      }
-
-      return [
-        TouchedSpotIndicatorData(
-          FlLine(color: Colors.blueGrey, strokeWidth: 2),
-          FlDotData(show: true),
-        )
-      ];
-    },
-  );
-}
