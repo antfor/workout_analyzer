@@ -1,7 +1,4 @@
-
-
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/tables/tables.dart';
 

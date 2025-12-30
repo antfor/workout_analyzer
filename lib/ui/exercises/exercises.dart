@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/info/tables/tables.dart';
-import 'package:test_flutter/domain/info/values/exercise_values.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
 import 'package:test_flutter/ui/chart/chart.dart';
 import 'package:test_flutter/ui/exercises/components/rep_pb.dart';
 import 'package:test_flutter/ui/exercises/components/strength_level.dart';
+import 'package:test_flutter/ui/exercises/components/value.dart';
 import 'package:test_flutter/ui/util.dart';
 
 final double bodyWeight = 75;
@@ -42,76 +41,4 @@ class ExerciseInfo extends StatelessWidget {
     ]);
     
   }
-}
-
-Widget valueTable(ExerciseValues levels){
-  final wv = levels.maxWeight;
-  final vv = levels.maxVolume;
-  final ov = levels.orm;
-
-  final weight = DataRow(cells:[
-    DataCell(Text('Heaviest Weight')),
-    DataCell(Text('${wv.reps}x${wv.weight}kg')),
-    DataCell(Text('${wv.value}kg'))]);
-
-  final volume = DataRow(cells:[
-    DataCell(Text('Max Volume')),
-    DataCell(Text('${vv.reps}x${vv.weight}kg')),
-    DataCell(Text('${vv.value}kg'))]);
-
-  final orm = DataRow(cells:[
-    DataCell(Text('One Rep Max')),
-    DataCell(Text('${ov.reps}x${ov.weight}kg')),
-    DataCell(Text('${ov.simplifyValue(2)}kg'))]);
-
-  final rows =[weight, volume, orm];
-
-  return DataTable(
-      columns: const [
-        DataColumn(label: Center(child:Text('Record'))),
-        DataColumn(label: Center(child:Text('Set'))),
-        DataColumn(label: Center(child:Text('Weight'))),
-      ],
-      rows: rows,
-      border: TableBorder.symmetric(outside: BorderSide()),
-    );
-}
-
-Widget? strengthLevel(Standard standard, double bodyWeight, double orm){
-  
-  final table = standard.weight ?? standard.reps;
-  final double height = 10;
-
-  if(table == null){
-    return Text('');
-  }
-
-  int index = table.bodyweight.toList().lastIndexWhere((i) => i <= bodyWeight);
-  index = index == -1 ? 0 : index;
-  final bwStandard = table.standrads(index);
-
-  bar(double v, String level, String weight) => Expanded(child:
-    Column(crossAxisAlignment: CrossAxisAlignment.start, 
-      children:[Text(level, maxLines: 1, overflow: TextOverflow.ellipsis),
-      LinearProgressIndicator(value: v, minHeight: height), 
-      Text(weight,maxLines: 1, overflow: TextOverflow.ellipsis)],));
-
-  final List<Widget> bars = [];
-  bool belowLevel = true;
-  for(int i = 0; i < bwStandard.length; i++ ){
-    final weight = bwStandard[i];
-    final next = i+1 < bwStandard.length ? bwStandard[i+1] : bwStandard[i] / Level.elite.percentage;
-    final level = Level.byIndex(i).label;
-    final limit = '$weight kg';
-
-    if(next <= orm){
-      bars.add(bar(1, level, limit));
-    }else if(belowLevel){
-      bars.add(bar((orm-weight)/(next-weight), level, limit)); //TODO orm or max reps
-      belowLevel=false;
-    }else{
-      bars.add(bar(0, level, limit));
-    }
-  }
-  return Row(spacing: 5, children: bars,);
 }
