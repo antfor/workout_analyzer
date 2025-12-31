@@ -21,7 +21,7 @@ Widget valueTable(ExerciseValues levels){
   final orm = DataRow(cells:[
     DataCell(Text('One Rep Max')),
     DataCell(Text('${ov.reps}x${ov.weight}kg')),
-    DataCell(Text('${ov.simplifyValue(2)}kg'))]);
+    DataCell(Text('${ov.value.toStringAsFixed(2)}kg'))]);
 
   final rows =[weight, volume, orm];
 
