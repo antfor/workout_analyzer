@@ -17,8 +17,9 @@ abstract class Bucket extends Graph{
   Histogram _getHistogram<T extends num>(Iterable<T> data, double? start, double? end, double? bin){
 
     final binWidth = bin ?? _scott(data);
-    final max = end ?? data.reduce(math.max);
-    final min = start ?? data.reduce(math.min);
+    final max = end ?? data.fold<num>(-double.maxFinite,math.max);
+    final min = start ?? data.fold<num>(double.maxFinite,math.min);
+
     if(binWidth == 0 || max < min){
       return Histogram.empty();
     }
@@ -61,12 +62,12 @@ abstract class Bucket extends Graph{
       case AggregationLevel.year: 
         isSame = (DateTime a, DateTime b) => a.year == b.year;  
         break; 
-      default: return data;
+      default: return data.getRange(start, end).toList();
     }
 
     final List<double> aggregated = [];
     List<T> group = [];
-    double mean (Iterable<T> l)=> l.reduce((a,b) => (a + b) as T)/l.length;
+    double mean (Iterable<T> l)=> l.fold<double>(0,(a,b) => (a + b))/l.length;
 
     for(int i = start; i < end; i++){
       if (group.isEmpty || isSame(time[i], time[i - 1])) {
@@ -86,20 +87,30 @@ abstract class Bucket extends Graph{
 
   Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout}){
 
-    final low = startDate == null ? 0 : time.indexWhere((d) => 0 <= startDate.compareTo(d));
+    if(data.isEmpty || time.isEmpty){
+      return Histogram.empty();
+    }
+
+    final low = startDate == null ? 0 : time.indexWhere((d) => 0 >= startDate.compareTo(d));
+
     final len = math.min(data.length, time.length);
     int high = endDate == null ?  len :  time.indexWhere((d) => d.isAfter(endDate));
+    high = high == -1 ? len : high;
 
     if(low == -1 || high < low){
       return Histogram.empty();
-    }
-    high = high == -1 ? len : high;
+    }        
 
     final list = _aggregateData(data, low, high, level);
     return _getHistogram(list,start,end,bin);
   } 
 
   Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout}){
+    
+    if(data.isEmpty || time.isEmpty){
+      return Histogram.empty();
+    }
+    
     final endDate = currentTime ?  DateTime.now() : time.last;
 
     if([years,months,days].every((p) => 0 == p)){
@@ -120,13 +131,13 @@ double _scott<T extends num>(Iterable<T> data){
     return 3.49 * sd / cbrtN;
 }
 
-double _sampleStandardDeviation<T extends num>(Iterable<T> data) {
+double _sampleStandardDeviation(Iterable<num> data) {
   if (data.isEmpty) return 0;
 
-  double mean = data.reduce((a, b) => (a + b) as T) / data.length;
+  double mean = data.fold<double>(0,(a, b) => (a + b)) / data.length;
 
   return math.sqrt(data.map((x) => math.pow(x - mean, 2))
-            .reduce((a, b) => a + b) / (data.length - 1));
+            .fold<double>(0,(a, b) => a + b) / (data.length - 1));
 
 }
 

@@ -35,26 +35,28 @@ class Histogram{
 
   bool get isEmpty => _histogram.isEmpty;
 
-  int get _total => _histogram.reduce((a,b) => a+b);
+  int get _total => _histogram.fold(0,(a,b) => a+b);
 
-  ({List<(double?, double?)> x, Iterable<double> y})getData({bool over=false, bool under=false, bool percentage = false}){
-    
-    final N = _total  + (over ? _over : 0) + (under ? _under : 0);
+  ({List<(double?, double?)> x, Iterable<num> y})getData({bool over=false, bool under=false, bool percentage = false}){
     
 
     final x =[if(under) (null, _min),
-              ...(List.generate(_total, (i) => (_min + _binWidth * i, math.min(_min + _binWidth * (i+1), _max)))),
+              ...(List.generate(_histogram.length, (i) => (_min + _binWidth * i, math.min(_min + _binWidth * (i+1), _max)))),
               if(over) (_max, null)
             ];
 
-
-    final v =[if (under) _under.toDouble(),
-              ...(_histogram.map((i)=>i.toDouble())),
-              if (over) _over.toDouble()
+    final v =[if (under) _under,
+              ...(_histogram),
+              if (over) _over
              ];
-      
-    final y = percentage ? v.map((v)=>v/N) : v;
+    
+    final N = _total  + (over ? _over : 0) + (under ? _under : 0);
+    final Iterable<num> y = percentage ? v.map((v)=>v/N) : v;
 
+    x.map(print).toList();
+    print("Y");
+    print("Y");
+    y.map(print).toList();
     return (x:x,y:y);
   }
 }
