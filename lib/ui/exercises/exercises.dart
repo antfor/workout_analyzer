@@ -32,7 +32,7 @@ class ExerciseInfo extends StatelessWidget {
     return ListView(children: [
       pad(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [H1(info.id),Text('Muscle: ${info.muscle.string}', style: TextStyle(color: Colors.grey,),)])),
       //pad(H3('Records')),
-      pad(Chart(info.graphs)),
+      pad(Chart(info.graphs, info.bucketGraphs)),
       pad(valueTable(info.values)),
       constrain(strength) ,
       //pad(H3("PR's")),

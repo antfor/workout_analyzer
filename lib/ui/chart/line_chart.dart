@@ -2,13 +2,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-//FlSpot(x,y)
 class BasicLineChart extends StatelessWidget {
   
   final List<DateTime> x;
   final List<num> y;
 
-  const BasicLineChart(this.x, this.y, {super.key});
+  BasicLineChart(Map<DateTime, num> xy, {super.key}):
+    x=xy.keys.toList(), 
+    y=xy.values.toList();
 
   @override
   Widget build(BuildContext context) {
