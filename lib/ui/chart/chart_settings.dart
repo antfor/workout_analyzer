@@ -6,30 +6,31 @@ import 'package:test_flutter/domain/info/graphs/graphs.dart';
 import 'package:test_flutter/ui/chart/histogram.dart';
 import 'package:test_flutter/ui/chart/line_chart.dart';
 
+//TODO dela upp  filer
+
 abstract class ChartSettings{
 
   final int xLabelFixed;
   final int yLabelFixed;
-  final String id; 
   final List<num> data;
 
-  ChartSettings(this.id,this.data,{this.xLabelFixed = 0, this.yLabelFixed=2});
+  ChartSettings(this.data,{this.xLabelFixed = 0, this.yLabelFixed=2});
 }
 
 class LineChartSettings extends ChartSettings {
 
-  LineChartSettings(super.id, super.data, {super.xLabelFixed = 0, super.yLabelFixed=2});
+  LineChartSettings(super.data, {super.xLabelFixed = 0, super.yLabelFixed=2});
 
   factory LineChartSettings.orm(Graphs graphs){
-    return LineChartSettings("One-Rep-Max", graphs.ormOverTime);
+    return LineChartSettings(graphs.ormOverTime);
   }
 
   factory LineChartSettings.weight(Graphs graphs){
-    return LineChartSettings("Max Weight", graphs.weightOverTime);
+    return LineChartSettings(graphs.weightOverTime);
   }
 
   factory LineChartSettings.volume(Graphs graphs){
-    return LineChartSettings("Max Set Volume", graphs.volumeOverTime, yLabelFixed:0);
+    return LineChartSettings(graphs.volumeOverTime, yLabelFixed:0);
   }
 
 }
@@ -43,27 +44,27 @@ class BucketChartSettings extends ChartSettings {
   final bool under;
   final bool xPer;
 
-  BucketChartSettings(super.id, super.data, {super.xLabelFixed = 0, super.yLabelFixed=2,this.bucketSize, this.start, this.end, this.xPer=false, this.over=true, this.under=true});
+  BucketChartSettings(super.data, {super.xLabelFixed = 0, super.yLabelFixed=2,this.bucketSize, this.start, this.end, this.xPer=false, this.over=true, this.under=true});
 
   factory BucketChartSettings.reps(BucketGraphs graphs){
-    return BucketChartSettings("Total Reps", graphs.repsOverTime, bucketSize: 1, start: 1, end:12, over: true);
+    return BucketChartSettings(graphs.repsOverTime, bucketSize: 1, start: 4, end:12, over: true);
   }
 
   factory BucketChartSettings.sets(BucketGraphs graphs){
-    return BucketChartSettings("sets", graphs.setsOverTime, bucketSize: 2, start: 1, end: 10, over: true);
+    return BucketChartSettings(graphs.setsOverTime, bucketSize: 2, start: 1, end: 10, over: true);
   }
 
   factory BucketChartSettings.perWeight(BucketGraphs graphs){
-    return BucketChartSettings("% Weight", graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0, end: 1);
+    return BucketChartSettings(graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0.5, end: 1);
   }
 
   factory BucketChartSettings.perVolume(BucketGraphs graphs){
-    return BucketChartSettings("% Volume", graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0, end: 1);
+    return BucketChartSettings(graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0, end: 1);
   }
 
   factory BucketChartSettings.duration(BucketGraphs graphs){
     final minutes = graphs.duration.map((d) => d.inMinutes).toList();
-    return BucketChartSettings("% Volume", minutes, xPer: true, start: 30, end: 60*2, over: true, under:true);
+    return BucketChartSettings(minutes, xPer: true, start: 30, end: 60*2, over: true, under:true);
   }
 }
 
@@ -73,9 +74,8 @@ abstract class ChartBuilder<T extends ChartSettings>{
 
   ChartBuilder(this.settings);
 
-  Widget chart({History? history, AggregationLevel? level, bool currentTime = true, int days = 0, int months = 0, int years = 0});
+  Widget build({History? history, AggregationLevel? level, bool currentTime = true, int days = 0, int months = 0, int years = 0});
 
-  String get id => settings.id;
 }
 
 
@@ -106,9 +106,9 @@ class BucketChartBuilder extends ChartBuilder<BucketChartSettings>{
   }
 
   @override
-  Widget chart({History? history, AggregationLevel? level,bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
+  Widget build({History? history, AggregationLevel? level,bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
     level = level ?? AggregationLevel.workout;
-    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,level:level, currentTime:currentTime, days: days, months: months, years: years);
+    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, days: days, months: months, years: years);
     final xy = histogram.getData(under:settings.under, over: settings.over, percentage: settings.xPer);
     return HistogramChart(xy.x, xy.y.toList(), fixedX: settings.xLabelFixed);
   }
@@ -134,7 +134,7 @@ class LineChartBuilder extends ChartBuilder<LineChartSettings> {
   }
 
   @override
-  Widget chart({History? history, AggregationLevel? level, bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
+  Widget build({History? history, AggregationLevel? level, bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
     history = history ?? History.individual;
     final data = settings.data;
     final xy = graphs.getLatestGraphData(data, history, currentTime:currentTime, days: days, months: months, years: years);

@@ -9,7 +9,17 @@ enum AggregationLevel{
   day,
   week ,
   month,
-  year,
+  year;
+
+  String get label {
+    switch(this){
+      case AggregationLevel.workout: return "Workout";
+      case AggregationLevel.day: return "Day";
+      case AggregationLevel.week: return "Week";
+      case AggregationLevel.month: return "Month";
+      case AggregationLevel.year: return "Year";
+    }
+  }
 }
 
 abstract class Bucket extends Graph{
@@ -132,7 +142,6 @@ double _scott<T extends num>(Iterable<T> data){
 }
 
 double _sampleStandardDeviation(Iterable<num> data) {
-  if (data.isEmpty) return 0;
 
   double mean = data.fold<double>(0,(a, b) => (a + b)) / data.length;
 
