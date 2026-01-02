@@ -53,10 +53,6 @@ class Histogram{
     final N = _total  + (over ? _over : 0) + (under ? _under : 0);
     final Iterable<num> y = percentage ? v.map((v)=>v/N) : v;
 
-    x.map(print).toList();
-    print("Y");
-    print("Y");
-    y.map(print).toList();
     return (x:x,y:y);
   }
 }

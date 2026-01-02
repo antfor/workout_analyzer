@@ -1,19 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/graphs/histogram.dart';
 
 class HistogramChart extends StatelessWidget {
   
-  final Histogram histogram;
-  final int fixed;
+  final List<(double?, double?)> x;
+  final List<num> y;
+  final int fixedX;
+  //final int fixedY;
 
-  const HistogramChart(this.histogram, {super.key, this.fixed = 0});
+  const HistogramChart(this.x, this.y, {super.key, this.fixedX = 0});
 
   @override
   Widget build(BuildContext context) {
-    final xy = histogram.getData();
-    final x = xy.x.toList();
-    final y = xy.y.toList();
+  
 
     return SizedBox(
         height: 300,
@@ -29,13 +28,13 @@ class HistogramChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       final range = x[value.toInt()];
                       if(range.$1 != null && range.$2 != null){
-                        return Text("${range.$1!.toStringAsFixed(fixed)}-${range.$2!.toStringAsFixed(fixed)}");
+                        return Text("${range.$1!.toStringAsFixed(fixedX)}-${range.$2!.toStringAsFixed(fixedX)}");
                       }
                       if(range.$1 != null){
-                        return Text("<${range.$1}");
+                        return Text("<${range.$1!.toStringAsFixed(fixedX)}");
                       }
                       if(range.$2 != null){
-                        return Text(">${range.$2}");
+                        return Text(">${range.$2!.toStringAsFixed(fixedX)}");
                       }
                       return Text("");
                     },

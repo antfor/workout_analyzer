@@ -71,7 +71,7 @@ class _Chart extends State<Chart> {
 
   Span duration = Span.month3;
   CharData chartData = CharData.reps;
-  History history = History.indevidual;
+  History history = History.individual;
   bool currentTime = false;
   AggregationLevel histogramBin = AggregationLevel.workout;
 
@@ -95,7 +95,7 @@ class _Chart extends State<Chart> {
         chart = BasicLineChart(xy);
         break;
       case CharType.histogram: 
-        final histogramData = widget.histogram.getLatestHistogram(data,currentTime:currentTime, days:duration.days, months: duration.months, years: duration.years, level:histogramBin);
+        final histogramData = widget.histogram.getLatestHistogram(data, level:histogramBin, currentTime:currentTime, days:duration.days, months: duration.months, years: duration.years);
         chart = HistogramChart(histogramData);
         break;
     }
@@ -160,7 +160,7 @@ SegmentedButton<History> chartHistorySelect(History history, void Function(Histo
   return SegmentedButton<History>(
     selected: {history},
     onSelectionChanged: (v) => onChanged(v.first),
-    segments: [History.indevidual, History.complete].map((t) => 
+    segments: [History.individual, History.complete].map((t) => 
       ButtonSegment<History>(
         value: t,
         label: Text(t.label),

@@ -4,13 +4,13 @@ import 'dart:math' as math;
 import 'package:test_flutter/domain/info/i_info.dart';
 
 enum History {
-      indevidual,
+      individual,
       period,
       complete;
 
   String get label {
     switch(this){
-      case History.indevidual : return"Indevidual";
+      case History.individual : return"Individual";
       case History.period : return"Period";
       case History.complete : return"Complete";
     }
@@ -41,7 +41,7 @@ abstract class Graph implements IExerciseUpdate{
     Iterable<T> y;
 
     switch(type){
-      case History.indevidual: y=data.getRange(start, end); break;
+      case History.individual: y=data.getRange(start, end); break;
       case History.period: y=_getMaxOverTime(data.getRange(start, end)); break;
       case History.complete: y=_getMaxOverTime(data).toList().getRange(start, end); break;
     }

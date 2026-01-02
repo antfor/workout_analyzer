@@ -7,9 +7,7 @@ class BasicLineChart extends StatelessWidget {
   final List<DateTime> x;
   final List<num> y;
 
-  BasicLineChart(Map<DateTime, num> xy, {super.key}):
-    x=xy.keys.toList(), 
-    y=xy.values.toList();
+  const BasicLineChart(this.x, this.y, {super.key});
 
   @override
   Widget build(BuildContext context) {
