@@ -36,7 +36,7 @@ class BucketGraphs extends Bucket {
       final exercises = _workout!.exercises.where((ex) => ex.id==e.id);
       
       time.add(_workout!.startTime);
-      duration.add(_workout!.startTime.difference(_workout!.endTime));
+      duration.add(_workout!.endTime.difference(_workout!.startTime));
       setsOverTime.add(exercises.length);
 
       for(Exercise we in exercises){
