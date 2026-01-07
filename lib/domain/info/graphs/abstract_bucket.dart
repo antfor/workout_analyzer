@@ -20,20 +20,30 @@ enum AggregationLevel{
       case AggregationLevel.year: return "Year";
     }
   }
+
+  int get days {
+    switch(this){
+      case AggregationLevel.workout: return 1;
+      case AggregationLevel.day: return 1;
+      case AggregationLevel.week: return 7;
+      case AggregationLevel.month: return 30;
+      case AggregationLevel.year: return 365;
+    }
+  }
 }
 
 abstract class Bucket extends Graph{
 
-  Histogram _getHistogram<T extends num>(Iterable<T> data, double? start, double? end, double? bin){
+  Histogram _getHistogram<T extends num>(Iterable<T> data, double? start, double? end, double? bin, int? xPrecision){
 
-    final binWidth = bin ?? _scott(data);
+    final binWidth = bin ?? _scott(data, xPrecision);
     final max = end ?? data.fold<num>(-double.maxFinite,math.max);
     final min = start ?? data.fold<num>(double.maxFinite,math.min);
 
     if(binWidth == 0 || max < min){
       return Histogram.empty();
     }
-    final k = ((max-min)/binWidth).ceil();
+    final k = math.max(((max-min)/binWidth).ceil(),1);
 
     final bins = List.generate(k, (i) => min + binWidth * i);  
    
@@ -53,7 +63,7 @@ abstract class Bucket extends Graph{
     );
   }  
 
-  List<num> _aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level){
+  List<num> _aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level, bool percentage){
     bool Function(DateTime a, DateTime b) isSame; 
 
     switch(level){
@@ -77,25 +87,29 @@ abstract class Bucket extends Graph{
 
     final List<double> aggregated = [];
     List<T> group = [];
+    
+  
     double mean (Iterable<T> l)=> l.fold<double>(0,(a,b) => (a + b))/l.length;
+    double add (Iterable<T> l)=> l.fold<double>(0,(a,b) => (a + b));
+    final groupUp = percentage ? mean : add;
 
     for(int i = start; i < end; i++){
       if (group.isEmpty || isSame(time[i], time[i - 1])) {
        group.add(data[i]);
       } else {
-        aggregated.add(mean(group));
+        aggregated.add(groupUp(group));
         group = [data[i]];
       }
     }
 
     if (group.isNotEmpty) {
-      aggregated.add(mean(group));
+      aggregated.add(groupUp(group));
     }
     
     return aggregated;
   }
 
-  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout}){
+  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision}){
 
     if(data.isEmpty || time.isEmpty){
       return Histogram.empty();
@@ -111,11 +125,11 @@ abstract class Bucket extends Graph{
       return Histogram.empty();
     }        
 
-    final list = _aggregateData(data, low, high, level);
-    return _getHistogram(list,start,end,bin);
+    final list = _aggregateData(data, low, high, level, percentage);
+    return _getHistogram(list,start,end,bin,xPrecision);
   } 
 
-  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout}){
+  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision}){
     
     if(data.isEmpty || time.isEmpty){
       return Histogram.empty();
