@@ -47,24 +47,24 @@ class BucketChartSettings extends ChartSettings {
   BucketChartSettings(super.data, {super.xLabelFixed = 0, super.yLabelFixed=2,this.bucketSize, this.start, this.end, this.xPer=false, this.over=true, this.under=true});
 
   factory BucketChartSettings.reps(BucketGraphs graphs){
-    return BucketChartSettings(graphs.repsOverTime, bucketSize: 1, start: 4, end:12, over: true);
+    return BucketChartSettings(graphs.repsOverTime, over: true);
   }
 
   factory BucketChartSettings.sets(BucketGraphs graphs){
-    return BucketChartSettings(graphs.setsOverTime, bucketSize: 2, start: 1, end: 10, over: true);
+    return BucketChartSettings(graphs.setsOverTime, over: true);
   }
 
   factory BucketChartSettings.perWeight(BucketGraphs graphs){
-    return BucketChartSettings(graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0.5, end: 1, xLabelFixed:0, over:false);
+    return BucketChartSettings(graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0.5, end: 1, xLabelFixed:0, over:true);
   }
 
   factory BucketChartSettings.perVolume(BucketGraphs graphs){
-    return BucketChartSettings(graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0.4, end: 1, xLabelFixed:0, over:false);
+    return BucketChartSettings(graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0.4, end: 1, xLabelFixed:0, over:true);
   }
 
   factory BucketChartSettings.duration(BucketGraphs graphs){
     final minutes = graphs.duration.map((d) => d.inMinutes).toList();
-    return BucketChartSettings(minutes, start: 30, end: 60*2, bucketSize:15, over: true, under:true);
+    return BucketChartSettings(minutes, over: true, under:true);
   }
 }
 
@@ -108,7 +108,7 @@ class BucketChartBuilder extends ChartBuilder<BucketChartSettings>{
   @override
   Widget build({History? history, AggregationLevel? level,bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
     level = level ?? AggregationLevel.workout;
-    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, days: days, months: months, years: years);
+    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, percentage: settings.xPer, xPrecision: settings.xLabelFixed, days: days, months: months, years: years);
     final xy = histogram.getData(under:settings.under, over: settings.over, percentage: settings.xPer);
     return HistogramChart(xy.x, xy.y.toList(), fixedX: settings.xLabelFixed, percentage: settings.xPer);
   }
