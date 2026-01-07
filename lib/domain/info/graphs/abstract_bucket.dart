@@ -124,28 +124,36 @@ abstract class Bucket extends Graph{
     final endDate = currentTime ?  DateTime.now() : time.last;
 
     if([years,months,days].every((p) => 0 == p)){
-      return getHistogram(data, start:start, end:end, bin:bin, endDate:endDate, level:level);
+      return getHistogram(data, start:start, end:end, bin:bin, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
     }
 
     final startDate =DateTime(endDate.year - years, endDate.month - months, endDate.day - days);
 
-    return getHistogram(data, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate, level:level);
+    return getHistogram(data, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
   } 
 
 }
 
-double _scott<T extends num>(Iterable<T> data){
+double _scott(Iterable<num> data, int? precision){
+    final n = data.length; 
+    if (n < 2) { 
+      return 1;
+    }
     final sd = _sampleStandardDeviation(data);
     final cbrtN = math.pow(data.length, 1.0/3.0);
-
-    return 3.49 * sd / cbrtN;
+    final bin = (3.5 * sd / cbrtN);
+    if(precision == null){
+      return bin;
+    }
+    final pow = math.pow(10, precision).toDouble();
+    return (bin * pow).round()/pow;
 }
 
 double _sampleStandardDeviation(Iterable<num> data) {
 
   double mean = data.fold<double>(0,(a, b) => (a + b)) / data.length;
 
-  return math.sqrt(data.map((x) => math.pow(x - mean, 2))
+  return math.sqrt(data.map((x) => math.pow(x - mean, 2).toDouble())
             .fold<double>(0,(a, b) => a + b) / (data.length - 1));
 
 }
