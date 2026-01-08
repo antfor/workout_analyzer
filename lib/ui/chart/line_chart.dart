@@ -12,7 +12,6 @@ class BasicLineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
     return SizedBox(
         height: 300,
         child:
@@ -32,7 +31,11 @@ class BasicLineChart extends StatelessWidget {
                 bottomTitles: AxisTitles( 
                   sideTitles: SideTitles( 
                     showTitles: true, 
+
                     getTitlesWidget: (value, meta) {
+                      if(value == meta.min || value == meta.max){
+                         return Text("");
+                      }
                       final date = DateTime.fromMillisecondsSinceEpoch((value).toInt());
                       return Text("${date.month}/${date.day}"); //TODO fix
                     },
