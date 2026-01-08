@@ -55,11 +55,11 @@ class BucketChartSettings extends ChartSettings {
   }
 
   factory BucketChartSettings.perWeight(BucketGraphs graphs){
-    return BucketChartSettings(graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0.5, end: 1, xLabelFixed:0, over:true);
+    return BucketChartSettings(graphs.perWeightOverTime, xPer: true, bucketSize: 0.1, start: 0.5, end: 1, xLabelFixed:0, over:false);
   }
 
   factory BucketChartSettings.perVolume(BucketGraphs graphs){
-    return BucketChartSettings(graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0.4, end: 1, xLabelFixed:0, over:true);
+    return BucketChartSettings(graphs.perVolumeOverTime, xPer: true, bucketSize: 0.1, start: 0.4, end: 1, xLabelFixed:0, over:false);
   }
 
   factory BucketChartSettings.duration(BucketGraphs graphs){
@@ -109,7 +109,7 @@ class BucketChartBuilder extends ChartBuilder<BucketChartSettings>{
   Widget build({History? history, AggregationLevel? level,bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
     level = level ?? AggregationLevel.workout;
     final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, percentage: settings.xPer, xPrecision: settings.xLabelFixed, days: days, months: months, years: years);
-    final xy = histogram.getData(under:settings.under, over: settings.over, percentage: settings.xPer);
+    final xy = histogram.getData(under:settings.under, over: settings.over, percentage: true);
     return HistogramChart(xy.x, xy.y.toList(), fixedX: settings.xLabelFixed, percentage: settings.xPer);
   }
 

@@ -14,7 +14,7 @@ class HistogramChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-
+    final double reservedSize = 44;
     return SizedBox(
         height: 300,
         child:
@@ -23,6 +23,12 @@ class HistogramChart extends StatelessWidget {
             BarChartData(
               barGroups: _getGroups(y),
               titlesData: FlTitlesData( 
+                leftTitles:  AxisTitles( sideTitles: SideTitles(showTitles: false), ),
+                topTitles:  AxisTitles( sideTitles: SideTitles(showTitles: false), ),
+                rightTitles: AxisTitles(sideTitles: SideTitles(
+                  reservedSize: reservedSize,
+                  showTitles: true, 
+                )),
                  bottomTitles: AxisTitles( 
                   sideTitles: SideTitles( 
                     showTitles: true, 
@@ -32,6 +38,9 @@ class HistogramChart extends StatelessWidget {
                       final v2 = ((percentage ? 100 : 1) * (range.$2 ?? 0)).toStringAsFixed(fixedX) + (percentage ? "%":"");
                       
                       if(range.$1 != null && range.$2 != null){
+                        if(range.$1 == range.$2){
+                          return Text(v1);
+                        }
                         return Text("$v1-$v2");
                       }
                       if(range.$1 != null){
@@ -44,6 +53,15 @@ class HistogramChart extends StatelessWidget {
                     },
                   ), 
                 ),
+              ),
+              barTouchData: BarTouchData( 
+                touchTooltipData: BarTouchTooltipData( 
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) { 
+                  final value = rod.toY * 100;
+                  final text = "${value.round()}%"; 
+                  return BarTooltipItem(text, TextStyle()); 
+                  }, 
+                ), 
               ),
             ),
           )

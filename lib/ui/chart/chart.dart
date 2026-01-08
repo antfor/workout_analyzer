@@ -119,7 +119,7 @@ class _Chart extends State<Chart> with AutomaticKeepAliveClientMixin<Chart> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if(chartWidget.type == CharType.line)chartHistorySelect(history, (h) => setState(() => history = h )),
-          if(chartWidget.type == CharType.histogram)chartaggregationLevel(aggregationLevel, (a) => setState(() => aggregationLevel = a )),
+          if(chartWidget.type == CharType.histogram)chartAggregationLevel(aggregationLevel, (a) => setState(() => aggregationLevel = a )),
           timeDropDown(duration, (s) => setState(() => duration = s))
         ],
       ),
@@ -173,7 +173,7 @@ Widget chartTypeSelect(CharWidget type, void Function(CharWidget) onChanged){
   );
 }
 
-Widget chartaggregationLevel(AggregationLevel level, void Function(AggregationLevel) onChanged ){
+Widget chartAggregationLevel(AggregationLevel level, void Function(AggregationLevel) onChanged ){
 
   final entries = AggregationLevel.values.map((s) => DropdownMenuEntry(
                 value: s,
