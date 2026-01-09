@@ -13,7 +13,7 @@ class Summary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final maxWidth = const BoxConstraints(maxWidth: 500);
+    final maxWidth = const BoxConstraints(maxWidth: 400);
     final padding = EdgeInsetsGeometry.symmetric(vertical: 8, horizontal: 16);
     pad(w) => Container(padding:padding , child: w,);
     constrain(w) => Center(child:Container(constraints: maxWidth, padding: padding, child:w));
@@ -27,7 +27,7 @@ class Summary extends StatelessWidget {
           svg,
         ],)),
     ]);
-    
+
   }
 }
 
@@ -43,10 +43,8 @@ class _MyColorMapper extends ColorMapper {
 
   @override
   Color substitute(String? id, String elementName, String attributeName, Color color,) {
-     //print("id: $id elem: $elementName att : $attributeName col: $color");
-     //print(id);
       
-    if(id == "calves_r_1" || id == "calves_r_2"){
+    if(id == "calves"){
       return Color(0xFFFF0000);
     }
         
@@ -54,11 +52,10 @@ class _MyColorMapper extends ColorMapper {
   }
 }
 
-  final String assetName = 'assets/images/man4.svg';
-  final Widget svg = SvgPicture.asset(
-  assetName,
-  semanticsLabel: 'Man',
-  width: 300,
-  height: 300,
-  colorMapper: const _MyColorMapper(),
-  );
+  final Widget svg = FittedBox(child: 
+    SvgPicture.asset(
+      'assets/images/man.svg',
+      fit: BoxFit.contain,
+      semanticsLabel: 'Man',
+      colorMapper: const _MyColorMapper(),
+  ));
