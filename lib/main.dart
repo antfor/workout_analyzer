@@ -4,7 +4,8 @@ import 'package:test_flutter/navigation.dart';
 import 'package:test_flutter/repository/import/map.dart';
 import 'package:test_flutter/repository/import/muscle.dart';
 import 'package:test_flutter/repository/import/standards.dart';
-import 'package:test_flutter/ui/exercises/page.dart';
+import 'package:test_flutter/ui/exercises/exersise_page.dart';
+import 'package:test_flutter/ui/summary/summary_page.dart';
 import 'repository/import.dart';
 
 void main() async {
@@ -26,14 +27,13 @@ class WorkoutAnalyzer extends StatelessWidget{
   
   const WorkoutAnalyzer(this.domain,{super.key});
 
-
   @override
   Widget build(BuildContext context) {
     
     final basic = domain.getBasicInfo.toList();
     basic.sort();
 
-    final pages = [getExersisePage(basic),getExersisePage(basic)];
+    final pages = [getSummaryPage(basic),getExersisePage(basic)];
 
     return MaterialApp(
       title:'Exerise analyzer',
