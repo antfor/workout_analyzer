@@ -67,7 +67,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/images/man4.svg
+    - assets/images/man.svg
     - assets/data/test_workout_data.csv
     - assets/data/standards/
     - assets/data/imports/
