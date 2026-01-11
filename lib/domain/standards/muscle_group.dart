@@ -19,10 +19,20 @@ enum Muscle{
   lowerBack("Lower Back"),
   neck("Neck"),
   quadriceps("Quadriceps"),
-  shoulders("Shoulders"),
-  traps("Traps"),
   triceps("Triceps"),
+
+  tibialis("tibialis"),
+  serratus("serratus"),
+  obliques("obliques"),
+
   upperBack("Upper Back"),
+  traps("Traps"),
+  teres("teres"),
+  
+  shoulders("Shoulders"),
+  frontDelts("front delts"),
+  sideDelts("side delts"),
+  rearDelts("rear delts"),
   
   other("Other");
 
