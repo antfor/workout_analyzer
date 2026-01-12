@@ -10,8 +10,8 @@ AppPage getExersisePage(List<LiftBasicInfo> lifts){
 }
 
 NavigationDestination _icon = NavigationDestination(
-            selectedIcon: Icon(Icons.fitness_center_outlined),
-            icon: Icon(Icons.fitness_center),
+            selectedIcon: Icon(Icons.fitness_center),
+            icon: Icon(Icons.fitness_center_outlined),
             label: 'Exercises',
           );
 

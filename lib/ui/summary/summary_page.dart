@@ -9,8 +9,8 @@ AppPage getSummaryPage(List<LiftBasicInfo> lifts){
 }
 
 NavigationDestination _icon = NavigationDestination(
-            selectedIcon: Icon(Icons.home_outlined),
-            icon: Icon(Icons.home),
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
           );
 
@@ -35,7 +35,7 @@ class _SummaryPage extends State<_SummaryState>  {
       builder: (context, constraints) {
         if(constraints.maxWidth > util.desktop){}
         
-        return Summary();
+        return Summary(widget.lifts);
       });
   }
 
