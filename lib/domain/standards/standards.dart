@@ -171,13 +171,26 @@ class StandardTable {
   List<int> standrads(int index) => [beginner, novice, intermediate, advanced, elite].map((l)=>l[index]).toList();
   
   Level level(double bw, double lift){
-    int wclass = bodyweight.firstWhere((b) => bw <= b);
-    wclass = wclass == -1 ? bodyweight.last : wclass;
-    final iwclass = bodyweight.toList().indexOf(wclass);
+    int iwclass = bodyweight.toList().indexWhere((b) => bw <= b);
+    iwclass = iwclass == -1 ? math.min(bodyweight.length-1,0) : iwclass;
 
     int index = standrads(iwclass).indexWhere((sd) => lift < sd);
     index = index == -1 ? eliteIndex : index-1;
 
     return Level.byIndex(index);
+  }
+
+  double levelValue(double bw, double lift){
+    int iwclass = bodyweight.toList().indexWhere((b) => bw <= b);
+    iwclass = iwclass == -1 ? bodyweight.length-1 : iwclass;
+
+    int index = standrads(iwclass).indexWhere((sd) => lift < sd);
+    index = index == -1 ? eliteIndex : index;
+    int nextIndex = math.min(eliteIndex, index+1);
+    if(index == nextIndex){
+      return 1.0 + index;
+    }
+    final fraction = ((lift - standrads(iwclass)[index]) / (standrads(iwclass)[nextIndex] - standrads(iwclass)[index]));
+    return 1 + index + fraction;
   }
 }
