@@ -34,13 +34,31 @@ enum AggregationLevel{
 
 abstract class Bucket extends Graph{
 
-  Histogram _getHistogram<T extends num>(Iterable<T> data, double? start, double? end, double? bin, int? xPrecision){
+  Histogram _getHistogram(List<(DateTime,num)>xy, double? start, double? end, double? bin, int? xPrecision, bool barChart){
 
-    final binWidth = bin ?? _scott(data, xPrecision);
+    final data = xy.map((xy) => xy.$2);
     final max = end ?? data.fold<num>(-double.maxFinite,math.max);
     final min = start ?? data.fold<num>(double.maxFinite,math.min);
 
-    if(binWidth == 0 || max < min){
+    if(max < min){
+      return Histogram.empty();
+    }
+
+    if(barChart){
+      return Histogram(
+      histogram: data.where((d) => min <= d && d <= max),
+      over: data.where((d) => d > max).length,
+      under: data.where((d) => min > d).length,
+      max: max.toDouble(),
+      min: min.toDouble(),
+      binWidth: 0,
+      labels: xy.map((xy) => xy.$1),
+     );
+    }
+
+    final binWidth = bin ?? _scott(data, xPrecision);
+
+    if(binWidth == 0){
       return Histogram.empty();
     }
     final k = math.max(((max-min)/binWidth).ceil(),1);
@@ -59,12 +77,11 @@ abstract class Bucket extends Graph{
       max: max.toDouble(),
       min: min.toDouble(),
       binWidth: binWidth,
-
     );
   }  
 
-  List<num> _aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level, bool percentage){
-    bool Function(DateTime a, DateTime b) isSame; 
+  List<(DateTime,num)> _aggregateData<T extends num>(List<T> data, int start, int end, AggregationLevel level, bool percentage){
+    bool Function(DateTime a, DateTime b) isSame;
 
     switch(level){
       case AggregationLevel.day:
@@ -82,11 +99,15 @@ abstract class Bucket extends Graph{
       case AggregationLevel.year: 
         isSame = (DateTime a, DateTime b) => a.year == b.year;  
         break; 
-      default: return data.getRange(start, end).toList();
+      default: 
+        final y = data.getRange(start, end).toList();
+        final x = time.getRange(start, end).toList();
+        return List.generate(x.length, (i) => (x[i],y[i]));
     }
 
-    final List<double> aggregated = [];
+    final List<(DateTime,double)> aggregated = [];
     List<T> group = [];
+    DateTime x = time[start]; 
     
   
     double mean (Iterable<T> l)=> l.fold<double>(0,(a,b) => (a + b))/l.length;
@@ -97,19 +118,20 @@ abstract class Bucket extends Graph{
       if (group.isEmpty || isSame(time[i], time[i - 1])) {
        group.add(data[i]);
       } else {
-        aggregated.add(groupUp(group));
+        aggregated.add((x,groupUp(group)));
         group = [data[i]];
+        x = time[i];
       }
     }
 
     if (group.isNotEmpty) {
-      aggregated.add(groupUp(group));
+      aggregated.add((x, groupUp(group)));
     }
     
     return aggregated;
   }
 
-  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision}){
+  Histogram getHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, DateTime? startDate, DateTime? endDate, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision, bool barChart = false}){
 
     if(data.isEmpty || time.isEmpty){
       return Histogram.empty();
@@ -126,10 +148,10 @@ abstract class Bucket extends Graph{
     }        
 
     final list = _aggregateData(data, low, high, level, percentage);
-    return _getHistogram(list,start,end,bin,xPrecision);
+    return _getHistogram(list,start,end,bin,xPrecision,barChart);
   } 
 
-  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision}){
+  Histogram getLatestHistogram<T extends num>(List<T> data, {double? start, double? end, double? bin, bool currentTime=true, int days=0, int months=0,int years=0, AggregationLevel level = AggregationLevel.workout, bool percentage = false, int? xPrecision, barChart = false}){
     
     if(data.isEmpty || time.isEmpty){
       return Histogram.empty();
@@ -138,12 +160,12 @@ abstract class Bucket extends Graph{
     final endDate = currentTime ?  DateTime.now() : time.last;
 
     if([years,months,days].every((p) => 0 == p)){
-      return getHistogram(data, start:start, end:end, bin:bin, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
+      return getHistogram(data, barChart:barChart, start:start, end:end, bin:bin, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
     }
 
     final startDate =DateTime(endDate.year - years, endDate.month - months, endDate.day - days);
 
-    return getHistogram(data, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
+    return getHistogram(data, barChart:barChart, start:start, end:end, bin:bin, startDate:startDate, endDate:endDate, level:level, percentage:percentage, xPrecision:xPrecision);
   } 
 
 }

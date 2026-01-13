@@ -9,7 +9,8 @@ class Histogram{
 
   final int _over;
   final int _under;
-  final Iterable<int> _histogram;
+  final Iterable<num> _histogram;
+  final Iterable<DateTime>? _labels;
 
   Histogram.empty()
     : _max = 0,
@@ -17,7 +18,8 @@ class Histogram{
       _binWidth = 0,
       _over = 0,
       _under = 0,
-      _histogram = {};
+      _histogram = {},
+      _labels = null;
 
   Histogram({
     required double max,
@@ -25,19 +27,33 @@ class Histogram{
     required double binWidth,
     required int over,
     required int under,
-    required Iterable<int> histogram,
+    required Iterable<num> histogram,
+    Iterable<DateTime>? labels,
   })  : _max = max,
         _min = min,
         _binWidth = binWidth,
         _over = over,
         _under = under,
-        _histogram = histogram;
+        _histogram = histogram,
+        _labels = labels;
 
   bool get isEmpty => _histogram.isEmpty;
 
-  int get _total => _histogram.fold(0,(a,b) => a+b);
-
+  num get _total => _histogram.fold(0,(a,b) => a+b);
+  
+  
   ({List<(double?, double?)> x, Iterable<num> y})getData({bool over=false, bool under=false, bool percentage = false}){
+    if(_binWidth != 0){
+      return _getData(over: over, under: under, percentage: percentage);
+    }
+    Iterable<DateTime> labels = _labels ?? [];
+    final x = labels.map((i)=> (i.millisecondsSinceEpoch.toDouble(),null));
+    return (x:x.toList(), y:_histogram);
+  }
+    
+
+
+  ({List<(double?, double?)> x, Iterable<num> y})_getData({bool over=false, bool under=false, bool percentage = false}){
     
 
     final x =[if(under) (null, _min),

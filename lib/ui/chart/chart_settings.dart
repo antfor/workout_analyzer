@@ -43,15 +43,16 @@ class BucketChartSettings extends ChartSettings {
   final bool over;
   final bool under;
   final bool xPer;
+  final bool barChart;
 
-  BucketChartSettings(super.data, {super.xLabelFixed = 0, super.yLabelFixed=2,this.bucketSize, this.start, this.end, this.xPer=false, this.over=true, this.under=true});
+  BucketChartSettings(super.data, {super.xLabelFixed = 0, super.yLabelFixed=2,this.bucketSize, this.start, this.end, this.xPer=false, this.over=true, this.under=true, this.barChart=false});
 
   factory BucketChartSettings.reps(BucketGraphs graphs){
-    return BucketChartSettings(graphs.repsOverTime, over: true);
+    return BucketChartSettings(graphs.repsOverTime, over: true, barChart: true);
   }
 
   factory BucketChartSettings.sets(BucketGraphs graphs){
-    return BucketChartSettings(graphs.setsOverTime, over: true);
+    return BucketChartSettings(graphs.setsOverTime, over: true, barChart: true);
   }
 
   factory BucketChartSettings.perWeight(BucketGraphs graphs){
@@ -64,7 +65,7 @@ class BucketChartSettings extends ChartSettings {
 
   factory BucketChartSettings.duration(BucketGraphs graphs){
     final minutes = graphs.duration.map((d) => d.inMinutes).toList();
-    return BucketChartSettings(minutes, over: true, under:true);
+    return BucketChartSettings(minutes, over: true, under:true, barChart: true);
   }
 }
 
@@ -108,9 +109,9 @@ class BucketChartBuilder extends ChartBuilder<BucketChartSettings>{
   @override
   Widget build({History? history, AggregationLevel? level,bool currentTime = true, int days = 0, int months = 0, int years = 0}) {
     level = level ?? AggregationLevel.workout;
-    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, percentage: settings.xPer, xPrecision: settings.xLabelFixed, days: days, months: months, years: years);
+    final histogram = graphs.getLatestHistogram(settings.data, start: settings.start, end: settings.end ,bin: settings.bucketSize, level:level, currentTime:currentTime, percentage: settings.xPer, xPrecision: settings.xLabelFixed, days: days, months: months, years: years, barChart: settings.barChart);
     final xy = histogram.getData(under:settings.under, over: settings.over, percentage: true);
-    return HistogramChart(xy.x, xy.y.toList(), fixedX: settings.xLabelFixed, percentage: settings.xPer);
+    return HistogramChart(xy.x, xy.y.toList(), settings.barChart, fixedX: settings.xLabelFixed, percentage: settings.xPer);
   }
 
 }

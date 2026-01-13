@@ -21,18 +21,18 @@ enum Muscle{
   quadriceps("Quadriceps"),
   triceps("Triceps"),
 
-  tibialis("tibialis"),
-  serratus("serratus"),
-  obliques("obliques"),
+  tibialis("Tibialis"),
+  serratus("Serratus"),
+  obliques("Obliques"),
 
-  upperBack("Upper Back"),
+  upperBack("Upper Back"),//TODO remove
   traps("Traps"),
-  teres("teres"),
+  teres("Teres"),
   
-  shoulders("Shoulders"),
-  frontDelts("front delts"),
-  sideDelts("side delts"),
-  rearDelts("rear delts"),
+  shoulders("Shoulders"),//TODO remove
+  frontDelts("Front Delts"),
+  sideDelts("Side Delts"),
+  rearDelts("Rear Delts"),
   
   other("Other");
 
