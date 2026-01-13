@@ -69,7 +69,6 @@ List<DropdownMenuEntry<T>> entries<T extends num>(List<T> list){
 Widget? _strengthLevel(Standard standard, double bodyWeight, double orm){
   
   final table = standard.weight ?? standard.reps;
-  final double height = 10;
 
   if(table == null){
     return Text('');
@@ -79,12 +78,13 @@ Widget? _strengthLevel(Standard standard, double bodyWeight, double orm){
   index = index == -1 ? 0 : index;
   final bwStandard = table.standrads(index);
 
-  bar(double v, String level, String weight) => Expanded(child:
+  bar(double v, String level, String weight, Color c1, Color c2) => Expanded(child:
     Column(crossAxisAlignment: CrossAxisAlignment.start, 
       children:[Text(level, maxLines: 1, overflow: TextOverflow.ellipsis),
-      LinearProgressIndicator(value: v, minHeight: height), 
+      GradientProgressBar(value: v, startColor:c1, endColor: c2), 
       Text(weight,maxLines: 1, overflow: TextOverflow.ellipsis)],));
 
+  final spectrum = List.generate(5, (i) => Color.fromARGB(255, 255, 63*(4-i), 0));
   final List<Widget> bars = [];
   bool belowLevel = true;
   for(int i = 0; i < bwStandard.length; i++ ){
@@ -92,15 +92,68 @@ Widget? _strengthLevel(Standard standard, double bodyWeight, double orm){
     final next = i+1 < bwStandard.length ? bwStandard[i+1] : bwStandard[i] / Level.elite.percentage;
     final level = Level.byIndex(i).label;
     final limit = '$weight kg';
+    final c1 = i > spectrum.length-1? spectrum.last :spectrum[i];
+    final c2 = i >= spectrum.length-1? c1 : spectrum[i+1];
 
     if(next <= orm){
-      bars.add(bar(1, level, limit));
+      bars.add(bar(1, level, limit, c1, c2));
     }else if(belowLevel){
-      bars.add(bar((orm-weight)/(next-weight), level, limit)); //TODO orm or max reps
+      bars.add(bar((orm-weight)/(next-weight), level, limit, c1, c2)); //TODO orm or max reps
       belowLevel=false;
     }else{
-      bars.add(bar(0, level, limit));
+      bars.add(bar(0, level, limit, c1, c2));
     }
   }
-  return Row(spacing: 5, children: bars,);
+  return Row(spacing: 3, children: bars,);
+}
+
+
+class GradientProgressBar extends StatelessWidget {
+  final double value;
+  final Color startColor;
+  final Color endColor;
+  final double height;
+  final Widget? headline;
+
+  const GradientProgressBar({
+    required this.value,
+    required this.startColor,
+    required this.endColor,
+    this.height = 10,
+    this.headline,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, 
+      children:[
+        if(headline != null) headline!,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(height / 4),
+          child: Stack(
+            children: [
+              Container(
+                height: height,
+                color: scheme.surfaceContainerHighest,
+              ),
+
+              FractionallySizedBox(
+                widthFactor: value.clamp(0.0, 1.0),
+                child: Container(
+                  height: height,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [startColor, endColor],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ]);
+  }
 }
