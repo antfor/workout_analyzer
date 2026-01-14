@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiver/collection.dart';
@@ -6,8 +5,8 @@ import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/standards/muscle_group.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
 import 'package:test_flutter/ui/components/progressbar.dart';
-import 'package:test_flutter/ui/util.dart';
 import 'package:test_flutter/ui/util.dart' as util;
+import 'dart:math' as math;
 
 final double bodyWeight = 75;
 final sex = Sex.male;
@@ -31,14 +30,14 @@ class Summary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 5,
         children: [
-          H2("Muscle Strength"),
+          util.H2("Muscle Strength"),
           svg(lifts),
           pad(bar()),
-          H2("Sets this week"),//week,month year
+          util.H2("Sets this week"),//week,month year
           svg(lifts),
 
-          H2("max volume"),//week,month year
-          H2("Heviest weight"),
+          util.H2("max volume"),//week,month year
+          util.H2("Heviest weight"),
          
         ],)),
     ]);
@@ -53,21 +52,14 @@ Widget bar(){
   Expanded( child:
     GradientProgressBar(
       value: 1, 
-      startColor: i>=spectrum.length ? util.spectrum.last : util.spectrum[i], 
-      endColor: i+1>=spectrum.length ? util.spectrum.last : util.spectrum[i+1], 
+      startColor: i>=util.spectrum.length ? util.spectrum.last : util.spectrum[i], 
+      endColor: i+1>=util.spectrum.length ? util.spectrum.last : util.spectrum[i+1], 
       headline: Text(levels[i].shortLabel, maxLines: 1, overflow: TextOverflow.ellipsis),
     )
   ));
 
   return Row(spacing: 3, children: bars);
 }
-
-/*
-	.s0 { fill: #808284 } 
-		.s1 { fill: #bbbdbf } 
-		.s2 { fill: #ec1c24 } 
-		.s3 { fill: #e6e7e8 } 
-*/
 
 class _MyColorMapper extends ColorMapper {
 
@@ -107,18 +99,7 @@ class _MyColorMapper extends ColorMapper {
         return  level > t ? level : t;
       });
     
-    // 0,    1,  2,  3,  4,  5
-    // start,big,nov,ind,adv,elite
-     //Colors.amberAccent.shade400; color +60
-    final big = const Color.fromARGB(255, 255, 0+63*4, 0);
-    final nov = const Color.fromARGB(255, 255, 0+63*3, 0);
-    final ind = const Color.fromARGB(255, 255, 0+63*2, 0);
-    final adv = const Color.fromARGB(255, 255, 0+63*1, 0);
-    final elite=const Color.fromARGB(255, 255, 0+63*0, 0);
-    //final colors = [color, big, nov, ind, adv, elite];
-
-    final spectrum = List.generate(5, (i) => Color.fromARGB(255, 255, 51*(4-i), 0));
-    final colors = [color, ...spectrum]; //color is the default gray color
+    final colors = [color, ...util.spectrum];
 
     final iPrev = math.max(0, strengthLevel.ceil());
     final iNext = math.min(colors.length-1, (strengthLevel +1).ceil());
