@@ -7,9 +7,10 @@ class HistogramChart extends StatelessWidget {
   final List<num> y;
   final int fixedX;
   final bool percentage;
+  final bool barChart;
   //final int fixedY;
 
-  const HistogramChart(this.x, this.y, {super.key, this.fixedX = 0, this.percentage = false});
+  const HistogramChart(this.x, this.y, this.barChart, {super.key, this.fixedX = 0, this.percentage = false});
 
   @override
   Widget build(BuildContext context) {
@@ -33,23 +34,32 @@ class HistogramChart extends StatelessWidget {
                   sideTitles: SideTitles( 
                     showTitles: true, 
                     getTitlesWidget: (value, meta) {
-                      final range = x[value.toInt()];
-                      final v1 = ((percentage ? 100 : 1) * (range.$1 ?? 0)).toStringAsFixed(fixedX) + (percentage ? "%":"");
-                      final v2 = ((percentage ? 100 : 1) * (range.$2 ?? 0)).toStringAsFixed(fixedX) + (percentage ? "%":"");
-                      
-                      if(range.$1 != null && range.$2 != null){
-                        if(range.$1 == range.$2){
-                          return Text(v1);
+                      if(barChart){
+                        final ms = (x[value.toInt()].$1 ?? 0).toInt();
+                        final date = DateTime.fromMillisecondsSinceEpoch(ms);
+                        if(value % 2 == 0 || x.length < 10){
+                          return Text("${date.month}/${date.day}"); //TODO based on Span if span is month only show month...
                         }
-                        return Text("$v1-$v2");
+                        return Text("");
+                      }else{
+                        final range = x[value.toInt()];
+                        final v1 = ((percentage ? 100 : 1) * (range.$1 ?? 0)).toStringAsFixed(fixedX) + (percentage ? "%":"");
+                        final v2 = ((percentage ? 100 : 1) * (range.$2 ?? 0)).toStringAsFixed(fixedX) + (percentage ? "%":"");
+                        
+                        if(range.$1 != null && range.$2 != null){
+                          if(range.$1 == range.$2){
+                            return Text(v1);
+                          }
+                          return Text("$v1-$v2");
+                        }
+                        if(range.$1 != null){
+                          return Text("<$v1");
+                        }
+                        if(range.$2 != null){
+                          return Text(">$v2");
+                        }
+                        return Text("");
                       }
-                      if(range.$1 != null){
-                        return Text("<$v1");
-                      }
-                      if(range.$2 != null){
-                        return Text(">$v2");
-                      }
-                      return Text("");
                     },
                   ), 
                 ),
@@ -57,9 +67,14 @@ class HistogramChart extends StatelessWidget {
               barTouchData: BarTouchData( 
                 touchTooltipData: BarTouchTooltipData( 
                   getTooltipItem: (group, groupIndex, rod, rodIndex) { 
-                  final value = rod.toY * 100;
-                  final text = "${value.round()}%"; 
-                  return BarTooltipItem(text, TextStyle()); 
+                    if(barChart){
+                      final text = rod.toY.toStringAsFixed(fixedX); 
+                      return BarTooltipItem(text, TextStyle()); 
+                    }else{
+                      final value = rod.toY * 100;
+                      final text = "${value.round()}%"; 
+                      return BarTooltipItem(text, TextStyle()); 
+                    }
                   }, 
                 ), 
               ),
