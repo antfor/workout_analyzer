@@ -85,27 +85,61 @@ class _MyColorMapper extends ColorMapper {
       return color;
     }
     
+    final strengthLevel = getLevel(lift, sex, bodyWeight);
+ 
+    return  getLerpColor(strengthLevel, defaultColor: color);
+  }
+}
+
+ Color getLerpColor(double level, {Color defaultColor = Colors.grey}){
+
     final start = 0;
     final end = 0;
     final len = 5 - start - end;
   
-    final colors = [color, ...util.spectrumN(len)];
+    final colors = [defaultColor, ...util.spectrumN(len)];
 
-    final strengthLevel = getLevel(lift, sex, bodyWeight);
-
-    final iPrev = math.min(math.max(0, strengthLevel.floor()), colors.length-1);
-    final iNext = math.max(0,math.min(colors.length-1, (strengthLevel +1).floor()));
-    final fraction = strengthLevel - strengthLevel.floor();
+    final iPrev = math.min(math.max(0, level.floor()), colors.length-1);
+    final iNext = math.max(0,math.min(colors.length-1, (level +1).floor()));
+    final fraction = level - level.floor();
     
-    return  Color.lerp(colors[iPrev],colors[iNext],fraction) ?? color;
-  }
+    return  Color.lerp(colors[iPrev],colors[iNext],fraction) ?? defaultColor;
 }
 
 Widget strengthList(Map<Muscle, LiftBasicInfo> maxStrenghLevel){
 
-  return const ExpansionTile(
+  final list = maxStrenghLevel.entries
+    .map((e) => (e.key, e.value,  getLevel(e.value, sex, bodyWeight)))
+    .toList();
+
+  list.sort((a,b)=> b.$3.compareTo(a.$3));
+
+  String getPer(double level){
+    if(level == 5){
+      return ",        ";
+    }
+    final percent = ((level-level.toInt())*100).truncate();
+    final spacing = percent < 10 ? " " : "";
+    return ": $percent%$spacing,";
+  }
+
+  Widget getBar(double level, String exercise)=> GradientProgressBar(
+      value: level == 5 ? 1 : level-level.toInt(), 
+      startColor: getLerpColor(level), 
+      endColor: getLerpColor(level), 
+      headline: Text('${Level.byIndex(level.toInt()).shortLabel}${getPer(level)}    Exersice: $exercise', maxLines: 1, overflow: TextOverflow.ellipsis),
+  );
+
+  return ExpansionTile(
           title: Text('Stength breakdown'),
-          children: <Widget>[ListTile(title: Text('This is tile number 1'))],
+          children: list.map<Widget>((v)=>
+              ListTile(
+                title: Text(v.$1.string, maxLines: 1, overflow: TextOverflow.ellipsis),
+                subtitle: 
+                  getBar(v.$3, v.$2.id),
+                onTap: ()=>1,  //TODO navigate to exersise
+              )
+            ).toList(),
         );
 }
 
