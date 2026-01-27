@@ -4,9 +4,20 @@ const int desktop = 1024;
 const int tablet = 700;
 
 
-//final spectrum = List.generate(5, (i) => Color.fromARGB(255, 255, 63*(4-i),0));
-const _blue = [55,35,20,10,0];
-final spectrum = List.generate(5, (i) => Color.fromARGB(255, 215 + 10*i, 63*(4-i),_blue[i]));
+final spectrum  = spectrumN(5);
+
+List<Color> spectrumN2 (int n) => List.generate(n, (i) => Color.fromARGB(255, 255, (255/n).floor()*(n-i-1),0));
+List<Color> spectrumN(int n) => List.generate(n, (i) {
+  if(n <= 1){
+    return Color.fromARGB(255, 255, 0, 0);
+  }
+
+  final g = ((255/(n-1))*(n-i-1)).round();
+  final b = ((n-i-1)* 75/n).round();
+  final r = (215 + 50/n * i).round();
+
+  return Color.fromARGB(255, r, g, b);
+});
 
 //TODO move to componets
 class H1 extends StatelessWidget{
