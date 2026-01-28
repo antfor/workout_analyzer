@@ -77,12 +77,12 @@ class _Chart extends State<Chart> with AutomaticKeepAliveClientMixin<Chart> {
   @override
   bool get wantKeepAlive => true;
 
-  CharWidget chartWidget = CharWidget.reps;
+  CharWidget chartWidget = CharWidget.orm;
 
   Span duration = Span.month3;
   History history = History.individual;
   bool currentTime = false;
-  AggregationLevel aggregationLevel = AggregationLevel.workout;
+  AggregationLevel aggregationLevel = AggregationLevel.week;
 
   @override
   Widget build(BuildContext context) {
