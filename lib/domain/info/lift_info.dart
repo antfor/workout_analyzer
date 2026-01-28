@@ -10,14 +10,17 @@ class LiftBasicInfo implements Comparable<LiftBasicInfo>{
   final String id;
   final Muscle muscle;
   final LiftInfo Function () getInfo;
-  //final maleStandard;
-  //final femaleStandard;
 
   LiftBasicInfo(this.id, this.muscle, this.getInfo);
   
   @override
   int compareTo(LiftBasicInfo other) {
     return id.compareTo(other.id);
+  }
+
+  double getLevel(Sex sex, double bodyWeight) {
+
+    return getInfo().getLevel(sex, bodyWeight);
   }
 }
 
@@ -77,5 +80,17 @@ class LiftInfo{
       maleStandard: maleStandard,
       femaleStandard: femaleStandard
     );
+  }
+
+  double getLevel(Sex sex, double bodyWeight) {
+    final orm = values.orm.value ;
+
+    final standard  = sex == Sex.male ? maleStandard : femaleStandard;
+    final strengthLevel = standard.weight ?? standard.reps;
+    if(strengthLevel != null){
+      return strengthLevel.levelValue(bodyWeight, orm);
+    }   
+
+    return 0;
   }
 }

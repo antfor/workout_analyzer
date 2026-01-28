@@ -85,7 +85,7 @@ class _MyColorMapper extends ColorMapper {
       return color;
     }
     
-    final strengthLevel = getLevel(lift, sex, bodyWeight);
+    final strengthLevel = lift.getLevel(sex, bodyWeight);
  
     return  getLerpColor(strengthLevel, defaultColor: color);
   }
@@ -106,10 +106,10 @@ class _MyColorMapper extends ColorMapper {
     return  Color.lerp(colors[iPrev],colors[iNext],fraction) ?? defaultColor;
 }
 
-Widget strengthList(Map<Muscle, LiftBasicInfo> maxStrenghLevel){
+Widget strengthList(Map<Muscle, LiftBasicInfo> maxStrenghLevel, Sex sex){
 
   final list = maxStrenghLevel.entries
-    .map((e) => (e.key, e.value,  getLevel(e.value, sex, bodyWeight)))
+    .map((e) => (e.key, e.value,  e.value.getLevel(sex, _bodyWeight)))
     .toList();
 
   list.sort((a,b)=> b.$3.compareTo(a.$3));
@@ -143,20 +143,6 @@ Widget strengthList(Map<Muscle, LiftBasicInfo> maxStrenghLevel){
         );
 }
 
-
-double getLevel(LiftBasicInfo l, Sex sex, double bodyWeight) {//todo move to info
-    final info = l.getInfo();
-    final orm = info.values.orm.value ;
-
-    final standard  = sex == Sex.male ? info.maleStandard : info.femaleStandard;
-    final strengthLevel = standard.weight ?? standard.reps;
-    if(strengthLevel != null){
-      return strengthLevel.levelValue(bodyWeight, orm);
-    }   
-
-    return 0;
-}
-
 Map<Muscle, LiftBasicInfo> getMaxStrenghLevel(List<LiftBasicInfo> lifts, Sex sex, double bodyWeight){
 
   final muscles = lifts.map((lift) => lift.muscle).toSet();
@@ -170,7 +156,7 @@ Map<Muscle, LiftBasicInfo> getMaxStrenghLevel(List<LiftBasicInfo> lifts, Sex sex
       if(liftsForMuscle.isNotEmpty){
 
         final strengthLevel = liftsForMuscle.reduce((a, b) {
-          return getLevel(b,sex,bodyWeight) > getLevel(a,sex,bodyWeight) ? b : a;
+          return b.getLevel(sex,bodyWeight) > a.getLevel(sex,bodyWeight) ? b : a;
         });
 
         maxStrength[muscle] = strengthLevel;
