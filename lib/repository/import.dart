@@ -7,8 +7,6 @@ import 'package:test_flutter/data/import/csv.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/collection.dart';
 
-const _mockData = 'assets/data/test_workout_data.csv';
-
 //"title","start_time","end_time","description","exercise_title","superset_id","exercise_notes","set_index","set_type","weight_kg","reps","distance_km","duration_seconds","rpe"
 //"start_time","end_time","exercise_title","superset_id","set_index","weight_kg","reps","distance_km","duration_seconds"
 //lift: 1,2,4,7,8,9,
@@ -31,7 +29,13 @@ enum ColumnName{
 }
 
 Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Standards female) async {
-  final csv = await loadCsv(_mockData);
+  const mockData = 'assets/data/test_workout_data.csv';
+  return importDataFromCsv(muscleMap, male, female, mockData); 
+}
+ 
+
+Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, Standards female, String filePath) async {
+  final csv = await loadCsv(filePath);
 
   if(csv.length < 2){
     return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
