@@ -5,20 +5,21 @@ import 'package:test_flutter/state/settings.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
 
-class Settings extends ConsumerWidget {
+class Settings extends StatelessWidget {
 
   const Settings({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
 
-    return IconButton(
+    return Padding( padding: EdgeInsets.symmetric(horizontal: 8),
+        child:IconButton(
       icon: const Icon(Icons.settings),
-      onPressed: () => _bottomSheet(context, ref),
-    );
+      onPressed: () => _bottomSheet(context),
+    ));
   }
 
-  void _bottomSheet(BuildContext context, WidgetRef ref){
+  void _bottomSheet(BuildContext context){
 
     final List<DropdownMenuEntry<Sex>> sexEntries = Sex.values.map((s)=>
       DropdownMenuEntry<Sex>( value: s, label: s.string)
@@ -29,8 +30,10 @@ class Settings extends ConsumerWidget {
       showDragHandle: true,
 
       builder: (sheetContext) => Consumer(builder: (c, sheetRef, _){
+
         final settings = sheetRef.watch(settingsProvider);
         final editSettings = sheetRef.read(settingsProvider.notifier);
+
         return Padding( padding: EdgeInsets.all(16),
         child: util.dropdown<Sex>(
           selection: settings.sex,
