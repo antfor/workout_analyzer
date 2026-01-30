@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/ui/app_page.dart';
-import 'package:test_flutter/ui/exercises/exercises.dart';
+import 'package:test_flutter/ui/exercises/exercises_info.dart';
 import 'package:test_flutter/ui/exercises/list.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 

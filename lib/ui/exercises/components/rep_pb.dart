@@ -11,30 +11,31 @@ DataTable repPbTable(RepPb table){
 DataTable repPbTableFiltered(RepPb table){
 
   final reps = table.reps.toList();
-  final weight = table.weight.toList();
-  final len = math.min(reps.length, weight.length);
+  final weights = table.weight.toList();
+  final len = math.min(reps.length, weights.length);
 
   if(len <= 1){
-    return _repPbTable(reps,weight);
+    return _repPbTable(reps,weights);
   }
 
-  final zip = List.generate(len,(i)=>(reps[i], weight[i]));
-  zip.sort((a,b) => a.$1.compareTo(b.$1) *-1);
+  final highToLowRep = List.generate(len,(i)=>(reps[i], weights[i]));
+  highToLowRep.sort((a,b) => b.$1.compareTo(a.$1));
 
-  double min = zip[0].$2;
-  final rw = [(zip[0].$1,min)];
+  double minWeight = highToLowRep[0].$2;
+  final repWeight = [(highToLowRep[0].$1,minWeight)];
   
-  for(int i = 1; i < zip.length; i++ ){
-    final w = zip[i].$2;
+  for(int i = 1; i < highToLowRep.length; i++ ){
+    final weight = highToLowRep[i].$2;
     
-    if(w > min){
-      rw.insert(0, (zip[i].$1, w));
+    if(weight > minWeight){
+      repWeight.insert(0, (highToLowRep[i].$1, weight));
+      minWeight = weight;
     }
-    min = w;
+    
   }
 
   //final filtred = rw.where((a) => a.$1 <= 20);
-  return _repPbTable(rw.map((v) => v.$1).toList(), rw.map((v) => v.$2).toList());
+  return _repPbTable(repWeight.map((v) => v.$1).toList(), repWeight.map((v) => v.$2).toList());
 } 
 
 DataTable _repPbTable(List<int> reps, List<double> weight){

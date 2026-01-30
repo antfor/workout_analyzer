@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
+import 'package:test_flutter/state/settings.dart';
 import 'package:test_flutter/ui/chart/chart.dart';
 import 'package:test_flutter/ui/exercises/components/rep_pb.dart';
 import 'package:test_flutter/ui/exercises/components/strength_level.dart';
 import 'package:test_flutter/ui/exercises/components/value.dart';
 import 'package:test_flutter/ui/util.dart';
 
-final double bodyWeight = 75;
-final sex = Sex.male;
+final double _bodyWeight = 75;
 
-class ExerciseInfo extends StatelessWidget {
+class ExerciseInfo extends ConsumerWidget {
 
   final LiftInfo info;
 
   const ExerciseInfo(this.info, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
 
-    final standard = sex == Sex.male ? info.maleStandard : info.femaleStandard;
-    final strength =  StrengthLevel(standard, bodyWeight, info.values.orm.value);
+    final settings = ref.watch(settingsProvider);
+    final standard = settings.sex == Sex.male ? info.maleStandard : info.femaleStandard;
+    final strength =  StrengthLevel(standard, _bodyWeight, info.values.orm.value);
     
 
     final maxWidth = const BoxConstraints(maxWidth: 500);
