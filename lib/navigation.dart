@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/ui/app_page.dart';
+import 'package:test_flutter/ui/settings/setting.dart';
 
 
 class Navigation extends StatefulWidget {
@@ -21,14 +22,17 @@ class _NavigationState extends State<Navigation> {
     final page = widget.pages[currentPageIndex];
     final destinations = widget.pages.map((p)=>p.navIcon).toList();
     return Scaffold(
-      appBar: AppBar(title: page.title),
+      appBar: AppBar(
+        title: page.title,
+        elevation: 100,
+        actions: [Settings()],
+        ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-        //indicatorColor: Colors.blue,
         selectedIndex: currentPageIndex,
         destinations: destinations,
       ),

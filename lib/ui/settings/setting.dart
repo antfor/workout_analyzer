@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
 import 'package:test_flutter/state/settings.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
 
@@ -29,25 +30,54 @@ class Settings extends StatelessWidget {
       context: context,
       showDragHandle: true,
 
-      builder: (sheetContext) => Consumer(builder: (c, sheetRef, _){
+      builder: (sheetContext) => Consumer(builder: (c, ref, _){
 
-        final settings = sheetRef.watch(settingsProvider);
-        final editSettings = sheetRef.read(settingsProvider.notifier);
+        final settings = ref.watch(settingsProvider);
+        final editSettings = ref.read(settingsProvider.notifier);
 
         return Padding( padding: EdgeInsets.all(16),
-        child: util.dropdown<Sex>(
-          selection: settings.sex,
-          onSelected: (s) { 
-            if (s != null) { 
-              editSettings.setSex(s); 
-            } 
-          },
-          entries: sexEntries,
-          label: (T) => T == null ? "" : T.string,
-          ),
-      );
+        child: Column(
+          spacing: 16,
+          children: [ 
+          importData(ref),
+          util.dropdown<Sex>(
+            selection: settings.sex,
+            onSelected: (s) { 
+              if (s != null) { 
+                editSettings.setSex(s); 
+              } 
+            },
+            entries: sexEntries,
+            label: (T) => T == null ? "" : T.string,
+            ),
+          ],)
+        );
     })
     );
   }
  
+}
+
+Widget importData(WidgetRef ref){
+
+  final editSettings = ref.read(settingsProvider.notifier);
+
+  void pickFile() async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['csv'],
+    );
+
+    if(result != null && result.files.single.path != null ){
+      final String path = result.files.single.path!;
+      
+      editSettings.setFilePath(path);
+    }
+  }
+
+  return FilledButton(
+    onPressed: pickFile, 
+    child: const Text('Import Data'));
+
 }
