@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/standards/muscle_group.dart';
 import 'package:test_flutter/domain/standards/standards.dart';
+import 'package:test_flutter/domain/workout.dart';
+import 'package:test_flutter/state/settings.dart';
 import 'package:test_flutter/ui/components/progressbar.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 import 'dart:math' as math;
 
-final double bodyWeight = 75;
-final sex = Sex.male;
+final double _bodyWeight = 75;
 
-class Summary extends StatelessWidget {
+class Summary extends ConsumerWidget {
 
   final List<LiftBasicInfo> lifts;
+  final List<Workout> workouts;
 
-  const Summary(this.lifts, {super.key});
+  const Summary(this.lifts, this.workouts, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final settings = ref.watch(settingsProvider);
 
     final maxWidth = const BoxConstraints(maxWidth: 400);
     final padding = EdgeInsetsGeometry.symmetric(vertical: 8, horizontal: 16);
     pad(w) => Container(padding:padding , child: w,);
     constrain(w) => Center(child:Container(constraints: maxWidth, padding: padding, child:w));
 
-    final maxStrenghLevel = getMaxStrenghLevel(lifts, sex, bodyWeight);
+    final maxStrenghLevel = getMaxStrenghLevel(lifts, settings.sex, _bodyWeight);
     //final minStrenghLevel = maxStrenghLevel.reduce((a,b)=>)
     
     return ListView(children: [
@@ -32,19 +39,112 @@ class Summary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 5,
         children: [
+          //util.H2("Calender"),
+          //pad(streak(workouts)),
+          pad(calender(workouts)),
           util.H2("Muscle Strength"),
-          svg(maxStrenghLevel, sex, bodyWeight),
+          svg(maxStrenghLevel, settings.sex, _bodyWeight),
           pad(bar()),
-          pad(strengthList(maxStrenghLevel)),
-          util.H2("Sets this week"),//week,month year
-          util.H2("max volume"),//week,month year
-          util.H2("Heviest weight"),
+          pad(strengthList(maxStrenghLevel, settings.sex)),
+          //util.H2("Sets this week"),//week,month year
+          //util.H2("max volume"),//week,month year
+          //util.H2("Heviest weight"),
          
         ],)),
     ]);
 
   }
 }
+
+
+
+
+bool isSameDay(DateTime a, DateTime b) {
+  return a.year == b.year &&
+        a.month == b.month &&
+        a.day == b.day;
+}
+
+List<Workout> events(DateTime date, List<Workout> workouts){
+
+  final events = workouts.where((w)=> isSameDay(w.startTime, date));
+  return events.toList();
+}
+
+Widget calender(List<Workout> workouts){
+  //todo min size
+  return TableCalendar<Workout>(
+    firstDay: DateTime.utc(2000, 1, 1),
+    lastDay: DateTime.now(),
+    focusedDay: DateTime.now(),
+    eventLoader: (d)=>events(d, workouts),
+
+    //pageJumpingEnabled: true,
+    startingDayOfWeek: StartingDayOfWeek.monday,
+    weekNumbersVisible: true,
+    availableCalendarFormats: {CalendarFormat.month: 'Month'},
+    calendarStyle: CalendarStyle( 
+      outsideDaysVisible: false,
+      todayTextStyle: TextStyle(color: Colors.blue.shade400, fontWeight: FontWeight.bold),
+      todayDecoration: const BoxDecoration(),
+    ),
+
+    calendarBuilders: CalendarBuilders(
+       markerBuilder: (context, date, events) {
+
+        if (events.isEmpty) return null;
+  
+        Color getColor(Workout w) => w.exercises.isNotEmpty? Colors.deepOrangeAccent.shade400 : Colors.blueAccent.shade400 ; 
+
+        return Transform.translate( offset: const Offset(0, -6),
+          child: SizedBox(
+          height: 6,
+          child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: events.take(4).map((event) {
+            return Container(
+              width: 6,
+              height: 6,
+              margin: const EdgeInsets.symmetric(horizontal: 1),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: getColor(event),
+              ),
+            );
+          }).toList(),
+          ))
+        );
+      },
+      defaultBuilder: (context, day, focusedDay) {
+        final events = workouts.where((w)=>isSameDay(w.startTime,day));
+
+        Color color = Colors.orange.shade400;
+     
+        final textColor = Colors.black;
+
+        if (events.isNotEmpty) {
+          return Container(
+            margin: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${day.day}',
+              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+            ),
+          );
+        }
+
+        return null; // use default rendering
+      },
+    ),
+  );
+}
+
+
 
 //TODO click on bar so it is deselected, if beg is deselected then the color spectrum can go from Nov-Elite
 // Making it easier to tell diffrence, and begginer is not used that ofthen
