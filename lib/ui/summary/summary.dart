@@ -56,7 +56,20 @@ class Summary extends ConsumerWidget {
   }
 }
 
+Widget streak(List<Workout> workouts){
+ 
 
+  final int streak = 20;
+  final double sizeFactor = math.min(streak/52, 1);
+  final double flameSize = 10 + 20*sizeFactor; //TODO size depends on streak length
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      if(streak !=0) Lottie.asset('assets/images/fire_lottie.json', width: flameSize, height: flameSize),
+      if(streak !=0) Text(" $streak week streak! "),
+      if(streak !=0) Lottie.asset('assets/images/fire_lottie.json', width: flameSize, height: flameSize),
+    ],);
+}
 
 
 bool isSameDay(DateTime a, DateTime b) {
