@@ -1,0 +1,46 @@
+image: cirrusci/flutter:stable
+
+stages:
+  - analyze
+  - build
+  - deploy
+
+before_script:
+  - flutter --version
+  - flutter pub get
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .pub-cache/
+
+analyze:
+  stage: analyze
+  script:
+    - flutter analyze
+
+test:
+  stage: test
+  script:
+    - flutter test
+
+build_android:
+  stage: build
+  script:
+    - flutter build web --wasm --release
+  only:
+    - master
+
+pages:
+  stage: deploy
+  only:
+    - master
+  dependencies:
+    - build
+  script:
+    - mkdir public
+    - mv build/web/* public
+  artifacts:
+    paths:
+      - public
+
