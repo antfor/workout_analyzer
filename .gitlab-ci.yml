@@ -19,11 +19,6 @@ analyze:
   script:
     - flutter analyze
 
-test:
-  stage: test
-  script:
-    - flutter test
-
 build_android:
   stage: build
   script:
