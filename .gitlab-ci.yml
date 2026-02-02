@@ -19,7 +19,7 @@ analyze:
   script:
     - flutter analyze
 
-build_android:
+build:
   stage: build
   script:
     - flutter build web --wasm --release
