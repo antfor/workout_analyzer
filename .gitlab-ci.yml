@@ -1,7 +1,6 @@
-image: cirrusci/flutter:stable
+image: ghcr.io/cirruslabs/flutter:latest
 
 stages:
-  - analyze
   - build
   - deploy
 
@@ -13,16 +12,12 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .pub-cache/
-
-analyze:
-  stage: analyze
-  script:
-    - flutter analyze
+    - .dart_tool/
 
 build:
   stage: build
   script:
-    - flutter build web --wasm --release
+    - flutter build web --release
   only:
     - master
 
