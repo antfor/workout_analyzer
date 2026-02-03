@@ -17,9 +17,8 @@ cache:
 build:
   stage: build
   script:
-    - flutter build web --release
-    - ls ./build
-    - ls ./build/web
+    - flutter build web
+    - ls ./build -R
   only:
     - master
   artifacts:
@@ -35,10 +34,8 @@ pages:
     - build
   script:
     - mkdir public
-    - ls 
-    - ls ./build
-    - ls ./build/web
     - mv build/web/* public
+    - ls ./public -R
   artifacts:
     paths:
       - public
