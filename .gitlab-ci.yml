@@ -18,8 +18,14 @@ build:
   stage: build
   script:
     - flutter build web --release
+    - ls ./build
+    - ls ./build/web
   only:
     - master
+  artifacts:
+    paths:
+    - build/web
+
 
 pages:
   stage: deploy
@@ -29,6 +35,9 @@ pages:
     - build
   script:
     - mkdir public
+    - ls 
+    - ls ./build
+    - ls ./build/web
     - mv build/web/* public
   artifacts:
     paths:
