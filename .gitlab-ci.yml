@@ -11,20 +11,15 @@ before_script:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .pub-cache/
+    - /root/.pub-cache/
     - .dart_tool/
 
 build:
   stage: build
   script:
     - flutter build web
-    - ls ./build -R
   only:
     - master
-  artifacts:
-    paths:
-    - build/web
-
 
 pages:
   stage: deploy
