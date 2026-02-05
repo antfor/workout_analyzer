@@ -59,7 +59,7 @@ class WorkoutAnalyzer extends ConsumerWidget{
 Widget materialAppWithTheme({required Widget home}){
 
   return MaterialApp(
-      title:'Exerise analyzer',
+      title:'Workout Analyzer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,

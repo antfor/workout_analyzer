@@ -53,18 +53,13 @@ class Workout implements Comparable<Workout>{
   @override
   int compareTo(Workout other) {//todo if equal also compare start time and then title
     final cmpEnd = endTime.compareTo(other.endTime);
+    if(cmpEnd != 0) return cmpEnd;
 
-    if(cmpEnd == 0){
-      final cmpStart = startTime.compareTo(other.startTime);
+    final cmpStart = startTime.compareTo(other.startTime);
+    if(cmpStart==0) return cmpStart;
+    
+    return title.compareTo(other.title);
 
-      if(cmpStart==0){
-        return title.compareTo(other.title);
-      }
-
-      return cmpStart;
-    }
-
-    return cmpEnd;
   }
 
   @override

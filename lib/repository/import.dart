@@ -35,13 +35,11 @@ Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Stan
  
 
 Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, Standards female, String filePath) async {
-  final csv = await loadCsv(filePath);
+  final rows = await loadCsv(filePath);
 
-  if(csv.length < 2){
+  if(rows.length < 2){
     return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
   }
-
-  final rows = [csv.first, ...csv.skip(1).toList().reversed];
 
   final title = rows[0].indexOf(ColumnName.title.string);
   final start = rows[0].indexOf(ColumnName.start.string);
@@ -92,6 +90,8 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
       exerciseMap.add(ex.id, ex);
     }//else if(isCardio(row)){}
   }
+
+  workouts.last.addExercises(exercises);
 
   return Domain(workouts: workouts, exerciseMap: exerciseMap, maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
 }
