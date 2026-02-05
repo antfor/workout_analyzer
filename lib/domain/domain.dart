@@ -25,7 +25,7 @@ class Domain {
   Iterable<String> get exercises => exerciseMap.keys;
   Iterable<Exercise> exercise(Id id) => exerciseMap.containsKey(id) ? exerciseMap[id] : [];
 
-  LiftInfo getLift(Id id) => _lifts.putIfAbsent(id, () => LiftInfo(id, exerciseMap[id], muscleMap[id]!, maleStandards.getStandard(id), femaleStandards.getStandard(id)));
+  LiftInfo getLift(Id id) => _lifts.putIfAbsent(id, () => LiftInfo(id, exerciseMap[id], getMuscle(id), maleStandards.getStandard(id), femaleStandards.getStandard(id)));
   Muscle getMuscle(Id id) => muscleMap[id] ?? Muscle.other;
 
   Iterable<LiftBasicInfo> get getBasicInfo => exercises.map((e)=> LiftBasicInfo(e, getMuscle(e), () => getLift(e)));

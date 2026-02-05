@@ -30,7 +30,12 @@ class Exercise implements Comparable<Exercise> {
   @override
   int compareTo(Exercise other) {
     int cmpW = workout.compareTo(other.workout);
-    return cmpW == 0 ? setIndex.compareTo(other.setIndex) : cmpW;
+    if(cmpW != 0) return cmpW;
+
+    int cmpId = id.compareTo(other.id);
+    if(cmpId != 0) return cmpId;
+
+    return setIndex.compareTo(other.setIndex);
   }
   
   @override
