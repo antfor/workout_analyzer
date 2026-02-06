@@ -17,7 +17,7 @@ cache:
 build:
   stage: build
   script:
-    - flutter build web
+    - flutter build web --base-href /workout_analyzer/
   only:
     - master
   artifacts:
