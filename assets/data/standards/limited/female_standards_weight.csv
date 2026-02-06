@@ -1,0 +1,375 @@
+Bodyweight,Beginner,Novice,Intermediate,Advanced,Elite,Exercise
+40,3,8,17,28,41,Barbell Curl
+45,4,10,19,30,44,Barbell Curl
+50,5,11,20,32,47,Barbell Curl
+55,5,12,22,34,49,Barbell Curl
+60,6,13,23,36,51,Barbell Curl
+65,7,14,25,38,54,Barbell Curl
+70,8,15,26,40,56,Barbell Curl
+75,8,16,27,41,57,Barbell Curl
+80,9,17,29,43,59,Barbell Curl
+85,10,18,30,44,61,Barbell Curl
+90,10,19,31,46,63,Barbell Curl
+95,11,20,32,47,64,Barbell Curl
+100,12,21,33,49,66,Barbell Curl
+105,12,22,34,50,67,Barbell Curl
+110,13,23,35,51,69,Barbell Curl
+115,14,23,36,52,70,Barbell Curl
+120,14,24,37,53,71,Barbell Curl
+40,6,19,41,71,108,Barbell Shrug
+45,8,23,47,79,117,Barbell Shrug
+50,10,27,52,85,125,Barbell Shrug
+55,13,30,57,92,133,Barbell Shrug
+60,15,34,61,98,140,Barbell Shrug
+65,17,37,66,103,146,Barbell Shrug
+70,19,40,70,108,153,Barbell Shrug
+75,21,43,74,114,159,Barbell Shrug
+80,24,46,78,118,165,Barbell Shrug
+85,26,49,82,123,170,Barbell Shrug
+90,28,52,86,128,175,Barbell Shrug
+95,30,55,89,132,180,Barbell Shrug
+100,32,58,93,136,185,Barbell Shrug
+105,34,60,96,140,190,Barbell Shrug
+110,36,63,99,144,195,Barbell Shrug
+115,38,65,102,148,199,Barbell Shrug
+120,39,68,105,151,203,Barbell Shrug
+40,8,18,32,50,70,Bench Press
+45,10,21,36,55,76,Bench Press
+50,12,24,40,59,82,Bench Press
+55,15,27,43,64,87,Bench Press
+60,17,29,47,68,92,Bench Press
+65,19,32,50,72,96,Bench Press
+70,20,34,53,75,101,Bench Press
+75,22,37,56,79,105,Bench Press
+80,24,39,59,82,109,Bench Press
+85,26,41,62,86,112,Bench Press
+90,28,44,64,89,116,Bench Press
+95,29,46,67,92,119,Bench Press
+100,31,48,69,95,123,Bench Press
+105,33,50,72,98,126,Bench Press
+110,34,52,74,100,129,Bench Press
+115,36,54,76,103,132,Bench Press
+120,37,56,79,106,135,Bench Press
+40,3,7,14,24,35,Bent Over Dumbbell Row
+45,4,8,16,25,37,Bent Over Dumbbell Row
+50,4,9,17,27,38,Bent Over Dumbbell Row
+55,5,10,18,28,40,Bent Over Dumbbell Row
+60,5,11,19,30,42,Bent Over Dumbbell Row
+65,6,12,20,31,43,Bent Over Dumbbell Row
+70,6,13,21,32,45,Bent Over Dumbbell Row
+75,7,13,22,33,46,Bent Over Dumbbell Row
+80,7,14,23,34,47,Bent Over Dumbbell Row
+85,8,15,24,36,49,Bent Over Dumbbell Row
+90,8,15,25,37,50,Bent Over Dumbbell Row
+95,9,16,26,37,51,Bent Over Dumbbell Row
+100,9,17,26,38,52,Bent Over Dumbbell Row
+105,10,17,27,39,53,Bent Over Dumbbell Row
+110,10,18,28,40,54,Bent Over Dumbbell Row
+115,11,18,28,41,55,Bent Over Dumbbell Row
+120,11,19,29,42,56,Bent Over Dumbbell Row
+40,10,19,31,47,64,Bent Over Row
+45,11,21,34,49,68,Bent Over Row
+50,13,22,36,52,71,Bent Over Row
+55,14,24,38,54,73,Bent Over Row
+60,15,25,39,57,76,Bent Over Row
+65,16,27,41,59,78,Bent Over Row
+70,17,28,43,61,80,Bent Over Row
+75,18,29,44,62,83,Bent Over Row
+80,19,31,46,64,85,Bent Over Row
+85,20,32,47,66,86,Bent Over Row
+90,21,33,49,67,88,Bent Over Row
+95,21,34,50,69,90,Bent Over Row
+100,22,35,51,70,92,Bent Over Row
+105,23,36,52,72,93,Bent Over Row
+110,24,37,53,73,95,Bent Over Row
+115,25,38,55,74,96,Bent Over Row
+120,25,39,56,76,98,Bent Over Row
+40,-12 kg,-4 kg,+5 kg,+15 kg,+26 kg,Chin Ups
+45,-11 kg,-3 kg,+7 kg,+18 kg,+29 kg,Chin Ups
+50,-11 kg,-2 kg,+8 kg,+19 kg,+31 kg,Chin Ups
+55,-12 kg,-2 kg,+9 kg,+21 kg,+33 kg,Chin Ups
+60,-12 kg,-2 kg,+10 kg,+22 kg,+35 kg,Chin Ups
+65,-12 kg,-2 kg,+10 kg,+23 kg,+36 kg,Chin Ups
+70,-13 kg,-2 kg,+10 kg,+24 kg,+37 kg,Chin Ups
+75,-14 kg,-2 kg,+10 kg,+24 kg,+38 kg,Chin Ups
+80,-14 kg,-3 kg,+10 kg,+24 kg,+39 kg,Chin Ups
+85,-15 kg,-4 kg,+10 kg,+24 kg,+39 kg,Chin Ups
+90,-17 kg,-4 kg,+9 kg,+24 kg,+39 kg,Chin Ups
+95,-18 kg,-5 kg,+9 kg,+24 kg,+39 kg,Chin Ups
+100,-19 kg,-6 kg,+8 kg,+23 kg,+39 kg,Chin Ups
+105,-21 kg,-8 kg,+7 kg,+23 kg,+39 kg,Chin Ups
+110,-22 kg,-9 kg,+6 kg,+22 kg,+38 kg,Chin Ups
+115,-24 kg,-10 kg,+5 kg,+21 kg,+38 kg,Chin Ups
+120,-26 kg,-12 kg,+4 kg,+20 kg,+37 kg,Chin Ups
+40,10,18,29,43,59,Close Grip Bench Press
+45,12,21,33,48,65,Close Grip Bench Press
+50,15,24,37,53,70,Close Grip Bench Press
+55,17,27,41,57,75,Close Grip Bench Press
+60,19,30,45,62,80,Close Grip Bench Press
+65,22,33,48,66,85,Close Grip Bench Press
+70,24,36,52,70,89,Close Grip Bench Press
+75,26,39,55,73,94,Close Grip Bench Press
+80,28,42,58,77,98,Close Grip Bench Press
+85,31,44,61,80,102,Close Grip Bench Press
+90,33,47,64,84,105,Close Grip Bench Press
+95,35,49,67,87,109,Close Grip Bench Press
+100,37,51,69,90,112,Close Grip Bench Press
+105,39,54,72,93,116,Close Grip Bench Press
+110,40,56,75,96,119,Close Grip Bench Press
+115,42,58,77,99,122,Close Grip Bench Press
+120,44,60,79,102,125,Close Grip Bench Press
+40,4,9,15,24,34,Dumbbell Calf Raise
+45,5,10,17,26,36,Dumbbell Calf Raise
+50,6,11,18,28,38,Dumbbell Calf Raise
+55,6,12,20,29,40,Dumbbell Calf Raise
+60,7,13,21,31,42,Dumbbell Calf Raise
+65,8,14,22,32,43,Dumbbell Calf Raise
+70,9,15,23,33,45,Dumbbell Calf Raise
+75,9,16,24,35,46,Dumbbell Calf Raise
+80,10,16,25,36,48,Dumbbell Calf Raise
+85,10,17,26,37,49,Dumbbell Calf Raise
+90,11,18,27,38,50,Dumbbell Calf Raise
+95,12,19,28,39,52,Dumbbell Calf Raise
+100,12,19,29,40,53,Dumbbell Calf Raise
+105,13,20,30,41,54,Dumbbell Calf Raise
+110,13,21,31,42,55,Dumbbell Calf Raise
+115,14,21,31,43,56,Dumbbell Calf Raise
+120,14,22,32,44,57,Dumbbell Calf Raise
+40,2,5,10,16,24,Dumbbell Curl
+45,2,5,11,17,25,Dumbbell Curl
+50,3,6,11,18,27,Dumbbell Curl
+55,3,7,12,19,28,Dumbbell Curl
+60,3,7,13,20,29,Dumbbell Curl
+65,4,8,14,21,30,Dumbbell Curl
+70,4,8,14,22,31,Dumbbell Curl
+75,4,9,15,23,32,Dumbbell Curl
+80,5,9,16,24,33,Dumbbell Curl
+85,5,10,16,25,34,Dumbbell Curl
+90,5,10,17,25,35,Dumbbell Curl
+95,6,11,17,26,35,Dumbbell Curl
+100,6,11,18,27,36,Dumbbell Curl
+105,6,12,19,27,37,Dumbbell Curl
+110,7,12,19,28,38,Dumbbell Curl
+115,7,12,20,28,38,Dumbbell Curl
+120,7,13,20,29,39,Dumbbell Curl
+40,2,4,7,11,17,Dumbbell Lateral Raise
+45,2,4,8,12,17,Dumbbell Lateral Raise
+50,2,5,8,13,18,Dumbbell Lateral Raise
+55,2,5,8,13,19,Dumbbell Lateral Raise
+60,3,5,9,14,19,Dumbbell Lateral Raise
+65,3,5,9,14,20,Dumbbell Lateral Raise
+70,3,6,10,15,20,Dumbbell Lateral Raise
+75,3,6,10,15,21,Dumbbell Lateral Raise
+80,3,6,10,15,21,Dumbbell Lateral Raise
+85,3,6,11,16,22,Dumbbell Lateral Raise
+90,4,7,11,16,22,Dumbbell Lateral Raise
+95,4,7,11,16,22,Dumbbell Lateral Raise
+100,4,7,11,17,23,Dumbbell Lateral Raise
+105,4,7,12,17,23,Dumbbell Lateral Raise
+110,4,7,12,17,23,Dumbbell Lateral Raise
+115,4,8,12,18,24,Dumbbell Lateral Raise
+120,4,8,12,18,24,Dumbbell Lateral Raise
+40,2,5,9,15,22,Dumbbell Reverse Curl
+45,2,6,10,16,23,Dumbbell Reverse Curl
+50,3,6,11,17,25,Dumbbell Reverse Curl
+55,3,7,12,18,26,Dumbbell Reverse Curl
+60,4,7,13,19,27,Dumbbell Reverse Curl
+65,4,8,13,20,28,Dumbbell Reverse Curl
+70,4,8,14,21,29,Dumbbell Reverse Curl
+75,5,9,15,22,30,Dumbbell Reverse Curl
+80,5,9,15,23,31,Dumbbell Reverse Curl
+85,5,10,16,23,32,Dumbbell Reverse Curl
+90,6,10,16,24,32,Dumbbell Reverse Curl
+95,6,11,17,25,33,Dumbbell Reverse Curl
+100,6,11,17,25,34,Dumbbell Reverse Curl
+105,7,12,18,26,35,Dumbbell Reverse Curl
+110,7,12,18,26,35,Dumbbell Reverse Curl
+115,7,12,19,27,36,Dumbbell Reverse Curl
+120,8,13,19,27,37,Dumbbell Reverse Curl
+40,3,6,11,17,23,Dumbbell Shoulder Press
+45,4,7,12,18,25,Dumbbell Shoulder Press
+50,4,8,13,19,26,Dumbbell Shoulder Press
+55,5,9,14,20,28,Dumbbell Shoulder Press
+60,5,9,15,22,29,Dumbbell Shoulder Press
+65,6,10,16,23,30,Dumbbell Shoulder Press
+70,6,11,17,24,31,Dumbbell Shoulder Press
+75,7,11,17,25,33,Dumbbell Shoulder Press
+80,7,12,18,25,34,Dumbbell Shoulder Press
+85,8,13,19,26,35,Dumbbell Shoulder Press
+90,8,13,20,27,35,Dumbbell Shoulder Press
+95,9,14,20,28,36,Dumbbell Shoulder Press
+100,9,14,21,29,37,Dumbbell Shoulder Press
+105,10,15,22,29,38,Dumbbell Shoulder Press
+110,10,15,22,30,39,Dumbbell Shoulder Press
+115,10,16,23,31,40,Dumbbell Shoulder Press
+120,11,16,23,31,40,Dumbbell Shoulder Press
+40,2,7,14,24,36,Dumbbell Side Bend
+45,3,8,15,26,38,Dumbbell Side Bend
+50,3,8,16,27,39,Dumbbell Side Bend
+55,4,9,17,28,41,Dumbbell Side Bend
+60,4,10,18,29,42,Dumbbell Side Bend
+65,4,10,19,30,43,Dumbbell Side Bend
+70,5,11,20,31,45,Dumbbell Side Bend
+75,5,11,20,32,46,Dumbbell Side Bend
+80,6,12,21,33,47,Dumbbell Side Bend
+85,6,12,22,34,48,Dumbbell Side Bend
+90,6,13,22,35,49,Dumbbell Side Bend
+95,7,13,23,35,49,Dumbbell Side Bend
+100,7,14,24,36,50,Dumbbell Side Bend
+105,7,14,24,37,51,Dumbbell Side Bend
+110,7,15,25,37,52,Dumbbell Side Bend
+115,8,15,25,38,53,Dumbbell Side Bend
+120,8,15,26,39,53,Dumbbell Side Bend
+40,7,14,22,34,46,Goblet Squat
+45,8,14,23,35,48,Goblet Squat
+50,8,15,24,36,49,Goblet Squat
+55,9,16,25,37,50,Goblet Squat
+60,9,16,26,38,51,Goblet Squat
+65,10,17,27,39,52,Goblet Squat
+70,10,17,27,40,53,Goblet Squat
+75,10,18,28,40,54,Goblet Squat
+80,11,18,29,41,55,Goblet Squat
+85,11,19,29,42,56,Goblet Squat
+90,11,19,30,42,57,Goblet Squat
+95,12,20,30,43,57,Goblet Squat
+100,12,20,31,44,58,Goblet Squat
+105,12,21,31,44,59,Goblet Squat
+110,13,21,32,45,59,Goblet Squat
+115,13,21,32,45,60,Goblet Squat
+120,13,22,33,46,61,Goblet Squat
+40,3,5,9,14,20,Hammer Curl
+45,3,6,10,15,21,Hammer Curl
+50,3,7,11,16,22,Hammer Curl
+55,4,7,12,17,23,Hammer Curl
+60,4,8,12,18,24,Hammer Curl
+65,5,8,13,19,25,Hammer Curl
+70,5,9,14,20,26,Hammer Curl
+75,6,9,14,20,27,Hammer Curl
+80,6,10,15,21,28,Hammer Curl
+85,6,10,16,22,29,Hammer Curl
+90,7,11,16,23,30,Hammer Curl
+95,7,11,17,23,30,Hammer Curl
+100,7,12,17,24,31,Hammer Curl
+105,8,12,18,24,32,Hammer Curl
+110,8,12,18,25,32,Hammer Curl
+115,8,13,19,26,33,Hammer Curl
+120,9,13,19,26,34,Hammer Curl
+40,3,7,13,20,29,Incline Dumbbell Bench Press
+45,4,8,14,22,31,Incline Dumbbell Bench Press
+50,5,10,16,24,33,Incline Dumbbell Bench Press
+55,6,11,17,26,35,Incline Dumbbell Bench Press
+60,7,12,19,27,37,Incline Dumbbell Bench Press
+65,7,13,20,29,39,Incline Dumbbell Bench Press
+70,8,14,21,30,41,Incline Dumbbell Bench Press
+75,9,15,22,32,42,Incline Dumbbell Bench Press
+80,9,16,24,33,44,Incline Dumbbell Bench Press
+85,10,16,25,34,45,Incline Dumbbell Bench Press
+90,11,17,26,36,47,Incline Dumbbell Bench Press
+95,12,18,27,37,48,Incline Dumbbell Bench Press
+100,12,19,28,38,49,Incline Dumbbell Bench Press
+105,13,20,29,39,51,Incline Dumbbell Bench Press
+110,13,21,30,40,52,Incline Dumbbell Bench Press
+115,14,21,30,41,53,Incline Dumbbell Bench Press
+120,15,22,31,42,54,Incline Dumbbell Bench Press
+40,1,3,8,15,24,Lying Dumbbell Tricep Extension
+45,1,4,9,16,25,Lying Dumbbell Tricep Extension
+50,1,4,10,18,27,Lying Dumbbell Tricep Extension
+55,2,5,11,19,29,Lying Dumbbell Tricep Extension
+60,2,6,12,20,30,Lying Dumbbell Tricep Extension
+65,2,6,13,21,32,Lying Dumbbell Tricep Extension
+70,3,7,14,22,33,Lying Dumbbell Tricep Extension
+75,3,8,14,24,34,Lying Dumbbell Tricep Extension
+80,3,8,15,25,35,Lying Dumbbell Tricep Extension
+85,4,9,16,25,37,Lying Dumbbell Tricep Extension
+90,4,9,17,26,38,Lying Dumbbell Tricep Extension
+95,5,10,17,27,39,Lying Dumbbell Tricep Extension
+100,5,10,18,28,40,Lying Dumbbell Tricep Extension
+105,5,11,19,29,41,Lying Dumbbell Tricep Extension
+110,6,11,19,30,42,Lying Dumbbell Tricep Extension
+115,6,12,20,31,43,Lying Dumbbell Tricep Extension
+120,6,12,21,31,43,Lying Dumbbell Tricep Extension
+40,7,14,22,33,45,Military Press
+45,9,16,25,36,48,Military Press
+50,11,18,27,39,52,Military Press
+55,12,20,30,42,55,Military Press
+60,14,22,32,45,58,Military Press
+65,15,23,34,47,61,Military Press
+70,16,25,36,50,64,Military Press
+75,18,27,38,52,67,Military Press
+80,19,28,40,54,69,Military Press
+85,20,30,42,56,72,Military Press
+90,22,32,44,58,74,Military Press
+95,23,33,46,60,76,Military Press
+100,24,34,47,62,79,Military Press
+105,25,36,49,64,81,Military Press
+110,26,37,51,66,83,Military Press
+115,27,39,52,68,85,Military Press
+120,29,40,54,69,86,Military Press
+40,-16 kg,-6 kg,+5 kg,+18 kg,+33 kg,Pull Ups
+45,-16 kg,-6 kg,+7 kg,+21 kg,+36 kg,Pull Ups
+50,-16 kg,-5 kg,+8 kg,+23 kg,+39 kg,Pull Ups
+55,-17 kg,-5 kg,+9 kg,+25 kg,+41 kg,Pull Ups
+60,-17 kg,-5 kg,+10 kg,+26 kg,+43 kg,Pull Ups
+65,-18 kg,-5 kg,+10 kg,+27 kg,+45 kg,Pull Ups
+70,-19 kg,-5 kg,+10 kg,+28 kg,+46 kg,Pull Ups
+75,-20 kg,-6 kg,+10 kg,+28 kg,+47 kg,Pull Ups
+80,-21 kg,-6 kg,+10 kg,+29 kg,+48 kg,Pull Ups
+85,-22 kg,-7 kg,+10 kg,+29 kg,+49 kg,Pull Ups
+90,-23 kg,-8 kg,+10 kg,+29 kg,+49 kg,Pull Ups
+95,-25 kg,-9 kg,+9 kg,+29 kg,+49 kg,Pull Ups
+100,-26 kg,-10 kg,+8 kg,+28 kg,+49 kg,Pull Ups
+105,-28 kg,-11 kg,+7 kg,+28 kg,+49 kg,Pull Ups
+110,-29 kg,-13 kg,+6 kg,+27 kg,+49 kg,Pull Ups
+115,-31 kg,-14 kg,+5 kg,+26 kg,+48 kg,Pull Ups
+120,-33 kg,-16 kg,+4 kg,+26 kg,+48 kg,Pull Ups
+40,20,34,52,74,98,Romanian Deadlift
+45,23,37,55,78,103,Romanian Deadlift
+50,25,39,59,82,107,Romanian Deadlift
+55,26,42,61,85,111,Romanian Deadlift
+60,28,44,64,88,115,Romanian Deadlift
+65,30,46,67,91,118,Romanian Deadlift
+70,32,48,69,94,121,Romanian Deadlift
+75,33,50,71,97,124,Romanian Deadlift
+80,35,52,74,99,127,Romanian Deadlift
+85,36,54,76,102,130,Romanian Deadlift
+90,37,55,78,104,133,Romanian Deadlift
+95,39,57,80,106,135,Romanian Deadlift
+100,40,58,81,108,137,Romanian Deadlift
+105,41,60,83,110,140,Romanian Deadlift
+110,42,61,85,112,142,Romanian Deadlift
+115,44,63,87,114,144,Romanian Deadlift
+120,45,64,88,116,146,Romanian Deadlift
+40,17,31,51,75,101,Squat
+45,20,36,56,81,109,Squat
+50,23,39,61,87,115,Squat
+55,26,43,65,92,122,Squat
+60,29,47,70,97,128,Squat
+65,32,50,74,102,133,Squat
+70,34,53,78,106,138,Squat
+75,37,56,81,111,143,Squat
+80,39,59,85,115,148,Squat
+85,41,62,88,119,152,Squat
+90,44,65,91,123,157,Squat
+95,46,68,95,126,161,Squat
+100,48,70,98,130,165,Squat
+105,50,73,101,133,169,Squat
+110,52,75,103,136,172,Squat
+115,54,77,106,140,176,Squat
+120,56,80,109,143,179,Squat
+40,2,1,13,37,71,Wrist Curl
+45,1,3,17,43,80,Wrist Curl
+50,0,4,21,50,89,Wrist Curl
+55,0,6,25,56,97,Wrist Curl
+60,0,8,29,61,104,Wrist Curl
+65,1,10,32,67,111,Wrist Curl
+70,1,12,36,72,118,Wrist Curl
+75,2,15,40,77,125,Wrist Curl
+80,3,17,43,82,131,Wrist Curl
+85,4,19,47,87,137,Wrist Curl
+90,5,21,50,92,143,Wrist Curl
+95,6,24,54,96,149,Wrist Curl
+100,7,26,57,101,154,Wrist Curl
+105,9,28,60,105,159,Wrist Curl
+110,10,30,64,109,165,Wrist Curl
+115,11,32,67,113,169,Wrist Curl
+120,12,34,70,117,174,Wrist Curl

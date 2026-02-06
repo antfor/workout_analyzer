@@ -1,0 +1,101 @@
+Strength Level,Bodyweight Ratio,Exercise
+Beginner,0.20x,Barbell Curl
+Novice,0.40x,Barbell Curl
+Intermediate,0.60x,Barbell Curl
+Advanced,0.85x,Barbell Curl
+Elite,1.15x,Barbell Curl
+Beginner,0.50x,Barbell Shrug
+Novice,1.00x,Barbell Shrug
+Intermediate,1.50x,Barbell Shrug
+Advanced,2.25x,Barbell Shrug
+Elite,3.25x,Barbell Shrug
+Beginner,0.50x,Bench Press
+Novice,0.75x,Bench Press
+Intermediate,1.25x,Bench Press
+Advanced,1.75x,Bench Press
+Elite,2.00x,Bench Press
+Beginner,0.15x,Bent Over Dumbbell Row
+Novice,0.30x,Bent Over Dumbbell Row
+Intermediate,0.45x,Bent Over Dumbbell Row
+Advanced,0.65x,Bent Over Dumbbell Row
+Elite,0.90x,Bent Over Dumbbell Row
+Beginner,0.50x,Bent Over Row
+Novice,0.75x,Bent Over Row
+Intermediate,1.00x,Bent Over Row
+Advanced,1.50x,Bent Over Row
+Elite,1.75x,Bent Over Row
+Beginner,0.50x,Close Grip Bench Press
+Novice,0.75x,Close Grip Bench Press
+Intermediate,1.25x,Close Grip Bench Press
+Advanced,1.50x,Close Grip Bench Press
+Elite,2.00x,Close Grip Bench Press
+Beginner,0.10x,Dumbbell Calf Raise
+Novice,0.25x,Dumbbell Calf Raise
+Intermediate,0.50x,Dumbbell Calf Raise
+Advanced,0.85x,Dumbbell Calf Raise
+Elite,1.25x,Dumbbell Calf Raise
+Beginner,0.10x,Dumbbell Curl
+Novice,0.15x,Dumbbell Curl
+Intermediate,0.30x,Dumbbell Curl
+Advanced,0.50x,Dumbbell Curl
+Elite,0.65x,Dumbbell Curl
+Beginner,0.05x,Dumbbell Lateral Raise
+Novice,0.10x,Dumbbell Lateral Raise
+Intermediate,0.20x,Dumbbell Lateral Raise
+Advanced,0.30x,Dumbbell Lateral Raise
+Elite,0.45x,Dumbbell Lateral Raise
+Beginner,0.10x,Dumbbell Reverse Curl
+Novice,0.15x,Dumbbell Reverse Curl
+Intermediate,0.30x,Dumbbell Reverse Curl
+Advanced,0.45x,Dumbbell Reverse Curl
+Elite,0.65x,Dumbbell Reverse Curl
+Beginner,0.15x,Dumbbell Shoulder Press
+Novice,0.25x,Dumbbell Shoulder Press
+Intermediate,0.40x,Dumbbell Shoulder Press
+Advanced,0.60x,Dumbbell Shoulder Press
+Elite,0.75x,Dumbbell Shoulder Press
+Beginner,0.05x,Dumbbell Side Bend
+Novice,0.20x,Dumbbell Side Bend
+Intermediate,0.45x,Dumbbell Side Bend
+Advanced,0.85x,Dumbbell Side Bend
+Elite,1.35x,Dumbbell Side Bend
+Beginner,0.20x,Goblet Squat
+Novice,0.35x,Goblet Squat
+Intermediate,0.55x,Goblet Squat
+Advanced,0.85x,Goblet Squat
+Elite,1.15x,Goblet Squat
+Beginner,0.10x,Hammer Curl
+Novice,0.20x,Hammer Curl
+Intermediate,0.30x,Hammer Curl
+Advanced,0.45x,Hammer Curl
+Elite,0.60x,Hammer Curl
+Beginner,0.25x,Incline Dumbbell Bench Press
+Novice,0.35x,Incline Dumbbell Bench Press
+Intermediate,0.50x,Incline Dumbbell Bench Press
+Advanced,0.65x,Incline Dumbbell Bench Press
+Elite,0.85x,Incline Dumbbell Bench Press
+Beginner,0.05x,Lying Dumbbell Tricep Extension
+Novice,0.15x,Lying Dumbbell Tricep Extension
+Intermediate,0.25x,Lying Dumbbell Tricep Extension
+Advanced,0.45x,Lying Dumbbell Tricep Extension
+Elite,0.60x,Lying Dumbbell Tricep Extension
+Beginner,0.40x,Military Press
+Novice,0.55x,Military Press
+Intermediate,0.80x,Military Press
+Advanced,1.05x,Military Press
+Elite,1.35x,Military Press
+Beginner,0.75x,Romanian Deadlift
+Novice,1.00x,Romanian Deadlift
+Intermediate,1.50x,Romanian Deadlift
+Advanced,2.00x,Romanian Deadlift
+Elite,2.75x,Romanian Deadlift
+Beginner,0.75x,Squat
+Novice,1.25x,Squat
+Intermediate,1.50x,Squat
+Advanced,2.25x,Squat
+Elite,2.75x,Squat
+Beginner,0.00x,Wrist Curl
+Novice,0.25x,Wrist Curl
+Intermediate,0.75x,Wrist Curl
+Advanced,1.25x,Wrist Curl
+Elite,2.00x,Wrist Curl
