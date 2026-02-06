@@ -12,7 +12,7 @@ enum ColumnName{
 
 
 Future<Map<String,Muscle>> importMuscle() async{
-  const file = 'assets/data/imports/exercises.csv';
+  const file = 'assets/data/imports/exercisesLimited.csv';
   final rows = await loadCsv(file);
 
   if(rows.length < 2){

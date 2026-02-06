@@ -22,7 +22,7 @@ enum ColumnName{
   static ColumnName getColumn(String name) => ColumnName.values.firstWhere((v)=>v.string==name);
 }
 
-const _path = 'assets/data/standards/';
+const _path = 'assets/data/standards/limited/';
 
 
 Future<Standards> importMale(Map<String, String> mapNames) async{

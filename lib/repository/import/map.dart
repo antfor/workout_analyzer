@@ -23,7 +23,7 @@ Future<Map<String,String>> importMap() async{
 
   final Map<String,String> map = {};
 
-  for(List<dynamic> row in rows.skip(1)){
+  for(List<dynamic> row in rows.skip(1)){ //TODO make handle empty rows
     String workout = row[wi].toString();
     String standards = row[si].toString();
     map.putIfAbsent(workout, () => standards);
