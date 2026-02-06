@@ -20,6 +20,9 @@ build:
     - flutter build web
   only:
     - master
+  artifacts:
+    paths:
+      - build/web
 
 pages:
   stage: deploy
