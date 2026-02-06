@@ -54,11 +54,21 @@ Novice,0.15x,Dumbbell Shoulder Press
 Intermediate,0.25x,Dumbbell Shoulder Press
 Advanced,0.35x,Dumbbell Shoulder Press
 Elite,0.50x,Dumbbell Shoulder Press
+Beginner,0.10x,Dumbbell Shrug
+Novice,0.20x,Dumbbell Shrug
+Intermediate,0.40x,Dumbbell Shrug
+Advanced,0.65x,Dumbbell Shrug
+Elite,0.95x,Dumbbell Shrug
 Beginner,0.05x,Dumbbell Side Bend
 Novice,0.15x,Dumbbell Side Bend
 Intermediate,0.30x,Dumbbell Side Bend
 Advanced,0.45x,Dumbbell Side Bend
 Elite,0.70x,Dumbbell Side Bend
+Beginner,0.05x,Dumbbell Wrist Curl
+Novice,0.10x,Dumbbell Wrist Curl
+Intermediate,0.20x,Dumbbell Wrist Curl
+Advanced,0.30x,Dumbbell Wrist Curl
+Elite,0.40x,Dumbbell Wrist Curl
 Beginner,0.15x,Goblet Squat
 Novice,0.25x,Goblet Squat
 Intermediate,0.40x,Goblet Squat
@@ -94,8 +104,3 @@ Novice,0.75x,Squat
 Intermediate,1.25x,Squat
 Advanced,1.50x,Squat
 Elite,2.00x,Squat
-Beginner,0.00x,Wrist Curl
-Novice,0.25x,Wrist Curl
-Intermediate,0.50x,Wrist Curl
-Advanced,1.00x,Wrist Curl
-Elite,1.75x,Wrist Curl
