@@ -7,4 +7,5 @@ abstract class IUpdate {
 
 abstract class IExerciseUpdate {
   void update(Exercise e);
+  void done(String id);
 }

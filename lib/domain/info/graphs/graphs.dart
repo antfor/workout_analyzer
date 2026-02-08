@@ -42,4 +42,19 @@ class Graphs extends Graph {
     _weigh = math.max(_weigh, e.weightKg);
     _volume = math.max(_volume, e.volume);
   }
+  
+  @override
+  void done(String id) {
+    if(_workout != null){
+
+      time.add(_workout!.startTime);
+      ormOverTime.add(_orm);
+      weightOverTime.add(_weigh);
+      volumeOverTime.add(_volume);
+
+      _orm = 0;
+      _weigh = 0;
+      _volume = 0;
+    }
+  }
 }

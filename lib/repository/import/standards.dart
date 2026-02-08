@@ -113,6 +113,7 @@ Future<List<StandardTable>> importTable(String file, int Function(String) parse)
     elite.add(parse(row[ie].toString()));
   }
 
+  tables.add(StandardTable(current, bw, beginner, novice, intermediate, advanced, elite));
 
   return tables;
 

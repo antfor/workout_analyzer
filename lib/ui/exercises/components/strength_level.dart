@@ -20,8 +20,6 @@ class _StrengthLevel extends State<StrengthLevel>{
 
   double? bodyWeight;
 
-
-
   @override
   Widget build(BuildContext context) {
     final bw = bodyWeight ?? widget.realBodyWeight;

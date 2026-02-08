@@ -50,15 +50,14 @@ class LiftInfo{
   });
 
   factory LiftInfo(String id, Iterable<Exercise> exercises, Muscle muscle, Standard maleStandard, Standard femaleStandard){
-    final filtered = exercises.where((e) => e.id == id).toList();
-    filtered.sort();
+    final filtered = exercises.where((e) => e.id == id).toList()..sort();
 
     final values = ExerciseValues();
     final tables = Tables(values.orm);
     final graphs = Graphs();
     final bucket = BucketGraphs();
 
-    for(Exercise e in exercises){
+    for(Exercise e in filtered){
 
       final weight = e.weightKg;
       final reps = e.reps;
@@ -68,6 +67,9 @@ class LiftInfo{
       graphs.update(e);
       bucket.update(e);
     }
+
+    graphs.done(id);
+    bucket.done(id);
 
     return LiftInfo._(
       id: id,

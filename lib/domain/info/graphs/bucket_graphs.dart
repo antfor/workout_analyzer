@@ -52,4 +52,22 @@ class BucketGraphs extends Bucket {
     _maxVolume = math.max(_maxVolume, e.weightKg * e.reps);
 
   }
+  
+  @override
+  void done(String id) {
+    if(_workout != null){
+
+      final exercises = _workout!.exercises.where((ex) => ex.id==id);
+      
+      time.add(_workout!.startTime);
+      duration.add(_workout!.endTime.difference(_workout!.startTime));
+      setsOverTime.add(exercises.length);
+
+      for(Exercise we in exercises){
+        perWeightOverTime.add(we.weightKg/_maxOrm);
+        perVolumeOverTime.add(we.volume/_maxVolume);
+        repsOverTime.add(we.reps);
+      }
+    }
+  }
 }
