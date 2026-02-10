@@ -5,6 +5,7 @@ const int tablet = 700;
 
 
 final spectrum  = spectrumN(5);
+//#e6e7e8 <- color of empty muscle
 
 List<Color> spectrumN2 (int n) => List.generate(n, (i) => Color.fromARGB(255, 255, (255/n).floor()*(n-i-1),0));
 List<Color> spectrumN(int n) => List.generate(n, (i) {

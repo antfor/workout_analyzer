@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:test_flutter/domain/orm/epely.dart';
 
 import 'cardio.dart';
 import 'exercise.dart';
@@ -50,8 +51,14 @@ class Workout implements Comparable<Workout>{
     cardio.addAll(list);
   }
 
+  Iterable<WorkoutExersiceInfo> getWorkoutExersiseInfo(){
+  
+    final exercisesIds = exercises.map((e) => e.id).toSet();
+    return exercisesIds.map((eId) => WorkoutExersiceInfo(eId, exercises));
+  }
+
   @override
-  int compareTo(Workout other) {//todo if equal also compare start time and then title
+  int compareTo(Workout other) {
     final cmpEnd = endTime.compareTo(other.endTime);
     if(cmpEnd != 0) return cmpEnd;
 
@@ -173,21 +180,54 @@ class WeekYear implements Comparable{
 
 }
 
-/*
-class ExersiceWorkout{
-  Workout workout;
-  String id;
-  int sets;
-  int reps;
-  double volume;
-  double maxWeight;
-}
-*/
+class WorkoutExersiceInfo{
+  
+  final String id;
+  late final Iterable<Exercise> exercises;
+  late final int sets;
+  late final int reps;
+  late final double volume;
+  late final double maxSetVolume;
+  late final double maxWeight;
+  late final double maxOrm;
 
-//get cardio, exersise dates for month, week, year, custom?
-class Calender {
+  WorkoutExersiceInfo(this.id, List<Exercise> list){
+    
+    exercises = list.where((e)=> e.id == id);
+    sets = exercises.length;
 
-  List<Workout> workouts;
+    int reps = 0;
+    double volume = 0;
+    double maxSetVolume = 0;
+    double maxWeight = 0;
+    double maxOrm = 0;
+    
+    for(final exercise in exercises){
 
-  Calender(this.workouts);
+      final setRep = exercise.reps;
+      reps += setRep;
+
+      final weight = exercise.weightKg;
+      if(weight > maxWeight){
+        maxWeight = weight;
+      }
+
+      final setOrm = epleyORM(weight, setRep);
+      if(setOrm > maxOrm){
+        maxOrm = setOrm;
+      }
+
+      final setVolume = exercise.volume;
+      if(setVolume>maxSetVolume){
+        maxSetVolume = setVolume;
+      }
+      volume += setVolume;
+    }
+
+    this.reps = reps;
+    this.volume = volume;
+    this.maxSetVolume = maxSetVolume;
+    this.maxWeight = maxWeight;
+    this.maxOrm = maxOrm;
+  }
 }
