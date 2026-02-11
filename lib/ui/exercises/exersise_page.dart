@@ -5,12 +5,12 @@ import 'package:test_flutter/ui/exercises/exercises_info.dart';
 import 'package:test_flutter/ui/exercises/list.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
-AppPage getExersisePage(List<LiftBasicInfo> lifts){
-  return AppPage(title: _title, body: _ExerciseState(lifts), navIcon: _icon);
+AppPage getExersisePage(List<LiftBasicInfo> lifts, BuildContext context){
+  return AppPage(title: _title, body: _ExerciseState(lifts), navIcon: _icon(context));
 }
 
-NavigationDestination _icon = NavigationDestination(
-            selectedIcon: Icon(Icons.fitness_center),
+NavigationDestination _icon(BuildContext context) => NavigationDestination(
+            selectedIcon: Icon(Icons.fitness_center, color: Theme.of(context).colorScheme.primary,),
             icon: Icon(Icons.fitness_center_outlined),
             label: 'Exercises',
           );

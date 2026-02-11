@@ -5,12 +5,12 @@ import 'package:test_flutter/ui/app_page.dart';
 import 'package:test_flutter/ui/summary/summary.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
-AppPage getSummaryPage(List<LiftBasicInfo> lifts, List<Workout> workouts){
-  return AppPage(title: _title, body: _SummaryState(lifts, workouts), navIcon: _icon);
+AppPage getSummaryPage(List<LiftBasicInfo> lifts, List<Workout> workouts, BuildContext context){
+  return AppPage(title: _title, body: _SummaryState(lifts, workouts), navIcon: _icon(context));
 }
 
-NavigationDestination _icon = NavigationDestination(
-            selectedIcon: Icon(Icons.home),
+NavigationDestination _icon(BuildContext context) => NavigationDestination(
+            selectedIcon: Icon(Icons.home, color: Theme.of(context).colorScheme.primary,),
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           );

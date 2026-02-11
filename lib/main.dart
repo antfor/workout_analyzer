@@ -9,6 +9,7 @@ import 'package:test_flutter/repository/import/standards.dart';
 import 'package:test_flutter/state/domain.dart';
 import 'package:test_flutter/state/settings.dart';
 import 'package:test_flutter/ui/exercises/exersise_page.dart';
+import 'package:test_flutter/ui/history/history_page.dart';
 import 'package:test_flutter/ui/summary/summary_page.dart';
 
 void main() async {
@@ -21,7 +22,7 @@ void main() async {
   final female = await importFemale(mapNames);
   
 
-  runApp(ProviderScope(child:WorkoutAnalyzer(muscles, male, female))); 
+  runApp(ProviderScope(child:materialAppWithTheme(home: WorkoutAnalyzer(muscles, male, female)))); 
 }
 
 class WorkoutAnalyzer extends ConsumerWidget{
@@ -40,8 +41,8 @@ class WorkoutAnalyzer extends ConsumerWidget{
     final asyncDomain = ref.watch(domainProvider(DomainArgs(muscles, male, female, filePath)));
     
     return asyncDomain.when(
-      loading: () => materialAppWithTheme(home: Scaffold(body: Center(child: CircularProgressIndicator()))),
-      error: (e, st) => materialAppWithTheme(home: Scaffold(body: Center(child: Text('Error: $e')))), //TODO option to import data or choose mock data
+      loading: () => Scaffold(body: Center(child: CircularProgressIndicator())),
+      error: (e, st) => Scaffold(body: Center(child: Text('Error: $e'))), //TODO option to import data or choose mock data
       data: (domain) {
 
         final basic = domain.getBasicInfo.toList();
@@ -49,9 +50,9 @@ class WorkoutAnalyzer extends ConsumerWidget{
 
         final workouts = domain.workouts;
 
-        final pages = [getSummaryPage(basic,workouts),getExersisePage(basic)];
+        final pages = [getSummaryPage(basic,workouts,context), getHistoryPage(workouts, context),getExersisePage(basic,context)];
 
-        return materialAppWithTheme(home: Navigation(pages));
+        return Navigation(pages);
     });
   }
 }
