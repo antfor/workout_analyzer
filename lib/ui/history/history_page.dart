@@ -3,6 +3,7 @@ import 'package:test_flutter/domain/info/lift_info.dart';
 import 'package:test_flutter/domain/workout.dart';
 import 'package:test_flutter/ui/app_page.dart';
 import 'package:test_flutter/ui/history/history.dart';
+import 'package:test_flutter/ui/history/history_info.dart';
 import 'package:test_flutter/ui/util.dart' as util;
 
 AppPage getHistoryPage(List<Workout> workouts, BuildContext context, {LiftBasicInfo? lift}){
@@ -30,14 +31,33 @@ class _HistoryState extends StatefulWidget{
 
 class _HistoryPage extends State<_HistoryState>  {
 
+  Workout? selectedWorkout;
+
   @override
   Widget build(BuildContext context) {
 
+    final listPage = History(widget.lift, widget.workouts, (workout) => setState(() => selectedWorkout = workout));
+
+    final loading = Text('');
+    final infoPage = selectedWorkout == null ? loading : HistoryInfo(selectedWorkout!);
+
     return  LayoutBuilder(
       builder: (context, constraints) {
-        if(constraints.maxWidth > util.desktop){}
-        
-        return History(widget.lift, widget.workouts);
+        if(constraints.maxWidth > util.desktop){
+          return Row(
+            children: [
+              Flexible(flex: 10, child:listPage),
+              Flexible(flex: 9, child:infoPage)
+            ],);
+        }else if (constraints.maxWidth > util.tablet){
+          
+        }
+
+        if(selectedWorkout != null){
+          return infoPage;//TODO: mark info page as subpage (make so yuo can turn back on subpage)
+        }else{
+          return listPage;
+        }
       });
   }
 

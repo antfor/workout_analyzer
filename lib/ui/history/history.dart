@@ -7,8 +7,9 @@ class History extends StatelessWidget{ //TODO impove preformance
   
   final LiftBasicInfo? lift;
   final List<Workout> workouts;
+  final void Function(Workout) setWorkout;
 
-  const History(this.lift, this.workouts,{super.key});
+  const History(this.lift, this.workouts, this.setWorkout, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class History extends StatelessWidget{ //TODO impove preformance
                 itemBuilder: (context, index) {
                   return Align( child: ConstrainedBox(
                    constraints: BoxConstraints(maxWidth: 600,), 
-                   child: WorkoutItem(history[index])));
+                   child: WorkoutItem(history[index], setWorkout)));
                 },
             );
   }
@@ -34,8 +35,9 @@ class History extends StatelessWidget{ //TODO impove preformance
 class WorkoutItem extends StatelessWidget{
 
     final Workout workout;
+    final void Function(Workout) setWorkout;
  
-    const WorkoutItem(this.workout, {super.key}); //this.selected, this.setWorkout,
+    const WorkoutItem(this.workout, this.setWorkout, {super.key}); //this.selected, this.setWorkout,
       
     @override
     Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class WorkoutItem extends StatelessWidget{
           child: Card( child: Column(children: [
             ListTile(
               selected: false,
-              onTap: () => 1, //TODO navigate to Workout info
+              onTap: () => setWorkout(workout),
               title: Text(workout.title),
               subtitle: getInfo(workout, context),
             ),
@@ -84,7 +86,7 @@ class ExerciseTile extends StatelessWidget{
           child: Card(
             color: scheme.surfaceContainerHigh,
             child: ListTile(
-              onTap: () => 1 , //navigate to exersice info
+              onTap: () => 1 , //TODO navigate to exersice info
               leading: FlutterLogo(size: 56.0),
               title: Text(info.id),
               subtitle: Row(
