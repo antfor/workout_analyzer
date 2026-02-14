@@ -1,5 +1,5 @@
 
-import 'package:test_flutter/domain/exercise.dart';
+import '/domain/exercise.dart';
 
 abstract class IUpdate {
   void update(double weight, int reps);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/workout.dart';
-import 'package:test_flutter/ui/app_page.dart';
-import 'package:test_flutter/ui/summary/summary.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/info/lift_info.dart';
+import '/domain/workout.dart';
+import '/ui/app_page.dart';
+import '/ui/summary/summary.dart';
+import '/ui/util.dart' as util;
 
 AppPage getSummaryPage(List<LiftBasicInfo> lifts, List<Workout> workouts, BuildContext context){
   return AppPage(title: _title, body: _SummaryState(lifts, workouts), navIcon: _icon(context));

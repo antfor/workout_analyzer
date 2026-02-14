@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/state/settings.dart';
-import 'package:test_flutter/ui/chart/chart.dart';
-import 'package:test_flutter/ui/exercises/components/rep_pb.dart';
-import 'package:test_flutter/ui/exercises/components/strength_level.dart';
-import 'package:test_flutter/ui/exercises/components/value.dart';
-import 'package:test_flutter/ui/util.dart';
+import '/domain/info/lift_info.dart';
+import '/domain/standards/standards.dart';
+import '/state/settings.dart';
+import '/ui/chart/chart.dart';
+import '/ui/exercises/components/rep_pb.dart';
+import '/ui/exercises/components/strength_level.dart';
+import '/ui/exercises/components/value.dart';
+import '/ui/util.dart';
 
 final double _bodyWeight = 75;
 

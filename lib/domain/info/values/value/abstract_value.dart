@@ -1,5 +1,5 @@
-import 'package:test_flutter/domain/info/i_info.dart';
-import 'package:test_flutter/domain/orm/epely.dart';
+import '/domain/info/i_info.dart';
+import '/domain/orm/epely.dart';
 part 'value.dart';
 
 

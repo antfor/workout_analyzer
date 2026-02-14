@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_bucket.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_graph.dart';
-import 'package:test_flutter/domain/info/graphs/bucket_graphs.dart';
-import 'package:test_flutter/domain/info/graphs/graphs.dart';
-import 'package:test_flutter/ui/chart/chart_settings.dart';
-import 'package:test_flutter/ui/util.dart';
+import '/domain/info/graphs/abstract_bucket.dart';
+import '/domain/info/graphs/abstract_graph.dart';
+import '/domain/info/graphs/bucket_graphs.dart';
+import '/domain/info/graphs/graphs.dart';
+import '/ui/chart/chart_settings.dart';
+import '/ui/util.dart';
 
 class Chart extends StatefulWidget {
 

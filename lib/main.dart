@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/navigation.dart';
-import 'package:test_flutter/repository/import/map.dart';
-import 'package:test_flutter/repository/import/muscle.dart';
-import 'package:test_flutter/repository/import/standards.dart';
-import 'package:test_flutter/state/domain.dart';
-import 'package:test_flutter/state/settings.dart';
-import 'package:test_flutter/ui/exercises/exersise_page.dart';
-import 'package:test_flutter/ui/history/history_page.dart';
-import 'package:test_flutter/ui/summary/summary_page.dart';
+import '/domain/standards/muscle_group.dart';
+import '/domain/standards/standards.dart';
+import '/navigation.dart';
+import '/repository/import/map.dart';
+import '/repository/import/muscle.dart';
+import '/repository/import/standards.dart';
+import '/state/domain.dart';
+import '/state/settings.dart';
+import '/ui/exercises/exersise_page.dart';
+import '/ui/history/history_page.dart';
+import '/ui/summary/summary_page.dart';
 
 void main() async {
 

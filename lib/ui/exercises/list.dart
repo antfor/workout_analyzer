@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
+import '/domain/info/lift_info.dart';
+import '/domain/standards/muscle_group.dart';
 
 class Search extends StatelessWidget {
 

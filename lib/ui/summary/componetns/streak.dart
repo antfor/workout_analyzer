@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:test_flutter/domain/workout.dart';
+import '/domain/workout.dart';
 import 'dart:math' as math;
 
 Widget? streak(List<Workout> workouts){

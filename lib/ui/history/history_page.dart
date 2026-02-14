@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/workout.dart';
-import 'package:test_flutter/ui/app_page.dart';
-import 'package:test_flutter/ui/history/history.dart';
-import 'package:test_flutter/ui/history/history_info.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/info/lift_info.dart';
+import '/domain/workout.dart';
+import '/ui/app_page.dart';
+import '/ui/history/history.dart';
+import '/ui/history/history_info.dart';
+import '/ui/util.dart' as util;
 
 AppPage getHistoryPage(List<Workout> workouts, BuildContext context, {LiftBasicInfo? lift}){
   return AppPage(title: _title, body: _HistoryState(lift, workouts), navIcon: _icon(context));

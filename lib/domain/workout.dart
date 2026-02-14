@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:test_flutter/domain/orm/epely.dart';
+import '/domain/orm/epely.dart';
 
 import 'cardio.dart';
 import 'exercise.dart';

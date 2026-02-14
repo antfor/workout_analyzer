@@ -1,4 +1,4 @@
-import 'package:test_flutter/data/import/csv.dart';
+import '/data/import/csv.dart';
 
 enum ColumnName{
   workout("Workout"),

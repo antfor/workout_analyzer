@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/values/exercise_values.dart';
+import '/domain/info/values/exercise_values.dart';
 
 Widget valueTable(ExerciseValues levels){
   final wv = levels.maxWeight;

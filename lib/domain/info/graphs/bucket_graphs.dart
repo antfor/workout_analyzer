@@ -1,7 +1,7 @@
-import 'package:test_flutter/domain/exercise.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_bucket.dart';
-import 'package:test_flutter/domain/orm/epely.dart';
-import 'package:test_flutter/domain/workout.dart';
+import '/domain/exercise.dart';
+import '/domain/info/graphs/abstract_bucket.dart';
+import '/domain/orm/epely.dart';
+import '/domain/workout.dart';
 import 'dart:math' as math;
 
 enum Data {

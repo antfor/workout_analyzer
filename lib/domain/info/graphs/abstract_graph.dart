@@ -1,7 +1,7 @@
 
 import 'dart:math' as math;
 
-import 'package:test_flutter/domain/info/i_info.dart';
+import '/domain/info/i_info.dart';
 
 enum History {
       individual,

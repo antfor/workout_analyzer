@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/workout.dart';
-import 'package:test_flutter/state/settings.dart';
-import 'package:test_flutter/ui/summary/componetns/calender.dart';
-import 'package:test_flutter/ui/summary/componetns/muscle_strength.dart';
-import 'package:test_flutter/ui/summary/componetns/streak.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/info/lift_info.dart';
+import '/domain/workout.dart';
+import '/state/settings.dart';
+import '/ui/summary/componetns/calender.dart';
+import '/ui/summary/componetns/muscle_strength.dart';
+import '/ui/summary/componetns/streak.dart';
+import '/ui/util.dart' as util;
 
 final double _bodyWeight = 75;
 

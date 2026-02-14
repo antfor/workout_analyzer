@@ -1,9 +1,9 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/domain.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/repository/import.dart';
+import '/domain/domain.dart';
+import '/domain/standards/muscle_group.dart';
+import '/domain/standards/standards.dart';
+import '/repository/import.dart';
 
 final domainProvider = FutureProvider.family<Domain, DomainArgs>((ref, args) async {
 

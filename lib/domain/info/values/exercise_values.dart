@@ -1,5 +1,5 @@
-import 'package:test_flutter/domain/info/i_info.dart';
-import 'package:test_flutter/domain/info/values/value/abstract_value.dart';
+import '/domain/info/i_info.dart';
+import '/domain/info/values/value/abstract_value.dart';
 
 
 class ExerciseValues implements IUpdate{

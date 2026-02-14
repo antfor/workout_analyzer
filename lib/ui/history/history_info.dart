@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:test_flutter/domain/workout.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/workout.dart';
+import '/ui/util.dart' as util;
 
 class HistoryInfo extends StatelessWidget{
 

@@ -7,11 +7,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/ui/components/progressbar.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/info/lift_info.dart';
+import '/domain/standards/muscle_group.dart';
+import '/domain/standards/standards.dart';
+import '/ui/components/progressbar.dart';
+import '/ui/util.dart' as util;
 
 Widget muscleStrengthBar(){
   final start = 0;
