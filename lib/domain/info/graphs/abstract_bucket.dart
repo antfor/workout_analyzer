@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:intl/intl.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_graph.dart';
-import 'package:test_flutter/domain/info/graphs/histogram.dart';
+import '/domain/info/graphs/abstract_graph.dart';
+import '/domain/info/graphs/histogram.dart';
 
 
 enum AggregationLevel{

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/ui/components/progressbar.dart';
-import 'package:test_flutter/ui/util.dart';
+import '/domain/standards/standards.dart';
+import '/ui/components/progressbar.dart';
+import '/ui/util.dart';
 
 class StrengthLevel extends StatefulWidget{
 

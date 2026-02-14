@@ -1,10 +1,10 @@
-import 'package:test_flutter/domain/info/graphs/bucket_graphs.dart';
-import 'package:test_flutter/domain/info/graphs/graphs.dart';
-import 'package:test_flutter/domain/info/tables/tables.dart';
-import 'package:test_flutter/domain/exercise.dart';
-import 'package:test_flutter/domain/info/values/exercise_values.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
+import '/domain/info/graphs/bucket_graphs.dart';
+import '/domain/info/graphs/graphs.dart';
+import '/domain/info/tables/tables.dart';
+import '/domain/exercise.dart';
+import '/domain/info/values/exercise_values.dart';
+import '/domain/standards/muscle_group.dart';
+import '/domain/standards/standards.dart';
 
 class LiftBasicInfo implements Comparable<LiftBasicInfo>{
   final String id;

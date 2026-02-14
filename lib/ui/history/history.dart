@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/domain/workout.dart';
+import '/domain/info/lift_info.dart';
+import '/domain/workout.dart';
 
 class History extends StatelessWidget{ //TODO impove preformance
   

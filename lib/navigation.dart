@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/ui/app_page.dart';
-import 'package:test_flutter/ui/settings/setting.dart';
+import '/ui/app_page.dart';
+import '/ui/settings/setting.dart';
 
 
 class Navigation extends StatefulWidget {

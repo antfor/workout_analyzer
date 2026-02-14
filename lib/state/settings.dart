@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
+import '/domain/standards/standards.dart';
 
 class SettingsState {
   final Sex sex;

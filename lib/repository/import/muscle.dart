@@ -1,5 +1,5 @@
-import 'package:test_flutter/data/import/csv.dart';
-import 'package:test_flutter/domain/standards/muscle_group.dart';
+import '/data/import/csv.dart';
+import '/domain/standards/muscle_group.dart';
 
 enum ColumnName{
   exercise("Exercise"),

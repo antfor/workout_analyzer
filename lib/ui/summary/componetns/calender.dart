@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:test_flutter/domain/workout.dart';
+import '/domain/workout.dart';
 
 bool isSameDay(DateTime a, DateTime b) {
   return a.year == b.year &&

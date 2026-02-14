@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_flutter/domain/standards/standards.dart';
-import 'package:test_flutter/state/settings.dart';
+import '/domain/standards/standards.dart';
+import '/state/settings.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/ui/util.dart' as util;
 
 
 class Settings extends StatelessWidget {

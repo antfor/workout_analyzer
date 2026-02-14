@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/lift_info.dart';
-import 'package:test_flutter/ui/app_page.dart';
-import 'package:test_flutter/ui/exercises/exercises_info.dart';
-import 'package:test_flutter/ui/exercises/list.dart';
-import 'package:test_flutter/ui/util.dart' as util;
+import '/domain/info/lift_info.dart';
+import '/ui/app_page.dart';
+import '/ui/exercises/exercises_info.dart';
+import '/ui/exercises/list.dart';
+import '/ui/util.dart' as util;
 
 AppPage getExersisePage(List<LiftBasicInfo> lifts, BuildContext context){
   return AppPage(title: _title, body: _ExerciseState(lifts), navIcon: _icon(context));

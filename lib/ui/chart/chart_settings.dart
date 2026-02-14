@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_bucket.dart';
-import 'package:test_flutter/domain/info/graphs/abstract_graph.dart';
-import 'package:test_flutter/domain/info/graphs/bucket_graphs.dart';
-import 'package:test_flutter/domain/info/graphs/graphs.dart';
-import 'package:test_flutter/ui/chart/histogram.dart';
-import 'package:test_flutter/ui/chart/line_chart.dart';
+import '/domain/info/graphs/abstract_bucket.dart';
+import '/domain/info/graphs/abstract_graph.dart';
+import '/domain/info/graphs/bucket_graphs.dart';
+import '/domain/info/graphs/graphs.dart';
+import '/ui/chart/histogram.dart';
+import '/ui/chart/line_chart.dart';
 
 //TODO dela upp  filer
 
