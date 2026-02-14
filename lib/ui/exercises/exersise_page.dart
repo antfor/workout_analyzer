@@ -37,7 +37,8 @@ class _ExercisePage extends State<_ExerciseState>  {
     final listPage = ExerciseList(widget.lifts, selectedLift, (lift) => setState(() => selectedLift = lift));
 
     final loading = Text('');
-    final infoPage = selectedLift == null ? loading : ExerciseInfo(selectedLift!.getInfo());
+    void exit() => setState(() => selectedLift = null);
+    final infoPage = selectedLift == null ? loading : ExerciseInfo(selectedLift!.getInfo(), exit);
 
     return  LayoutBuilder(
       builder: (context, constraints) {
