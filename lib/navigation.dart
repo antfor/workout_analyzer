@@ -24,7 +24,7 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       appBar: AppBar(
         title: page.title,
-        elevation: 100,
+        elevation: 100, //TODO fix color
         actions: [Settings()],
         ),
       bottomNavigationBar: NavigationBar(

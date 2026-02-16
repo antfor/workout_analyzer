@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '/domain/workout.dart';
 
-bool isSameDay(DateTime a, DateTime b) {
-  return a.year == b.year &&
-        a.month == b.month &&
-        a.day == b.day;
-}
 
 List<Workout> events(DateTime date, List<Workout> workouts){
 

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '/ui/util.dart';
 import '/domain/info/lift_info.dart';
 import '/domain/workout.dart';
 
 class History extends StatelessWidget{ //TODO impove preformance
   
+  final bool groupByDate;
   final LiftBasicInfo? lift;
+  final DateTime? day; //TODO for modal popup in calender on summary page
   final List<Workout> workouts;
+  final Workout? selected;
   final void Function(Workout) setWorkout;
 
-  const History(this.lift, this.workouts, this.setWorkout, {super.key});
+  const History(this.workouts, this.selected ,this.setWorkout, {super.key, this.day, this.lift, this.groupByDate = true });
 
   @override
   Widget build(BuildContext context) {
@@ -17,55 +21,120 @@ class History extends StatelessWidget{ //TODO impove preformance
     List<Workout> history = workouts;
 
     if(lift != null){
-      history = workouts.where((w)=> w.exercises.any((e)=> e.id == lift!.id)).toList();
+      history = workouts.where((w)=> w.exercises.any((e)=> e.id == lift?.id)).toList();
     }
 
-    return ListView.builder(
-                itemCount: history.length,
-                itemBuilder: (context, index) {
-                  return Align( child: ConstrainedBox(
-                   constraints: BoxConstraints(maxWidth: 600,), 
-                   child: WorkoutItem(history[index], setWorkout)));
-                },
-            );
+    if(day != null){
+      history = workouts.where((w) => isSameDay(w.startTime, day)).toList();
+    }
+
+    if(groupByDate){
+      //TODO ExpansionTile for each Month?, paginator for months, tabs by by year, week?
+      final years = history.map((w) => w.startTime.year).toSet().toList()..sort((a,b)=> b.compareTo(a));
+      final tabs = years.map((y) => listBuilder(history, selected, setWorkout, lift, year:y));
+
+      return DefaultTabController(
+        initialIndex: 0,
+        length: years.length,
+          child:Column(
+          children: [
+            TabBar(
+            tabs: years.map((y) => H3(y.toString())).toList(),
+            isScrollable: true,
+            ),
+            Expanded(child:
+              TabBarView(
+                children: tabs.toList(),
+              )
+            )
+          ])
+        );
+    }
+
+    return listBuilder(history, selected, setWorkout, lift);
   }
   
+}
+
+Widget listBuilder(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, LiftBasicInfo? lift, {int? year, int? month}){
+
+  if(year != null){
+    if(month != null){
+      history = history.where((w) => w.startTime.year == year && w.startTime.month == month);
+    }else{
+      history = history.where((w) => w.startTime.year == year);
+    }
+  }
+
+  final data = history.toList();
+
+  return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return Align( child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 600,), 
+                child: WorkoutItem(data[index], data[index] == selected, setWorkout, lift?.id)));
+            },
+          );
+}
+
+Widget monthView(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, LiftBasicInfo? lift, {required int year}){
+  //TODO make look like this https://api.flutter.dev/flutter/widgets/PageView-class.html
+  final controller = PageController(initialPage: 0);
+  
+  final months = <int>{};
+
+  for (final w in history) {
+    if (w.startTime.year == year) {
+      months.add(w.startTime.month);
+    }
+  }
+
+  final sortedMonths = months.toList()..sort((b, a) => a.compareTo(b));
+
+  return PageView(
+    controller: controller,
+    children: [ for(final month in sortedMonths) listBuilder(history, selected, setWorkout, lift, year: year, month: month)],
+  );
 }
 
 class WorkoutItem extends StatelessWidget{
 
     final Workout workout;
+    final bool selected;
     final void Function(Workout) setWorkout;
+    final String? filterId;
  
-    const WorkoutItem(this.workout, this.setWorkout, {super.key}); //this.selected, this.setWorkout,
+    const WorkoutItem(this.workout, this.selected, this.setWorkout, this.filterId, {super.key});
       
     @override
     Widget build(BuildContext context) {
         return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
           child: Card( child: Column(children: [
             ListTile(
-              selected: false,
+              selected: selected,
               onTap: () => setWorkout(workout),
               title: Text(workout.title),
               subtitle: getInfo(workout, context),
             ),
-            exerciseList(workout),
+            ?exerciseList(workout, filterId),
           ]),
           ));
     }
 }
 
-Widget exerciseList(Workout workout){
+Widget? exerciseList(Workout workout, String? filterId){
 
-  final exercises = workout.getWorkoutExersiseInfo();
+  final exercises = workout.getWorkoutExersiseInfo(filterId);
 
+  if(exercises.isEmpty) return null;
 
   return ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 150),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [ for (final e in exercises) ExerciseTile(e), ],
+              children: [ for (final e in exercises) ExerciseTile(e) ],
             ),
           ),
         );     
@@ -108,8 +177,12 @@ Widget getInfo(Workout workout, BuildContext context){
   final start = workout.startTime;
   final end = workout.endTime;
   final formatter = DateFormat('EEEE, MMM d, yyyy'); 
-  final volume = workout.exercises.fold<double>(0,(s,e)=> s + e.volume).toStringAsFixed(0);
-  final distance = workout.cardio.fold<double>(0, (s,c)=> s + c.distanceKm);
+
+  final exercises = workout.exercises;
+  final cardio = workout.cardio;
+
+  final volume = exercises.fold<double>(0,(s,e)=> s + e.volume).toStringAsFixed(0);
+  final distance = cardio.fold<double>(0, (s,c)=> s + c.distanceKm).toStringAsFixed(0);
   final records = 1;
 
   return Column( 
@@ -122,8 +195,8 @@ Widget getInfo(Workout workout, BuildContext context){
         spacing: 16,
         children: [
           infoWithTitle('Duration',Text(getDuration(start, end)),context),
-          if(workout.exercises.isNotEmpty) infoWithTitle('Volume',Text('$volume kg'),context),
-          if(workout.cardio.isNotEmpty && workout.exercises.isEmpty) infoWithTitle('distance',Text('$distance km'),context),
+          if(exercises.isNotEmpty) infoWithTitle('Volume',Text('$volume kg'),context),
+          if(cardio.isNotEmpty && exercises.isEmpty) infoWithTitle('distance',Text('$distance km'),context),
           if(records > 0) infoWithTitle('Records' ,Row(
             spacing: 2,
             children: [

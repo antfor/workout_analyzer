@@ -20,6 +20,16 @@ List<Color> spectrumN(int n) => List.generate(n, (i) {
   return Color.fromARGB(255, r, g, b);
 });
 
+bool isSameDay(DateTime? a, DateTime? b) {
+  if(a == null || b == null){
+    return false;
+  }
+  
+  return a.year == b.year &&
+        a.month == b.month &&
+        a.day == b.day;
+}
+
 //TODO move to componets
 class H1 extends StatelessWidget{
 

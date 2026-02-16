@@ -1,30 +1,8 @@
 import 'package:intl/intl.dart';
 import '/domain/orm/epely.dart';
-
 import 'cardio.dart';
 import 'exercise.dart';
 
-/*
-final workout = Workout(
-  title: 'Leg Day',
-  startTime: DateTime.now(),
-  endTime: DateTime.now().add(Duration(hours: 1)),
-  exercises: [],
-);
-
-final squat = Exercise(
-  exerciseTitle: 'Squat',
-  setIndex: 1,
-  weightKg: 100,
-  reps: 8,
-  durationSeconds: 60,
-  workout: workout,
-);
-
-workout.exercises.add(squat);
-*/
-
-//"title","start_time","end_time"
 class Workout implements Comparable<Workout>{
 
   final String title;
@@ -51,8 +29,13 @@ class Workout implements Comparable<Workout>{
     cardio.addAll(list);
   }
 
-  Iterable<WorkoutExersiceInfo> getWorkoutExersiseInfo(){
-  
+  Iterable<WorkoutExersiceInfo> getWorkoutExersiseInfo(String? filterId){
+    
+    if(filterId != null){
+      final contains = exercises.any((e)=> e.id == filterId);
+      return contains ? [WorkoutExersiceInfo(filterId, exercises)] : [];
+    }
+
     final exercisesIds = exercises.map((e) => e.id).toSet();
     return exercisesIds.map((eId) => WorkoutExersiceInfo(eId, exercises));
   }
@@ -71,7 +54,7 @@ class Workout implements Comparable<Workout>{
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true; // same instance
+    if (identical(this, other)) return true;
     return other is Workout &&
         other.title == title &&
         other.startTime == startTime &&
