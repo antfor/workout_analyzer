@@ -21,14 +21,14 @@ build:
     - apt-get update -y
     - apt-get install -y brotli zstd parallel
     - find build/web -type f \( \
-        -name "*.html" -o -name "*.htm" -o -name "*.txt" -o -name "*.text" -o \
-        -name "*.css" -o -name "*.js" -o -name "*.mjs" -o -name "*.json" -o \
-        -name "*.xml" -o -name "*.svg" -o -name "*.yaml" -o -name "*.yml" -o \
-        -name "*.toml" -o -name "*.csv" -o -name "*.frag" -o -name "*.vert" -o \
-        -name "*.pdf" -o -name "*.wasm" -o -name "*.bin" -o \
-        -name "canvaskit.js" -o -name "canvaskit.wasm" -o \
-        -name "NOTICES" \
-      \) ! -name "*.gz" > compress_list.txt
+      -name "*.html" -o -name "*.htm" -o -name "*.txt" -o -name "*.text" -o \
+      -name "*.css" -o -name "*.js" -o -name "*.mjs" -o -name "*.json" -o \
+      -name "*.xml" -o -name "*.svg" -o -name "*.yaml" -o -name "*.yml" -o \
+      -name "*.toml" -o -name "*.csv" -o -name "*.frag" -o -name "*.vert" -o \
+      -name "*.pdf" -o -name "*.wasm" -o -name "*.bin" -o \
+      -name "canvaskit.js" -o -name "canvaskit.wasm" -o \
+      -name "NOTICES" \
+      \) > compress_list.txt
     - cat compress_list.txt | parallel gzip -f -k -9 {}
     - cat compress_list.txt | parallel brotli -f -k -Z {}
     - cat compress_list.txt | parallel zstd -f -k --ultra -22 -q {}
