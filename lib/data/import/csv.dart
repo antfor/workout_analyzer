@@ -5,7 +5,6 @@ import 'package:csv/csv.dart';
 
 Future<List<List<dynamic>>> loadCsv(String filePath) async {
   final rawData = await rootBundle.loadString(filePath);
-  List<List<dynamic>> rows = const CsvToListConverter(eol: '\n').convert(rawData);
-
+  final List<List<dynamic>> rows = csv.decoder.convert(rawData);
   return rows;
 }
