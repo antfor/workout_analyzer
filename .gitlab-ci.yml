@@ -1,4 +1,4 @@
-image: ghcr.io/cirruslabs/flutter:latest
+image: ghcr.io/cirruslabs/flutter:stable
 
 stages:
   - build
@@ -6,10 +6,8 @@ stages:
 
 before_script:
   - flutter --version
-  - flutter pub get
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - /root/.pub-cache/
     - .dart_tool/
@@ -17,7 +15,12 @@ cache:
 build:
   stage: build
   script:
-    - flutter build web --base-href /workout_analyzer/
+    - flutter pub get
+    - flutter build web --wasm --base-href /workout_analyzer/
+    #Compress
+    - find build/web -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|xml\|json\|mjs\|svg\|yaml\|yml\|toml\|css\|pdf\|wasm\)$' -exec gzip -f -k -9 {} \;
+    - find build/web -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|xml\|json\|mjs\|svg\|yaml\|yml\|toml\|css\|pdf\|wasm\)$' -exec brotli -f -k -Z {} \;
+    - find build/web -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|xml\|json\|mjs\|svg\|yaml\|yml\|toml\|css\|pdf\|wasm\)$' -exec zstd -f -k --ultra -22 -q {} \;
   only:
     - master
   artifacts:
