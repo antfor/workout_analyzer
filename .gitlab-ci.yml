@@ -24,6 +24,11 @@ build:
     - cat compress_list.txt | parallel gzip -f -k -9 {}
     - cat compress_list.txt | parallel brotli -f -k -Z {}
     - cat compress_list.txt | parallel zstd -f -k --ultra -22 -q {}
+  only:
+    - master
+  artifacts:
+    paths:
+      - build/web
 
 pages:
   stage: deploy
