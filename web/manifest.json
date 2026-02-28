@@ -1,6 +1,6 @@
 {
-    "name": "test_flutter",
-    "short_name": "test_flutter",
+    "name": "Workout Analyzer",
+    "short_name": "Workout Analyzer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
