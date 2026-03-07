@@ -1,4 +1,4 @@
-package com.example.test_flutter
+package dev.pages.workout_analyzer
 
 import io.flutter.embedding.android.FlutterActivity
 
