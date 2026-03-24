@@ -162,11 +162,11 @@ class ExerciseTile extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.start,
                 spacing: 8,
                 children: [
-                  infoWithTitle('Sets', Text(info.sets.toString()), context),
-                  infoWithTitle('Volume', Text('${info.volume.toStringAsFixed(0)} kg'), context),
-                  infoWithTitle('max set Volume', Text('${info.maxSetVolume.toStringAsFixed(0)} kg'), context),
-                  infoWithTitle('max set 1RM', Text('${info.maxOrm.toStringAsFixed(2)} kg'), context),
-                  infoWithTitle('max Weight', Text('${info.maxWeight.toStringAsFixed(2)} kg'), context),
+                  infoWithTitle('Sets', Text(info.sets.toString())),
+                  infoWithTitle('Volume', Text('${info.volume.toStringAsFixed(0)} kg')),
+                  infoWithTitle('max set Volume', Text('${info.maxSetVolume.toStringAsFixed(0)} kg')),
+                  infoWithTitle('max set 1RM', Text('${info.maxOrm.toStringAsFixed(2)} kg')),
+                  infoWithTitle('max Weight', Text('${info.maxWeight.toStringAsFixed(2)} kg')),
                 ],),
             ),
           ));
@@ -194,9 +194,9 @@ Widget getInfo(Workout workout, BuildContext context){
         mainAxisAlignment:MainAxisAlignment.start,
         spacing: 16,
         children: [
-          infoWithTitle('Duration',Text(getDuration(start, end)),context),
-          if(exercises.isNotEmpty) infoWithTitle('Volume',Text('$volume kg'),context),
-          if(cardio.isNotEmpty && exercises.isEmpty) infoWithTitle('distance',Text('$distance km'),context),
+          infoWithTitle('Duration',Text(getDuration(start, end))),
+          if(exercises.isNotEmpty) infoWithTitle('Volume',Text('$volume kg')),
+          if(cardio.isNotEmpty && exercises.isEmpty) infoWithTitle('distance',Text('$distance km')),
           if(records > 0) infoWithTitle('Records' ,Row(
             spacing: 2,
             children: [
@@ -205,7 +205,7 @@ Widget getInfo(Workout workout, BuildContext context){
               color: Colors.amber,
               size: DefaultTextStyle.of(context).style.fontSize,
             ),
-            Text(records.toString())],),context),
+            Text(records.toString())],)),
       ],)
     ]);
 }
@@ -224,16 +224,7 @@ String getDuration(DateTime start, DateTime end){
   }
 }
 
-Widget infoWithTitle(String title, Widget info, BuildContext context){
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text('$title:', style: TextStyle(fontSize: 12, color: Colors.grey) ),
-      info,
-    ],
-  );
-}
 
 class KeepAliveWrapper extends StatefulWidget {
   final Widget child;

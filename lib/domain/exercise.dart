@@ -1,3 +1,4 @@
+import 'package:workout_analyzer/domain/orm/epely.dart';
 import 'workout.dart';
 
 //"title","start_time","end_time","description","exercise_title","superset_id","exercise_notes","set_index","set_type","weight_kg","reps","distance_km","duration_seconds","rpe"
@@ -27,7 +28,7 @@ class Exercise implements Comparable<Exercise> {
     required this.workout,
   }): volume = reps * weightKg;
   
-
+  double get orm => epleyORM(weightKg, reps);
   @override
   int compareTo(Exercise other) {
     int cmpW = workout.compareTo(other.workout);

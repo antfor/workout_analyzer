@@ -82,3 +82,14 @@ Widget dropdown<T>({required List<DropdownMenuEntry<T>> entries, T? selection, S
     dropdownMenuEntries:  entries
   );
 }
+
+Widget infoWithTitle(String title, Widget info){
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('$title:', style: TextStyle(fontSize: 12, color: Colors.grey) ),
+      info,
+    ],
+  );
+}
