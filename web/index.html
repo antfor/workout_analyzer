@@ -29,6 +29,11 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="Workout Analyzer">
+  <meta property="og:description" content="Track workouts, analyze strength progression, and compare strength standards.">
+  <meta property="og:image" href="icons/Icon-512.png">
+
   <!-- Preload -->
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
   <link rel="modulepreload" href="main.dart.mjs" />
@@ -36,8 +41,23 @@
 
   <title>Workout Analyzer</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    #seo-content { display: none; }
+  </style>
 </head>
 <body>
+  <div id="seo-content">
+    <h1>Workout Analyzer</h1>
+    <p>
+      Cross-platform workout tracking app built with Flutter.
+      Track workout history, analyze 1RM progression, and compare strength standards.
+    </p>
+  </div>
+
+  <noscript>
+    Workout Analyzer - A cross-platform workout tracking app built with Flutter.
+  </noscript>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
