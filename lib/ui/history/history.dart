@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:workout_analyzer/domain/cardio.dart';
 import '/ui/util.dart';
 import '/domain/info/lift_info.dart';
 import '/domain/workout.dart';
@@ -117,30 +118,63 @@ class WorkoutItem extends StatelessWidget{
               title: Text(workout.title),
               subtitle: getInfo(workout, context),
             ),
-            ?exerciseList(workout, filterId),
+            ?exerciseList(workout, filterId, context),
           ]),
           ));
     }
 }
 
-Widget? exerciseList(Workout workout, String? filterId){
+Widget? exerciseList(Workout workout, String? filterId, BuildContext context){
 
   final exercises = workout.getWorkoutExersiseInfo(filterId);
-
-  if(exercises.isEmpty) return null;
+  final cardio = filterId == null ? workout.cardio : workout.cardio.where((c) => c.id == filterId) ;
+  final cardioIds = filterId != null ? {filterId} : cardio.map((c)=>c.id).toSet() ;
+  if(exercises.isEmpty && cardio.isEmpty) return null;
 
   return ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 150),
-          child: SingleChildScrollView(
+          child: SingleChildScrollView( //TODO make expand toggle, not scrollview
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [ for (final e in exercises) ExerciseTile(e) ],
+              children: [ 
+                for (final c in cardioIds) ?cardioTile(cardio, c, context),
+                for (final e in exercises) ExerciseTile(e) ],
             ),
           ),
         );     
 }
 
-class ExerciseTile extends StatelessWidget{
+Widget? cardioTile(Iterable<Cardio> cardioList, String id, BuildContext context){
+  
+  final cardio = cardioList.where((c) => c.id == id);
+
+  if(cardio.isEmpty) return null;
+
+  final bestLap = cardio.reduce((a,b) => a.paceSec < b.paceSec ? a : b);
+  final pace = bestLap.pace;
+  final scheme = Theme.of(context).colorScheme;
+
+  return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
+          child: Card(
+            color: scheme.surfaceContainerHigh,
+            child: ListTile(
+              onTap: () => 1 , //TODO navigate to exersice info
+              leading: FlutterLogo(size: 56.0),
+              title: Text(id),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  infoWithTitle('Laps', Text(cardio.length.toString())),
+                  infoWithTitle('best lap Time', Text(bestLap.duration)),
+                  infoWithTitle('best lap Pace', Text('${pace.min}:${pace.sec.toStringAsFixed(1)} /km')),
+                  infoWithTitle('best lap Distance', Text('${bestLap.distanceKm} km')),
+                ],),
+            ),
+          ));
+}
+
+class ExerciseTile extends StatelessWidget{//TODo make class
 
     final WorkoutExersiceInfo info;
 
@@ -182,7 +216,8 @@ Widget getInfo(Workout workout, BuildContext context){
   final cardio = workout.cardio;
 
   final volume = exercises.fold<double>(0,(s,e)=> s + e.volume).toStringAsFixed(0);
-  final distance = cardio.fold<double>(0, (s,c)=> s + c.distanceKm).toStringAsFixed(0);
+  final distance = cardio.fold<double>(0, (s,c)=> s + c.distanceKm).toStringAsFixed(2);
+  final duration = cardio.length == 1 && exercises.isEmpty ? cardio[0].duration : getDuration(start, end);
   final records = 1;
 
   return Column( 
@@ -194,7 +229,7 @@ Widget getInfo(Workout workout, BuildContext context){
         mainAxisAlignment:MainAxisAlignment.start,
         spacing: 16,
         children: [
-          infoWithTitle('Duration',Text(getDuration(start, end))),
+          infoWithTitle('Duration',Text(duration)),
           if(exercises.isNotEmpty) infoWithTitle('Volume',Text('$volume kg')),
           if(cardio.isNotEmpty && exercises.isEmpty) infoWithTitle('distance',Text('$distance km')),
           if(records > 0) infoWithTitle('Records' ,Row(
