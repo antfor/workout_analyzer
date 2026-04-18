@@ -23,7 +23,7 @@ class GradientProgressBar extends StatelessWidget {
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, 
       children:[
-        if(headline != null) headline!,
+        ?headline,
         ClipRRect(
           borderRadius: BorderRadius.circular(height / 4),
           child: Stack(
