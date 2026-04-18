@@ -53,7 +53,7 @@ class _Chart extends State<CardioChart> {
       crossAxisAlignment: CrossAxisAlignment.end,
       spacing: 10,
       children:[
-      Chart(chartBuilder),
+      Chart(chartBuilder, chartWidget.type),
       chartTypeSelect(chartWidget, (CharWidget t) => setState(() => chartWidget = t)),
       ]);
   }

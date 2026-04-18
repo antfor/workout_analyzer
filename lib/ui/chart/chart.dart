@@ -4,11 +4,13 @@ import '/domain/info/graphs/abstract_graph.dart';
 import '/ui/chart/chart_settings.dart';
 import '/ui/util.dart';
 
+
 class Chart extends StatefulWidget {
 
   final ChartBuilder chartBuilder;
+  final CharType chartType;
 
-  const Chart(this.chartBuilder, {super.key});
+  const Chart(this.chartBuilder, this.chartType, {super.key});
 
   @override
   State<Chart> createState() => _Chart();
@@ -40,59 +42,20 @@ enum CharType{
   line();
 }
 
-enum CharWidget{
-  orm(CharType.line),
-  wight(CharType.line),
-  volume(CharType.line),
-
-  reps(CharType.histogram),
-  sets(CharType.histogram),
-  perWight(CharType.histogram),
-  perVolume(CharType.histogram),
-  duration(CharType.histogram);
-
-  final CharType type;
-
-  const CharWidget(this.type);
-
-  String get label {
-    switch(this){
-      case CharWidget.orm: return "One-Rep-Max";
-      case CharWidget.wight: return "Max Weight";
-      case CharWidget.volume: return "Max Set Volume";
-
-      case CharWidget.reps: return "Total Reps";
-      case CharWidget.sets: return "Total Sets";
-      case CharWidget.duration: return "duration";
-      case CharWidget.perVolume: return "% Volume";
-      case CharWidget.perWight: return "% Weight";
-    }
-  }
-}
-
 class _Chart extends State<Chart> with AutomaticKeepAliveClientMixin<Chart> {
 
   @override
   bool get wantKeepAlive => true;
 
-  CharWidget chartWidget = CharWidget.orm;
-
   Span duration = Span.month3;
   History history = History.individual;
   bool currentTime = false;
-  AggregationLevel aggregationLevel = AggregationLevel.week;
-  //ChartBuilder? chartBuilder; 
-
-
-  void setChart(ChartBuilder cb){
-    //setState(() => chartBuilder = cb);
-  }
+  AggregationLevel aggregationLevel = AggregationLevel.week; 
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    //chartBuilder ??= widget.defaultChart;
     Widget? chart = widget.chartBuilder.build(history: history , level:aggregationLevel, currentTime:currentTime, days:duration.days, months: duration.months, years: duration.years);
 
     return Column(
@@ -110,8 +73,8 @@ class _Chart extends State<Chart> with AutomaticKeepAliveClientMixin<Chart> {
         spacing: 5,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if(chartWidget.type == CharType.line)chartHistorySelect(history, (h) => setState(() => history = h )),
-          if(chartWidget.type == CharType.histogram)chartAggregationLevel(aggregationLevel, (a) => setState(() => aggregationLevel = a )),
+          if(widget.chartType == CharType.line)chartHistorySelect(history, (h) => setState(() => history = h )),
+          if(widget.chartType == CharType.histogram)chartAggregationLevel(aggregationLevel, (a) => setState(() => aggregationLevel = a )),
           timeDropDown(duration, (s) => setState(() => duration = s))
         ],
       ),
