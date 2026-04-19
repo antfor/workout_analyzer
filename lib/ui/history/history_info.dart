@@ -1,10 +1,7 @@
-
-
-
-import 'dart:math' as math show max;
-
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:workout_analyzer/domain/cardio.dart';
 import 'package:workout_analyzer/domain/exercise.dart';
 import '/domain/workout.dart';
 import '/ui/util.dart';
@@ -27,6 +24,7 @@ class HistoryInfo extends StatelessWidget{
     
     return  ListView(children: [
       pad(_header(workout, exit, context)),
+      constrain(cardios(workout, context)),
       constrain(exercises(workout, context)),
     ]);
   }
@@ -63,7 +61,7 @@ Widget exercise(String id, Workout workout, BuildContext context){
 
   final exercises = workout.exercises.where((w)=>w.id == id);
   
-  final list = exercises.map((e) => lift(e, context));
+  //final list = exercises.map((e) => lift(e, context));
   
   return( Card( 
     //margin: EdgeInsets.all(8.0),
@@ -140,6 +138,61 @@ DataRow liftRow(Exercise lift){
       DataCell(Text(maxLines: 1,"${lift.volume} kg")),
       DataCell(Text(maxLines: 1,"${lift.orm.toStringAsFixed(2)} kg")),
       //DataCell(Text(maxLines: 1,"${(lift.percantage()*100).toStringAsFixed(0)}%")),
+    ],
+  ));
+}
+
+Widget cardios(Workout workout, BuildContext context){
+  final cardioIds = workout.cardio.map((e) => e.id).toSet();
+
+  return Column(children: [
+    ...cardioIds.map((id)=>cadio(id, workout, context)),
+  ],);
+}
+
+Widget cadio(String id, Workout workout, BuildContext context){
+
+  final cardio = workout.cardio.where((w)=>w.id == id);
+
+  return( Card( 
+    //margin: EdgeInsets.all(8.0),
+    child: Padding(padding: EdgeInsetsGeometry.all(16), child:
+      ListBody(
+        children: [
+          H3(id),
+          //cardioSummary(cardio),
+          //...list,
+          cardioTable(cardio),
+        ],
+      ))
+  ));
+}
+
+
+Widget cardioTable(Iterable<Cardio> cardio){
+
+  return DataTable(
+      columns: [
+        DataColumn(label: Center(child:Text('Lap'))),
+        DataColumn(label: Center(child:Text('Distance'))),
+        DataColumn(label: Center(child:Text('Time'))),
+        DataColumn(label: Center(child:Text('Pace'))),
+        //DataColumn(label: Center(child:Text('%'))),
+      ],
+      rows: cardio.indexed.map((ci) => cardioRow(ci.$2, ci.$1)).toList(),
+      //border: TableBorder.symmetric(outside: BorderSide()),
+  );
+}
+
+DataRow cardioRow(Cardio cardio, int lap){
+  final pace = cardio.pace;
+
+  return(
+    DataRow(cells:[
+      DataCell(Text(maxLines: 1, "${lap + 1}")),
+      DataCell(Text(maxLines: 1, "${cardio.distanceKm.toStringAsFixed(2)} km")),
+      DataCell(Text(maxLines: 1, cardio.duration)),
+      DataCell(Text(maxLines: 1, "${pace.min} : ${pace.sec.toStringAsFixed(1)} /km")),
     ],
   ));
 }
