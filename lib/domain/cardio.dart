@@ -28,7 +28,7 @@ class Cardio implements Comparable<Cardio>  {
   // */
   double get paceSec => durationSeconds/distanceKm;
   ({int min, double sec})  get pace => (min: paceSec~/60, sec: paceSec % 60);
-  static String toPace(num sec, {int decimals=2}) => "${sec~/60}:${(sec%60).toStringAsFixed(decimals)}";
+  static String toPace(num sec, {int decimals=2}) => "${sec~/60}:${(sec%60) < 10 ? "0" : ""}${(sec%60).toStringAsFixed(decimals)}";
 
   String get duration => calcDuration(durationSeconds);
 
@@ -40,11 +40,15 @@ class Cardio implements Comparable<Cardio>  {
     final buffer = StringBuffer();
 
     if (hours > 0) buffer.write("$hours${compact ? ":" : "h "}");
-    if ((hours > 0 &&  seconds > 0) || minutes > 0) buffer.write("$minutes${compact ? ":" : "m "}");
+    if ((hours > 0 &&  seconds > 0) || minutes > 0){
+      final zero = compact && (hours > 0) && minutes < 10 ? "0" : "";
+      buffer.write("$zero$minutes${compact ? ":" : "m "}");
+    }
 
-    if (seconds > 0) {
+    if (seconds > 0 || compact) {
       final fixed = seconds.truncate() == seconds ? 0 : decimals;
-      buffer.write("${seconds.toStringAsFixed(fixed)}${compact ? "" : "s"}");
+      final zero = compact && seconds < 10 ? "0" : "";
+      buffer.write("$zero${seconds.toStringAsFixed(fixed)}${compact ? "" : "s"}");
     }
 
     return buffer.toString();
