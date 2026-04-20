@@ -185,14 +185,14 @@ Widget cardioTable(Iterable<Cardio> cardio){
 }
 
 DataRow cardioRow(Cardio cardio, int lap){
-  final pace = cardio.pace;
+  final pace = Cardio.toPace(cardio.paceSec, decimals: 1);
 
   return(
     DataRow(cells:[
       DataCell(Text(maxLines: 1, "${lap + 1}")),
       DataCell(Text(maxLines: 1, "${cardio.distanceKm.toStringAsFixed(2)} km")),
       DataCell(Text(maxLines: 1, cardio.duration)),
-      DataCell(Text(maxLines: 1, "${pace.min} : ${pace.sec.toStringAsFixed(1)} /km")),
+      DataCell(Text(maxLines: 1, "$pace min/km")),
     ],
   ));
 }

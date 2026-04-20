@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_analyzer/domain/info/cardio/cardio_info.dart';
+import 'package:workout_analyzer/domain/info/i_info.dart';
+import 'package:workout_analyzer/ui/exercises/components/selected.dart';
 import '/domain/info/lift_info.dart';
 import '/domain/standards/muscle_group.dart';
 
@@ -25,17 +28,22 @@ class Search extends StatelessWidget {
   }
   
 }
+typedef SetInfo = void Function(LiftBasicInfo?, CardioBasicInfo?);
 
 class ExerciseList extends StatefulWidget {
 
   final List<LiftBasicInfo> lifts;
+  final List<CardioBasicInfo> cardio;
   final List<Muscle> muscles;
-  final void Function(LiftBasicInfo) setLiftInfo;
-  final LiftBasicInfo? selected;
+  final SetInfo setLiftInfo;
+  final Selected selected;
 
-  ExerciseList(this.lifts, this.selected, this.setLiftInfo, {super.key}):
-    muscles = lifts.map((v)=>v.muscle).toSet().toList()
-      ..sort((a, b) => a.index.compareTo(b.index));
+  ExerciseList(this.lifts, this.cardio, this.selected, this.setLiftInfo, {super.key}):
+  muscles = {
+    ...lifts.map((v) => v.muscle),
+    if (cardio.isNotEmpty) Muscle.cardio,
+  }.toList()..sort((a, b) => a.index.compareTo(b.index));
+
 
   @override
   State<ExerciseList> createState() => _ExerciseList();
@@ -59,11 +67,22 @@ class _ExerciseList extends State<ExerciseList> {
         .where((lift) => lift.muscle == muscleFilter).toList();
   }
 
+  List<CardioBasicInfo> filterCardio(List<CardioBasicInfo> cardio){
+
+    if(muscleFilter != null && muscleFilter != Muscle.cardio) return [];
+
+    return cardio
+      .where((c) => c.id.toLowerCase().contains(query.toLowerCase())).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    final filtered = search(filter(widget.lifts));
+    final lifts = search(filter(widget.lifts));
+    final cardio = filterCardio(widget.cardio);
 
+    final infoList = createList(lifts, cardio, widget.setLiftInfo);
+    
     return 
       Column(
         children: [   
@@ -75,9 +94,9 @@ class _ExerciseList extends State<ExerciseList> {
           Expanded(
             child:
               ListView.builder(
-                itemCount: filtered.length,
+                itemCount: infoList.length,
                 itemBuilder: (context, index) {
-                  return Tile(filtered[index], widget.selected, widget.setLiftInfo);
+                  return tile(infoList[index].$1, widget.selected.selected, infoList[index].$2);
                 },
               ),
           ),
@@ -125,25 +144,25 @@ Entries entries(){
   }
 }
 
-class Tile extends StatelessWidget{
+List<(IInfo, void Function())> createList(List<LiftBasicInfo> lift, List<CardioBasicInfo> cardio, SetInfo setInfo){
 
-    final LiftBasicInfo lift;
-    final LiftBasicInfo? selected;
-    final void Function(LiftBasicInfo) setLiftInfo;
+  final List<(IInfo, void Function())> info = lift.map<(IInfo, void Function())>((l)=>(l, () => setInfo(l, null))).toList();
+  info.addAll(cardio.map<(IInfo, void Function())>((c)=>(c, () => setInfo(null, c))));
+  
+  info.sort((a, b) => a.$1.compareTo(b.$1));
 
-    const Tile(this.lift, this.selected, this.setLiftInfo, {super.key});
-      
-    @override
-    Widget build(BuildContext context) {
-        return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
+  return info;
+}
+
+Widget tile(IInfo info, IInfo? selected, void Function() setInfo){
+  return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
           child: Card(
             child: ListTile(
-              selected: selected == lift,
-              onTap: () => setLiftInfo(lift),
+              selected: selected == info ,
+              onTap: () => setInfo(),
               leading: FlutterLogo(size: 56.0),
-              title: Text(lift.id),
-              subtitle: Text(lift.muscle.string),
+              title: Text(info.id),
+              subtitle: Text(info.muscle.string),
             ),
           ));
-    }
 }
