@@ -118,7 +118,8 @@ class WorkoutItem extends StatelessWidget{
               title: Text(workout.title),
               subtitle: getInfo(workout, context),
             ),
-            ?exerciseList(workout, filterId, context),
+            //?exerciseList(workout, filterId, context),
+            ?historyOverview(workout, filterId, context),
           ]),
           ));
     }
@@ -151,7 +152,7 @@ Widget? cardioTile(Iterable<Cardio> cardioList, String id, BuildContext context)
   if(cardio.isEmpty) return null;
 
   final bestLap = cardio.reduce((a,b) => a.paceSec < b.paceSec ? a : b);
-  final pace = bestLap.pace;
+  final pace = Cardio.toPace(bestLap.paceSec);
   final scheme = Theme.of(context).colorScheme;
 
   return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
@@ -167,7 +168,7 @@ Widget? cardioTile(Iterable<Cardio> cardioList, String id, BuildContext context)
                 children: [
                   infoWithTitle('Laps', Text(cardio.length.toString())),
                   infoWithTitle('best lap Time', Text(bestLap.duration)),
-                  infoWithTitle('best lap Pace', Text('${pace.min}:${pace.sec.toStringAsFixed(1)} /km')),
+                  infoWithTitle('best lap Pace', Text('$pace /km')),
                   infoWithTitle('best lap Distance', Text('${bestLap.distanceKm} km')),
                 ],),
             ),
@@ -280,4 +281,21 @@ class _KeepAliveWrapperState extends State<KeepAliveWrapper>
     super.build(context);
     return widget.child;
   }
+}
+
+Widget? historyOverview(Workout workout, String? filterId, BuildContext context){
+
+  final exercises = workout.getWorkoutExersiseInfo(filterId);
+  final cardio = filterId == null ? workout.cardio : workout.cardio.where((c) => c.id == filterId) ;
+  final cardioIds = filterId != null ? {filterId} : cardio.map((c)=>c.id).toSet() ;
+  
+  if(exercises.isEmpty && cardio.isEmpty) return null;
+
+  return ExpansionTile(
+        title: Text('Overview'),
+        children: [
+          for (final c in cardioIds) ?cardioTile(cardio, c, context),
+          for (final e in exercises) ExerciseTile(e),
+        ],
+      );
 }
