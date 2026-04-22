@@ -1,3 +1,5 @@
+import 'package:workout_analyzer/domain/info/i_info.dart';
+
 import '/domain/info/graphs/bucket_graphs.dart';
 import '/domain/info/graphs/graphs.dart';
 import '/domain/info/tables/tables.dart';
@@ -6,17 +8,14 @@ import '/domain/info/values/exercise_values.dart';
 import '/domain/standards/muscle_group.dart';
 import '/domain/standards/standards.dart';
 
-class LiftBasicInfo implements Comparable<LiftBasicInfo>{
+class LiftBasicInfo extends IInfo{//TODO remove? because of getLevel spoil lazy create
+  @override
   final String id;
+  @override
   final Muscle muscle;
   final LiftInfo Function () getInfo;
 
   LiftBasicInfo(this.id, this.muscle, this.getInfo);
-  
-  @override
-  int compareTo(LiftBasicInfo other) {
-    return id.compareTo(other.id);
-  }
 
   double getLevel(Sex sex, double bodyWeight) {
 
@@ -24,8 +23,9 @@ class LiftBasicInfo implements Comparable<LiftBasicInfo>{
   }
 }
 
-class LiftInfo{
-
+class LiftInfo extends IInfo{
+  
+  @override
   final String id;
   final List<Exercise> history;
   final ExerciseValues values;
@@ -33,6 +33,7 @@ class LiftInfo{
   final BucketGraphs bucketGraphs;
   final Tables tables;
 
+  @override
   final Muscle muscle;
   final Standard maleStandard;
   final Standard femaleStandard;

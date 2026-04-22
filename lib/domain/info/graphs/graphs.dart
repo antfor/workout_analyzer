@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:workout_analyzer/domain/info/i_info.dart';
 import '/domain/exercise.dart';
 import '/domain/info/graphs/abstract_graph.dart';
 import '/domain/orm/epely.dart';
@@ -6,7 +7,7 @@ import '/domain/workout.dart';
 
 
 
-class Graphs extends Graph {
+class Graphs extends Graph implements IDoneUpdate<Exercise>  {
 
   final List<double> ormOverTime  = [];
   final List<double> weightOverTime = [];

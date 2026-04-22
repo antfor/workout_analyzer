@@ -34,6 +34,7 @@ class HistogramChart extends StatelessWidget {
                   sideTitles: SideTitles( 
                     showTitles: true, 
                     getTitlesWidget: (value, meta) {
+                      if(0 > value.toInt() && x.length <= value.toInt()) return Text("E");
                       if(barChart){
                         final ms = (x[value.toInt()].$1 ?? 0).toInt();
                         final date = DateTime.fromMillisecondsSinceEpoch(ms);
