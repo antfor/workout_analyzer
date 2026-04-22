@@ -1,3 +1,4 @@
+import 'package:workout_analyzer/domain/info/i_info.dart';
 import '/domain/exercise.dart';
 import '/domain/info/graphs/abstract_bucket.dart';
 import '/domain/orm/epely.dart';
@@ -13,7 +14,7 @@ enum Data {
   count,
 }
 
-class BucketGraphs extends Bucket {
+class BucketGraphs extends Bucket implements IDoneUpdate<Exercise>{
 
   final List<double> perWeightOverTime = [];
   final List<double> perVolumeOverTime = [];

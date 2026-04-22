@@ -1,7 +1,6 @@
 
 import 'dart:math' as math;
 
-import '/domain/info/i_info.dart';
 
 enum History {
       individual,
@@ -17,7 +16,7 @@ enum History {
   }
 }
 
-abstract class Graph implements IExerciseUpdate{
+abstract class Graph{
 
   final List<DateTime> time = [];
 
