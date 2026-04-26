@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:workout_analyzer/domain/cardio.dart';
+import 'package:workout_analyzer/ui/history/components/workout_tables.dart';
 import '/ui/util.dart';
-import '/domain/info/lift_info.dart';
 import '/domain/workout.dart';
 
-class History extends StatelessWidget{ //TODO impove preformance
+class History extends StatelessWidget{
   
   final bool groupByDate;
-  final LiftBasicInfo? lift;
+  final String? filterId;
   final DateTime? day; //TODO for modal popup in calender on summary page
   final List<Workout> workouts;
   final Workout? selected;
   final void Function(Workout) setWorkout;
+  final bool preview;
 
-  const History(this.workouts, this.selected ,this.setWorkout, {super.key, this.day, this.lift, this.groupByDate = true });
+  const History(this.workouts, this.selected ,this.setWorkout, {super.key, this.day, this.filterId, this.groupByDate = true, this.preview=false });
 
   @override
   Widget build(BuildContext context) {
 
     List<Workout> history = workouts;
 
-    if(lift != null){
-      history = workouts.where((w)=> w.exercises.any((e)=> e.id == lift?.id)).toList();
+    if(filterId != null){
+      history = workouts.where((w)=> w.exercises.any((e)=> e.id == filterId)).toList();
     }
 
     if(day != null){
@@ -32,7 +33,7 @@ class History extends StatelessWidget{ //TODO impove preformance
     if(groupByDate){
       //TODO ExpansionTile for each Month?, paginator for months, tabs by by year, week?
       final years = history.map((w) => w.startTime.year).toSet().toList()..sort((a,b)=> b.compareTo(a));
-      final tabs = years.map((y) => listBuilder(history, selected, setWorkout, lift, year:y));
+      final tabs = years.map((y) => listBuilder(history, selected, setWorkout, filterId, preview, year:y));
 
       return DefaultTabController(
         initialIndex: 0,
@@ -52,12 +53,12 @@ class History extends StatelessWidget{ //TODO impove preformance
         );
     }
 
-    return listBuilder(history, selected, setWorkout, lift);
+    return listBuilder(history, selected, setWorkout, filterId, preview);
   }
   
 }
 
-Widget listBuilder(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, LiftBasicInfo? lift, {int? year, int? month}){
+Widget listBuilder(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, String? filterId, bool preview, {int? year, int? month}){
 
   if(year != null){
     if(month != null){
@@ -74,12 +75,12 @@ Widget listBuilder(Iterable<Workout> history, final Workout? selected, void Func
             itemBuilder: (context, index) {
               return Align( child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 600,), 
-                child: WorkoutItem(data[index], data[index] == selected, setWorkout, lift?.id)));
+                child: WorkoutItem(data[index], data[index] == selected, setWorkout, filterId, preview)));
             },
           );
 }
 
-Widget monthView(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, LiftBasicInfo? lift, {required int year}){
+Widget monthView(Iterable<Workout> history, final Workout? selected, void Function(Workout) setWorkout, String? filterId, bool preview, {required int year}){
   //TODO make look like this https://api.flutter.dev/flutter/widgets/PageView-class.html
   final controller = PageController(initialPage: 0);
   
@@ -95,7 +96,7 @@ Widget monthView(Iterable<Workout> history, final Workout? selected, void Functi
 
   return PageView(
     controller: controller,
-    children: [ for(final month in sortedMonths) listBuilder(history, selected, setWorkout, lift, year: year, month: month)],
+    children: [ for(final month in sortedMonths) listBuilder(history, selected, setWorkout, filterId, preview, year: year, month: month)],
   );
 }
 
@@ -105,11 +106,15 @@ class WorkoutItem extends StatelessWidget{
     final bool selected;
     final void Function(Workout) setWorkout;
     final String? filterId;
- 
-    const WorkoutItem(this.workout, this.selected, this.setWorkout, this.filterId, {super.key});
-      
+    final bool preview;
+
+    const WorkoutItem(this.workout, this.selected, this.setWorkout, this.filterId, this.preview, {super.key});
+    
     @override
     Widget build(BuildContext context) {
+
+      final summary = preview ? historyPreview : historyOverview;
+
         return Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 16), 
           child: Card( child: Column(children: [
             ListTile(
@@ -118,8 +123,7 @@ class WorkoutItem extends StatelessWidget{
               title: Text(workout.title),
               subtitle: getInfo(workout, context),
             ),
-            //?exerciseList(workout, filterId, context),
-            ?historyOverview(workout, filterId, context),
+            ?summary(workout, filterId, context),
           ]),
           ));
     }
@@ -298,4 +302,16 @@ Widget? historyOverview(Workout workout, String? filterId, BuildContext context)
           for (final e in exercises) ExerciseTile(e),
         ],
       );
+}
+
+Widget? historyPreview(Workout workout, String? filterId, BuildContext context,){
+  final set = filterId == null ? null : {filterId};
+  final preview = workoutTables(workout, context , id: set);
+
+  if(preview == null) return null;
+
+  return ExpansionTile(
+    title: Text('Preview'),
+    children: [preview],
+  );
 }

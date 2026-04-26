@@ -93,3 +93,7 @@ Widget infoWithTitle(String title, Widget info){
     ],
   );
 }
+
+Widget oneLine(String text,{overflow = TextOverflow.fade}){
+  return Text(maxLines: 1, overflow: overflow, text);
+}

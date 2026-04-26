@@ -144,7 +144,7 @@ class StandardRatio {
 
 class StandardTable {
 
-  final Iterable<int> bodyweight;
+  final List<int> bodyweight;
 
   final String id;
   final List<int> beginner;
