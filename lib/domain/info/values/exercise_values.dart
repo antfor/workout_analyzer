@@ -2,7 +2,7 @@ import '/domain/info/i_info.dart';
 import '/domain/info/values/value/abstract_value.dart';
 
 
-class ExerciseValues implements IUpdate{
+class ExerciseValues implements IExerciseUpdate{
 
   final ExerciseValue _orm = OrmValue.empty();
   final ExerciseValue _maxWeight = WeightValue.empty();

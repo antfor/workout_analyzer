@@ -6,7 +6,7 @@ import 'dart:math' as math;
 
 
 
-class Tables implements IUpdate{
+class Tables implements IExerciseUpdate{
 
   late final OrmData? _ormData;
   late final NewOrmData? _newOrmData;
@@ -32,7 +32,7 @@ class Tables implements IUpdate{
 
 }
 
-class RepPb implements IUpdate{
+class RepPb implements IExerciseUpdate{
 
   final Map<int, double> _map = {};
 
