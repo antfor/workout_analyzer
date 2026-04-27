@@ -3,7 +3,7 @@ import '/domain/orm/epely.dart';
 part 'value.dart';
 
 
-abstract  class ExerciseValue implements IUpdate {
+abstract  class ExerciseValue implements IExerciseUpdate {
 
   double _weight;
   int _reps;

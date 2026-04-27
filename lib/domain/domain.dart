@@ -24,8 +24,6 @@ class Domain {
   final Multimap<Id, Cardio> cardioMap;
 
   Domain({required this.workouts, required this.exerciseMap, required this.cardioMap, required this.maleStandards, required this.femaleStandards, required this.muscleMap});
-  Domain.empty(Map<String, String> mapNames):workouts=[],exerciseMap=Multimap<String, Exercise>(),cardioMap=Multimap<String, Cardio>(),muscleMap={},maleStandards=Standards.male(weight: [], reps: [], ratio: [], mapNames: mapNames),femaleStandards=Standards.female(weight: [], reps: [], ratio: [], mapNames: mapNames);
-
  
   Iterable<String> get exercises => exerciseMap.keys;
   Iterable<String> get cardio => cardioMap.keys;

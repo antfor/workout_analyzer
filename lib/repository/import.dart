@@ -1,3 +1,5 @@
+import 'package:workout_analyzer/domain/cardio.dart';
+
 import '/domain/domain.dart';
 import '/domain/exercise.dart';
 import '/domain/standards/muscle_group.dart';
@@ -38,7 +40,7 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
   final rows = await loadCsv(filePath);
 
   if(rows.length < 2){
-    return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
+    return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), cardioMap:  Multimap<String, Cardio>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
   }
 
   final title = rows[0].indexOf(ColumnName.title.string);
@@ -49,9 +51,16 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
   final weightKg = rows[0].indexOf(ColumnName.weightKg.string); 
   final reps = rows[0].indexOf(ColumnName.reps.string);
 
+  final distance = rows[0].indexOf(ColumnName.distanceKm.string);
+  final duration = rows[0].indexOf(ColumnName.durationSeconds.string);
+
   bool isExercises(List<dynamic> row){
 
     return (double.tryParse(row[weightKg].toString()) != null && int.tryParse(row[reps].toString()) != null);
+  } 
+
+  bool isCardio(List<dynamic> row){
+    return (double.tryParse(row[distance].toString()) != null && double.tryParse(row[duration].toString()) != null);
   } 
 
   Workout workout = Workout(
@@ -61,8 +70,10 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
 
   final List<Workout> workouts = [workout];
   final exerciseMap = Multimap<String, Exercise>();
+  final cardioMap = Multimap<String, Cardio>();
 
   List<Exercise> exercises = [];
+  List<Cardio> cardioList = [];
 
   for(List<dynamic> row in rows.skip(1)){
     final newWorkout =  Workout(
@@ -72,28 +83,45 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
     
     if(0 != newWorkout.compareTo(workout)){
       workout.addExercises(exercises);
+      workout.addCardio(cardioList);
       exercises = [];
+      cardioList = [];
       workouts.add(newWorkout);
       workout = newWorkout;
     }
 
-    if(isExercises(row)){
+    if(isExercises(row)){//TODO: mising exerscises whitout weight, chin up/ pull up
 
       final ex = Exercise(
         id: row[exercise].toString(), 
         setIndex: safeIntParse(row[set].toString()), 
-        weightKg: double.parse(row[weightKg].toString()), 
+        weightKg: double.parse(row[weightKg].toString()),// TODO make optioal
         reps: int.parse(row[reps].toString()), 
         workout: workout);
 
       exercises.add(ex);
       exerciseMap.add(ex.id, ex);
-    }//else if(isCardio(row)){}
+    }else if(isCardio(row)){ //TODO missing cardio without distance
+      
+      final cardio = Cardio(
+        id: row[exercise].toString(), 
+        lap: safeIntParse(row[set].toString()),
+        distanceKm: double.parse(row[distance]),// TODO make optioal
+        durationSeconds: double.parse(row[duration]),
+        workout: workout);
+        
+      cardioList.add(cardio);
+      cardioMap.add(cardio.id, cardio);
+
+    }else{
+      print(row);//TODO
+    }
   }
 
   workouts.last.addExercises(exercises);
+  workouts.last.addCardio(cardioList);
 
-  return Domain(workouts: workouts, exerciseMap: exerciseMap, maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
+  return Domain(workouts: workouts, exerciseMap: exerciseMap, cardioMap: cardioMap, maleStandards: male, femaleStandards: female, muscleMap:muscleMap);
 }
 
 
