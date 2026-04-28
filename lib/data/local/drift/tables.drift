@@ -1,0 +1,148 @@
+
+-- TODO multiple users on one account: CREATE TABEL Users();
+/*
+CREATE TABLE CustomExercises(
+    id TEXT NOT NULL PRIMARY KEY, //can be same as Exercises?
+    link TEXT REFERENCES Exercises(id), -- use same strength table etc
+    muscle TEXT NOT NULL REFERENCES Muscle(id),
+    equipment TEXT REFERENCES Equipment(id),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+*/
+CREATE TABLE Exercises(
+    id TEXT NOT NULL PRIMARY KEY,
+    muscle TEXT NOT NULL REFERENCES Muscle(id),
+    equipment TEXT REFERENCES Equipment(id),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Equipment(
+    id TEXT NOT NULL PRIMARY KEY,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Muscle(
+    id TEXT NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE Lift(
+    exercise TEXT NOT NULL REFERENCES Exercises (id),
+    set_of_sets INT NOT NULL, -- you can do benchpress at start and end of workout for example
+    set_index INT NOT NULL,
+    reps INT NOT NULL,
+    weight_kg FLOAT, 
+    workout INTEGER NOT NULL REFERENCES Workouts (id),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (workout, exercise, set_of_sets, set_index),
+    CHECK (reps > 0),
+    --CHECK (weight_kg >= 0), --CAN BE ASSISTED
+    CHECK (set_index >= 0),
+    CHECK (set_of_sets > 0)
+);
+
+CREATE TABLE Cardio(
+    exercise TEXT NOT NULL REFERENCES Exercises (id),
+    lap INT NOT NULL, --TODO lap_of_laps
+    distance_m FLOAT, 
+    duration_s FLOAT,
+    workout INTEGER NOT NULL REFERENCES Workouts (id),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (workout, exercise, lap),
+
+    CHECK (lap >= 0),
+    CHECK ((distance_m IS NULL AND duration_s IS NOT NULL) OR distance_m > 0),
+    CHECK ((duration_s IS NULL AND distance_m IS NOT NULL) OR duration_s > 0)
+
+);
+
+CREATE TABLE Workouts(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CHECK (start_time <= end_time)
+);
+
+
+CREATE TABLE StandardsWeight(
+    exercise TEXT NOT NULL REFERENCES Exercises (id),
+    sex TEXT NOT NULL,
+    bodyweight Float NOT NULL,
+    beginner FLOAT NOT NULL,
+    novice FLOAT NOT NULL,
+    intermediate FLOAT NOT NULL,
+    advanced FLOAT NOT NULL,
+    elite FLOAT NOT NULL,
+
+    PRIMARY KEY (exercise, sex, bodyweight),
+
+    CHECK (sex in ('male','female')), 
+
+    CHECK (beginner >= 0),
+    CHECK (novice >= beginner),
+    CHECK (intermediate >= novice),
+    CHECK (advanced >= intermediate),
+    CHECK (elite >= advanced)
+
+);
+
+CREATE TABLE StandardsReps(
+    exercise TEXT NOT NULL REFERENCES Exercises (id),
+    sex TEXT NOT NULL,
+    bodyweight INT NOT NULL,
+    beginner INT NOT NULL,
+    novice INT NOT NULL,
+    intermediate INT NOT NULL,
+    advanced INT NOT NULL,
+    elite INT NOT NULL,
+
+    PRIMARY KEY (exercise, sex, bodyweight),
+
+    CHECK (sex in ('male','female')), 
+
+    CHECK (beginner >= 0),
+    CHECK (novice >= beginner),
+    CHECK (intermediate >= novice),
+    CHECK (advanced >= intermediate),
+    CHECK (elite >= advanced)
+);
+
+CREATE TABLE StandardsCardio(
+    exercise TEXT NOT NULL REFERENCES Exercises (id),
+    sex TEXT NOT NULL,
+    age INT NOT NULL,
+    distance_m FLOAT NOT NULL,
+
+    beginner FLOAT NOT NULL,
+    novice FLOAT NOT NULL,
+    intermediate FLOAT NOT NULL,
+    advanced FLOAT NOT NULL,
+    elite FLOAT NOT NULL,
+
+    PRIMARY KEY (exercise, sex, age),
+
+    CHECK (sex in ('male','female')), 
+    CHECK (age >= 0),
+
+    CHECK (beginner >= 0),
+    CHECK (novice >= beginner),
+    CHECK (intermediate >= novice),
+    CHECK (advanced >= intermediate),
+    CHECK (elite >= advanced)
+);

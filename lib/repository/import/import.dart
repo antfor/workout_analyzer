@@ -31,7 +31,7 @@ enum ColumnName{
 }
 
 Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Standards female) async {
-  const mockData = 'assets/data/test_workout_data.csv';
+  const mockData = 'assets/data/workout_data_new.csv';
   return importDataFromCsv(muscleMap, male, female, mockData); 
 }
  
@@ -114,7 +114,7 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
       cardioMap.add(cardio.id, cardio);
 
     }else{
-      print(row);//TODO
+      //print(row);//TODO
     }
   }
 
