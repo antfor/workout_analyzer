@@ -62,8 +62,11 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
   bool isCardio(List<dynamic> row){
     return (double.tryParse(row[distance].toString()) != null && double.tryParse(row[duration].toString()) != null);
   } 
+  int workoutID = 1;
+  int getID() => workoutID++;
 
   Workout workout = Workout(
+      id: getID(),
       endTime: toDateTime(rows[1][end].toString()),
       startTime: toDateTime(rows[1][start].toString()),
       title: rows[1][title].toString());
@@ -77,6 +80,7 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
 
   for(List<dynamic> row in rows.skip(1)){
     final newWorkout =  Workout(
+      id: getID(),
       endTime: toDateTime(row[end].toString()),
       startTime: toDateTime(row[start].toString()),
       title: row[title].toString());
@@ -90,7 +94,7 @@ Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, S
       workout = newWorkout;
     }
 
-    if(isExercises(row)){//TODO: mising exerscises whitout weight, chin up/ pull up
+    if(isExercises(row)){//TODO: mising exerscises whitout weight, chin up/ pull up (just make it 0)
 
       final ex = Exercise(
         id: row[exercise].toString(), 
