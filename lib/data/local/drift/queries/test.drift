@@ -7,3 +7,11 @@ get_muscles: SELECT * FROM Muscle;
 get_workouts: SELECT * FROM Workouts;
 
 get_workout_lift: SELECT * FROM Lift WHERE workout = ?;
+get_workout_cardio: SELECT * FROM Cardio WHERE workout = ?;
+
+
+get_names_weight: SELECT DISTINCT exercise FROM StandardsWeight;
+get_names_reps: SELECT DISTINCT exercise FROM StandardsReps;
+
+get_standard_weight: SELECT * FROM StandardsWeight WHERE sex = ? AND exercise = ? ORDER BY bodyweight ASC;
+get_standard_reps: SELECT * FROM StandardsReps WHERE sex = ? AND exercise = ? ORDER BY bodyweight ASC;

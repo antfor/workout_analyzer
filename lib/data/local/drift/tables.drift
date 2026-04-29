@@ -7,8 +7,8 @@ CREATE TABLE CustomExercises(
     muscle TEXT NOT NULL REFERENCES Muscle(id),
     equipment TEXT REFERENCES Equipment(id),
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 */
 CREATE TABLE Exercises(
@@ -16,15 +16,15 @@ CREATE TABLE Exercises(
     muscle TEXT NOT NULL REFERENCES Muscle(id),
     equipment TEXT REFERENCES Equipment(id),
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Equipment(
     id TEXT NOT NULL PRIMARY KEY,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Muscle(
@@ -39,8 +39,8 @@ CREATE TABLE Lift(
     weight_kg FLOAT, 
     workout INTEGER NOT NULL REFERENCES Workouts (id),
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (workout, exercise, set_of_sets, set_index),
     CHECK (reps > 0),
@@ -56,8 +56,8 @@ CREATE TABLE Cardio(
     duration_s FLOAT,
     workout INTEGER NOT NULL REFERENCES Workouts (id),
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (workout, exercise, lap),
 
@@ -70,11 +70,11 @@ CREATE TABLE Cardio(
 CREATE TABLE Workouts(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL,
+    start_time INT NOT NULL,
+    end_time INT NOT NULL,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
 
     CHECK (start_time <= end_time)
 );
@@ -83,7 +83,7 @@ CREATE TABLE Workouts(
 CREATE TABLE StandardsWeight(
     exercise TEXT NOT NULL REFERENCES Exercises (id),
     sex TEXT NOT NULL,
-    bodyweight Float NOT NULL,
+    bodyweight FLOAT NOT NULL,
     beginner FLOAT NOT NULL,
     novice FLOAT NOT NULL,
     intermediate FLOAT NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE StandardsWeight(
 CREATE TABLE StandardsReps(
     exercise TEXT NOT NULL REFERENCES Exercises (id),
     sex TEXT NOT NULL,
-    bodyweight INT NOT NULL,
+    bodyweight FLOAT NOT NULL,
     beginner INT NOT NULL,
     novice INT NOT NULL,
     intermediate INT NOT NULL,

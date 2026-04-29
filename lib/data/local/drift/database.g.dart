@@ -172,11 +172,11 @@ class Equipment extends Table with TableInfo<Equipment, EquipmentData> {
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
-  late final GeneratedColumn<double> createdAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
     'created_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -184,11 +184,11 @@ class Equipment extends Table with TableInfo<Equipment, EquipmentData> {
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
   );
-  late final GeneratedColumn<double> updatedAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
     'updated_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -238,11 +238,11 @@ class Equipment extends Table with TableInfo<Equipment, EquipmentData> {
         data['${effectivePrefix}id'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}created_at'],
       ),
       updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}updated_at'],
       ),
     );
@@ -259,18 +259,18 @@ class Equipment extends Table with TableInfo<Equipment, EquipmentData> {
 
 class EquipmentData extends DataClass implements Insertable<EquipmentData> {
   final String id;
-  final double? createdAt;
-  final double? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   const EquipmentData({required this.id, this.createdAt, this.updatedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<double>(createdAt);
+      map['created_at'] = Variable<String>(createdAt);
     }
     if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<double>(updatedAt);
+      map['updated_at'] = Variable<String>(updatedAt);
     }
     return map;
   }
@@ -294,8 +294,8 @@ class EquipmentData extends DataClass implements Insertable<EquipmentData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return EquipmentData(
       id: serializer.fromJson<String>(json['id']),
-      createdAt: serializer.fromJson<double?>(json['created_at']),
-      updatedAt: serializer.fromJson<double?>(json['updated_at']),
+      createdAt: serializer.fromJson<String?>(json['created_at']),
+      updatedAt: serializer.fromJson<String?>(json['updated_at']),
     );
   }
   @override
@@ -303,15 +303,15 @@ class EquipmentData extends DataClass implements Insertable<EquipmentData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
-      'created_at': serializer.toJson<double?>(createdAt),
-      'updated_at': serializer.toJson<double?>(updatedAt),
+      'created_at': serializer.toJson<String?>(createdAt),
+      'updated_at': serializer.toJson<String?>(updatedAt),
     };
   }
 
   EquipmentData copyWith({
     String? id,
-    Value<double?> createdAt = const Value.absent(),
-    Value<double?> updatedAt = const Value.absent(),
+    Value<String?> createdAt = const Value.absent(),
+    Value<String?> updatedAt = const Value.absent(),
   }) => EquipmentData(
     id: id ?? this.id,
     createdAt: createdAt.present ? createdAt.value : this.createdAt,
@@ -348,8 +348,8 @@ class EquipmentData extends DataClass implements Insertable<EquipmentData> {
 
 class EquipmentCompanion extends UpdateCompanion<EquipmentData> {
   final Value<String> id;
-  final Value<double?> createdAt;
-  final Value<double?> updatedAt;
+  final Value<String?> createdAt;
+  final Value<String?> updatedAt;
   final Value<int> rowid;
   const EquipmentCompanion({
     this.id = const Value.absent(),
@@ -365,8 +365,8 @@ class EquipmentCompanion extends UpdateCompanion<EquipmentData> {
   }) : id = Value(id);
   static Insertable<EquipmentData> custom({
     Expression<String>? id,
-    Expression<double>? createdAt,
-    Expression<double>? updatedAt,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -379,8 +379,8 @@ class EquipmentCompanion extends UpdateCompanion<EquipmentData> {
 
   EquipmentCompanion copyWith({
     Value<String>? id,
-    Value<double?>? createdAt,
-    Value<double?>? updatedAt,
+    Value<String?>? createdAt,
+    Value<String?>? updatedAt,
     Value<int>? rowid,
   }) {
     return EquipmentCompanion(
@@ -398,10 +398,10 @@ class EquipmentCompanion extends UpdateCompanion<EquipmentData> {
       map['id'] = Variable<String>(id.value);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<double>(createdAt.value);
+      map['created_at'] = Variable<String>(createdAt.value);
     }
     if (updatedAt.present) {
-      map['updated_at'] = Variable<double>(updatedAt.value);
+      map['updated_at'] = Variable<String>(updatedAt.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -458,11 +458,11 @@ class Exercises extends Table with TableInfo<Exercises, Exercise> {
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
-  late final GeneratedColumn<double> createdAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
     'created_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -470,11 +470,11 @@ class Exercises extends Table with TableInfo<Exercises, Exercise> {
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
   );
-  late final GeneratedColumn<double> updatedAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
     'updated_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -552,11 +552,11 @@ class Exercises extends Table with TableInfo<Exercises, Exercise> {
         data['${effectivePrefix}equipment'],
       ),
       createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}created_at'],
       ),
       updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}updated_at'],
       ),
     );
@@ -575,8 +575,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
   final String id;
   final String muscle;
   final String? equipment;
-  final double? createdAt;
-  final double? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   const Exercise({
     required this.id,
     required this.muscle,
@@ -593,10 +593,10 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       map['equipment'] = Variable<String>(equipment);
     }
     if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<double>(createdAt);
+      map['created_at'] = Variable<String>(createdAt);
     }
     if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<double>(updatedAt);
+      map['updated_at'] = Variable<String>(updatedAt);
     }
     return map;
   }
@@ -626,8 +626,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       id: serializer.fromJson<String>(json['id']),
       muscle: serializer.fromJson<String>(json['muscle']),
       equipment: serializer.fromJson<String?>(json['equipment']),
-      createdAt: serializer.fromJson<double?>(json['created_at']),
-      updatedAt: serializer.fromJson<double?>(json['updated_at']),
+      createdAt: serializer.fromJson<String?>(json['created_at']),
+      updatedAt: serializer.fromJson<String?>(json['updated_at']),
     );
   }
   @override
@@ -637,8 +637,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       'id': serializer.toJson<String>(id),
       'muscle': serializer.toJson<String>(muscle),
       'equipment': serializer.toJson<String?>(equipment),
-      'created_at': serializer.toJson<double?>(createdAt),
-      'updated_at': serializer.toJson<double?>(updatedAt),
+      'created_at': serializer.toJson<String?>(createdAt),
+      'updated_at': serializer.toJson<String?>(updatedAt),
     };
   }
 
@@ -646,8 +646,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     String? id,
     String? muscle,
     Value<String?> equipment = const Value.absent(),
-    Value<double?> createdAt = const Value.absent(),
-    Value<double?> updatedAt = const Value.absent(),
+    Value<String?> createdAt = const Value.absent(),
+    Value<String?> updatedAt = const Value.absent(),
   }) => Exercise(
     id: id ?? this.id,
     muscle: muscle ?? this.muscle,
@@ -694,8 +694,8 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
   final Value<String> id;
   final Value<String> muscle;
   final Value<String?> equipment;
-  final Value<double?> createdAt;
-  final Value<double?> updatedAt;
+  final Value<String?> createdAt;
+  final Value<String?> updatedAt;
   final Value<int> rowid;
   const ExercisesCompanion({
     this.id = const Value.absent(),
@@ -718,8 +718,8 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     Expression<String>? id,
     Expression<String>? muscle,
     Expression<String>? equipment,
-    Expression<double>? createdAt,
-    Expression<double>? updatedAt,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -736,8 +736,8 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     Value<String>? id,
     Value<String>? muscle,
     Value<String?>? equipment,
-    Value<double?>? createdAt,
-    Value<double?>? updatedAt,
+    Value<String?>? createdAt,
+    Value<String?>? updatedAt,
     Value<int>? rowid,
   }) {
     return ExercisesCompanion(
@@ -763,10 +763,10 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       map['equipment'] = Variable<String>(equipment.value);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<double>(createdAt.value);
+      map['created_at'] = Variable<String>(createdAt.value);
     }
     if (updatedAt.present) {
-      map['updated_at'] = Variable<double>(updatedAt.value);
+      map['updated_at'] = Variable<String>(updatedAt.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -815,33 +815,33 @@ class Workouts extends Table with TableInfo<Workouts, Workout> {
   static const VerificationMeta _startTimeMeta = const VerificationMeta(
     'startTime',
   );
-  late final GeneratedColumn<double> startTime = GeneratedColumn<double>(
+  late final GeneratedColumn<int> startTime = GeneratedColumn<int>(
     'start_time',
     aliasedName,
     false,
-    type: DriftSqlType.double,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
     $customConstraints: 'NOT NULL',
   );
   static const VerificationMeta _endTimeMeta = const VerificationMeta(
     'endTime',
   );
-  late final GeneratedColumn<double> endTime = GeneratedColumn<double>(
+  late final GeneratedColumn<int> endTime = GeneratedColumn<int>(
     'end_time',
     aliasedName,
     false,
-    type: DriftSqlType.double,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
     $customConstraints: 'NOT NULL',
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
-  late final GeneratedColumn<double> createdAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
     'created_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -849,11 +849,11 @@ class Workouts extends Table with TableInfo<Workouts, Workout> {
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
   );
-  late final GeneratedColumn<double> updatedAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
     'updated_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -936,19 +936,19 @@ class Workouts extends Table with TableInfo<Workouts, Workout> {
         data['${effectivePrefix}title'],
       )!,
       startTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.int,
         data['${effectivePrefix}start_time'],
       )!,
       endTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.int,
         data['${effectivePrefix}end_time'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}created_at'],
       ),
       updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}updated_at'],
       ),
     );
@@ -968,10 +968,10 @@ class Workouts extends Table with TableInfo<Workouts, Workout> {
 class Workout extends DataClass implements Insertable<Workout> {
   final int id;
   final String title;
-  final double startTime;
-  final double endTime;
-  final double? createdAt;
-  final double? updatedAt;
+  final int startTime;
+  final int endTime;
+  final String? createdAt;
+  final String? updatedAt;
   const Workout({
     required this.id,
     required this.title,
@@ -985,13 +985,13 @@ class Workout extends DataClass implements Insertable<Workout> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
-    map['start_time'] = Variable<double>(startTime);
-    map['end_time'] = Variable<double>(endTime);
+    map['start_time'] = Variable<int>(startTime);
+    map['end_time'] = Variable<int>(endTime);
     if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<double>(createdAt);
+      map['created_at'] = Variable<String>(createdAt);
     }
     if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<double>(updatedAt);
+      map['updated_at'] = Variable<String>(updatedAt);
     }
     return map;
   }
@@ -1019,10 +1019,10 @@ class Workout extends DataClass implements Insertable<Workout> {
     return Workout(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      startTime: serializer.fromJson<double>(json['start_time']),
-      endTime: serializer.fromJson<double>(json['end_time']),
-      createdAt: serializer.fromJson<double?>(json['created_at']),
-      updatedAt: serializer.fromJson<double?>(json['updated_at']),
+      startTime: serializer.fromJson<int>(json['start_time']),
+      endTime: serializer.fromJson<int>(json['end_time']),
+      createdAt: serializer.fromJson<String?>(json['created_at']),
+      updatedAt: serializer.fromJson<String?>(json['updated_at']),
     );
   }
   @override
@@ -1031,20 +1031,20 @@ class Workout extends DataClass implements Insertable<Workout> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'start_time': serializer.toJson<double>(startTime),
-      'end_time': serializer.toJson<double>(endTime),
-      'created_at': serializer.toJson<double?>(createdAt),
-      'updated_at': serializer.toJson<double?>(updatedAt),
+      'start_time': serializer.toJson<int>(startTime),
+      'end_time': serializer.toJson<int>(endTime),
+      'created_at': serializer.toJson<String?>(createdAt),
+      'updated_at': serializer.toJson<String?>(updatedAt),
     };
   }
 
   Workout copyWith({
     int? id,
     String? title,
-    double? startTime,
-    double? endTime,
-    Value<double?> createdAt = const Value.absent(),
-    Value<double?> updatedAt = const Value.absent(),
+    int? startTime,
+    int? endTime,
+    Value<String?> createdAt = const Value.absent(),
+    Value<String?> updatedAt = const Value.absent(),
   }) => Workout(
     id: id ?? this.id,
     title: title ?? this.title,
@@ -1095,10 +1095,10 @@ class Workout extends DataClass implements Insertable<Workout> {
 class WorkoutsCompanion extends UpdateCompanion<Workout> {
   final Value<int> id;
   final Value<String> title;
-  final Value<double> startTime;
-  final Value<double> endTime;
-  final Value<double?> createdAt;
-  final Value<double?> updatedAt;
+  final Value<int> startTime;
+  final Value<int> endTime;
+  final Value<String?> createdAt;
+  final Value<String?> updatedAt;
   const WorkoutsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -1110,8 +1110,8 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
   WorkoutsCompanion.insert({
     this.id = const Value.absent(),
     required String title,
-    required double startTime,
-    required double endTime,
+    required int startTime,
+    required int endTime,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   }) : title = Value(title),
@@ -1120,10 +1120,10 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
   static Insertable<Workout> custom({
     Expression<int>? id,
     Expression<String>? title,
-    Expression<double>? startTime,
-    Expression<double>? endTime,
-    Expression<double>? createdAt,
-    Expression<double>? updatedAt,
+    Expression<int>? startTime,
+    Expression<int>? endTime,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1138,10 +1138,10 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
   WorkoutsCompanion copyWith({
     Value<int>? id,
     Value<String>? title,
-    Value<double>? startTime,
-    Value<double>? endTime,
-    Value<double?>? createdAt,
-    Value<double?>? updatedAt,
+    Value<int>? startTime,
+    Value<int>? endTime,
+    Value<String?>? createdAt,
+    Value<String?>? updatedAt,
   }) {
     return WorkoutsCompanion(
       id: id ?? this.id,
@@ -1163,16 +1163,16 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
       map['title'] = Variable<String>(title.value);
     }
     if (startTime.present) {
-      map['start_time'] = Variable<double>(startTime.value);
+      map['start_time'] = Variable<int>(startTime.value);
     }
     if (endTime.present) {
-      map['end_time'] = Variable<double>(endTime.value);
+      map['end_time'] = Variable<int>(endTime.value);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<double>(createdAt.value);
+      map['created_at'] = Variable<String>(createdAt.value);
     }
     if (updatedAt.present) {
-      map['updated_at'] = Variable<double>(updatedAt.value);
+      map['updated_at'] = Variable<String>(updatedAt.value);
     }
     return map;
   }
@@ -1263,11 +1263,11 @@ class Lift extends Table with TableInfo<Lift, LiftData> {
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
-  late final GeneratedColumn<double> createdAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
     'created_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -1275,11 +1275,11 @@ class Lift extends Table with TableInfo<Lift, LiftData> {
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
   );
-  late final GeneratedColumn<double> updatedAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
     'updated_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -1404,11 +1404,11 @@ class Lift extends Table with TableInfo<Lift, LiftData> {
         data['${effectivePrefix}workout'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}created_at'],
       ),
       updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}updated_at'],
       ),
     );
@@ -1439,8 +1439,8 @@ class LiftData extends DataClass implements Insertable<LiftData> {
   final int reps;
   final double? weightKg;
   final int workout;
-  final double? createdAt;
-  final double? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   const LiftData({
     required this.exercise,
     required this.setOfSets,
@@ -1463,10 +1463,10 @@ class LiftData extends DataClass implements Insertable<LiftData> {
     }
     map['workout'] = Variable<int>(workout);
     if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<double>(createdAt);
+      map['created_at'] = Variable<String>(createdAt);
     }
     if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<double>(updatedAt);
+      map['updated_at'] = Variable<String>(updatedAt);
     }
     return map;
   }
@@ -1502,8 +1502,8 @@ class LiftData extends DataClass implements Insertable<LiftData> {
       reps: serializer.fromJson<int>(json['reps']),
       weightKg: serializer.fromJson<double?>(json['weight_kg']),
       workout: serializer.fromJson<int>(json['workout']),
-      createdAt: serializer.fromJson<double?>(json['created_at']),
-      updatedAt: serializer.fromJson<double?>(json['updated_at']),
+      createdAt: serializer.fromJson<String?>(json['created_at']),
+      updatedAt: serializer.fromJson<String?>(json['updated_at']),
     );
   }
   @override
@@ -1516,8 +1516,8 @@ class LiftData extends DataClass implements Insertable<LiftData> {
       'reps': serializer.toJson<int>(reps),
       'weight_kg': serializer.toJson<double?>(weightKg),
       'workout': serializer.toJson<int>(workout),
-      'created_at': serializer.toJson<double?>(createdAt),
-      'updated_at': serializer.toJson<double?>(updatedAt),
+      'created_at': serializer.toJson<String?>(createdAt),
+      'updated_at': serializer.toJson<String?>(updatedAt),
     };
   }
 
@@ -1528,8 +1528,8 @@ class LiftData extends DataClass implements Insertable<LiftData> {
     int? reps,
     Value<double?> weightKg = const Value.absent(),
     int? workout,
-    Value<double?> createdAt = const Value.absent(),
-    Value<double?> updatedAt = const Value.absent(),
+    Value<String?> createdAt = const Value.absent(),
+    Value<String?> updatedAt = const Value.absent(),
   }) => LiftData(
     exercise: exercise ?? this.exercise,
     setOfSets: setOfSets ?? this.setOfSets,
@@ -1600,8 +1600,8 @@ class LiftCompanion extends UpdateCompanion<LiftData> {
   final Value<int> reps;
   final Value<double?> weightKg;
   final Value<int> workout;
-  final Value<double?> createdAt;
-  final Value<double?> updatedAt;
+  final Value<String?> createdAt;
+  final Value<String?> updatedAt;
   final Value<int> rowid;
   const LiftCompanion({
     this.exercise = const Value.absent(),
@@ -1636,8 +1636,8 @@ class LiftCompanion extends UpdateCompanion<LiftData> {
     Expression<int>? reps,
     Expression<double>? weightKg,
     Expression<int>? workout,
-    Expression<double>? createdAt,
-    Expression<double>? updatedAt,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1660,8 +1660,8 @@ class LiftCompanion extends UpdateCompanion<LiftData> {
     Value<int>? reps,
     Value<double?>? weightKg,
     Value<int>? workout,
-    Value<double?>? createdAt,
-    Value<double?>? updatedAt,
+    Value<String?>? createdAt,
+    Value<String?>? updatedAt,
     Value<int>? rowid,
   }) {
     return LiftCompanion(
@@ -1699,10 +1699,10 @@ class LiftCompanion extends UpdateCompanion<LiftData> {
       map['workout'] = Variable<int>(workout.value);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<double>(createdAt.value);
+      map['created_at'] = Variable<String>(createdAt.value);
     }
     if (updatedAt.present) {
-      map['updated_at'] = Variable<double>(updatedAt.value);
+      map['updated_at'] = Variable<String>(updatedAt.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -1788,11 +1788,11 @@ class Cardio extends Table with TableInfo<Cardio, CardioData> {
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
-  late final GeneratedColumn<double> createdAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
     'created_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -1800,11 +1800,11 @@ class Cardio extends Table with TableInfo<Cardio, CardioData> {
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
   );
-  late final GeneratedColumn<double> updatedAt = GeneratedColumn<double>(
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
     'updated_at',
     aliasedName,
     true,
-    type: DriftSqlType.double,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: 'DEFAULT CURRENT_TIMESTAMP',
     defaultValue: const CustomExpression('CURRENT_TIMESTAMP'),
@@ -1909,11 +1909,11 @@ class Cardio extends Table with TableInfo<Cardio, CardioData> {
         data['${effectivePrefix}workout'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}created_at'],
       ),
       updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.string,
         data['${effectivePrefix}updated_at'],
       ),
     );
@@ -1943,8 +1943,8 @@ class CardioData extends DataClass implements Insertable<CardioData> {
   final double? distanceM;
   final double? durationS;
   final int workout;
-  final double? createdAt;
-  final double? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   const CardioData({
     required this.exercise,
     required this.lap,
@@ -1967,10 +1967,10 @@ class CardioData extends DataClass implements Insertable<CardioData> {
     }
     map['workout'] = Variable<int>(workout);
     if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<double>(createdAt);
+      map['created_at'] = Variable<String>(createdAt);
     }
     if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<double>(updatedAt);
+      map['updated_at'] = Variable<String>(updatedAt);
     }
     return map;
   }
@@ -2006,8 +2006,8 @@ class CardioData extends DataClass implements Insertable<CardioData> {
       distanceM: serializer.fromJson<double?>(json['distance_m']),
       durationS: serializer.fromJson<double?>(json['duration_s']),
       workout: serializer.fromJson<int>(json['workout']),
-      createdAt: serializer.fromJson<double?>(json['created_at']),
-      updatedAt: serializer.fromJson<double?>(json['updated_at']),
+      createdAt: serializer.fromJson<String?>(json['created_at']),
+      updatedAt: serializer.fromJson<String?>(json['updated_at']),
     );
   }
   @override
@@ -2019,8 +2019,8 @@ class CardioData extends DataClass implements Insertable<CardioData> {
       'distance_m': serializer.toJson<double?>(distanceM),
       'duration_s': serializer.toJson<double?>(durationS),
       'workout': serializer.toJson<int>(workout),
-      'created_at': serializer.toJson<double?>(createdAt),
-      'updated_at': serializer.toJson<double?>(updatedAt),
+      'created_at': serializer.toJson<String?>(createdAt),
+      'updated_at': serializer.toJson<String?>(updatedAt),
     };
   }
 
@@ -2030,8 +2030,8 @@ class CardioData extends DataClass implements Insertable<CardioData> {
     Value<double?> distanceM = const Value.absent(),
     Value<double?> durationS = const Value.absent(),
     int? workout,
-    Value<double?> createdAt = const Value.absent(),
-    Value<double?> updatedAt = const Value.absent(),
+    Value<String?> createdAt = const Value.absent(),
+    Value<String?> updatedAt = const Value.absent(),
   }) => CardioData(
     exercise: exercise ?? this.exercise,
     lap: lap ?? this.lap,
@@ -2096,8 +2096,8 @@ class CardioCompanion extends UpdateCompanion<CardioData> {
   final Value<double?> distanceM;
   final Value<double?> durationS;
   final Value<int> workout;
-  final Value<double?> createdAt;
-  final Value<double?> updatedAt;
+  final Value<String?> createdAt;
+  final Value<String?> updatedAt;
   final Value<int> rowid;
   const CardioCompanion({
     this.exercise = const Value.absent(),
@@ -2127,8 +2127,8 @@ class CardioCompanion extends UpdateCompanion<CardioData> {
     Expression<double>? distanceM,
     Expression<double>? durationS,
     Expression<int>? workout,
-    Expression<double>? createdAt,
-    Expression<double>? updatedAt,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2149,8 +2149,8 @@ class CardioCompanion extends UpdateCompanion<CardioData> {
     Value<double?>? distanceM,
     Value<double?>? durationS,
     Value<int>? workout,
-    Value<double?>? createdAt,
-    Value<double?>? updatedAt,
+    Value<String?>? createdAt,
+    Value<String?>? updatedAt,
     Value<int>? rowid,
   }) {
     return CardioCompanion(
@@ -2184,10 +2184,10 @@ class CardioCompanion extends UpdateCompanion<CardioData> {
       map['workout'] = Variable<int>(workout.value);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<double>(createdAt.value);
+      map['created_at'] = Variable<String>(createdAt.value);
     }
     if (updatedAt.present) {
-      map['updated_at'] = Variable<double>(updatedAt.value);
+      map['updated_at'] = Variable<String>(updatedAt.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -2771,11 +2771,11 @@ class StandardsReps extends Table with TableInfo<StandardsReps, StandardsRep> {
   static const VerificationMeta _bodyweightMeta = const VerificationMeta(
     'bodyweight',
   );
-  late final GeneratedColumn<int> bodyweight = GeneratedColumn<int>(
+  late final GeneratedColumn<double> bodyweight = GeneratedColumn<double>(
     'bodyweight',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: true,
     $customConstraints: 'NOT NULL',
   );
@@ -2938,7 +2938,7 @@ class StandardsReps extends Table with TableInfo<StandardsReps, StandardsRep> {
         data['${effectivePrefix}sex'],
       )!,
       bodyweight: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}bodyweight'],
       )!,
       beginner: attachedDatabase.typeMapping.read(
@@ -2986,7 +2986,7 @@ class StandardsReps extends Table with TableInfo<StandardsReps, StandardsRep> {
 class StandardsRep extends DataClass implements Insertable<StandardsRep> {
   final String exercise;
   final String sex;
-  final int bodyweight;
+  final double bodyweight;
   final int beginner;
   final int novice;
   final int intermediate;
@@ -3007,7 +3007,7 @@ class StandardsRep extends DataClass implements Insertable<StandardsRep> {
     final map = <String, Expression>{};
     map['exercise'] = Variable<String>(exercise);
     map['sex'] = Variable<String>(sex);
-    map['bodyweight'] = Variable<int>(bodyweight);
+    map['bodyweight'] = Variable<double>(bodyweight);
     map['beginner'] = Variable<int>(beginner);
     map['novice'] = Variable<int>(novice);
     map['intermediate'] = Variable<int>(intermediate);
@@ -3037,7 +3037,7 @@ class StandardsRep extends DataClass implements Insertable<StandardsRep> {
     return StandardsRep(
       exercise: serializer.fromJson<String>(json['exercise']),
       sex: serializer.fromJson<String>(json['sex']),
-      bodyweight: serializer.fromJson<int>(json['bodyweight']),
+      bodyweight: serializer.fromJson<double>(json['bodyweight']),
       beginner: serializer.fromJson<int>(json['beginner']),
       novice: serializer.fromJson<int>(json['novice']),
       intermediate: serializer.fromJson<int>(json['intermediate']),
@@ -3051,7 +3051,7 @@ class StandardsRep extends DataClass implements Insertable<StandardsRep> {
     return <String, dynamic>{
       'exercise': serializer.toJson<String>(exercise),
       'sex': serializer.toJson<String>(sex),
-      'bodyweight': serializer.toJson<int>(bodyweight),
+      'bodyweight': serializer.toJson<double>(bodyweight),
       'beginner': serializer.toJson<int>(beginner),
       'novice': serializer.toJson<int>(novice),
       'intermediate': serializer.toJson<int>(intermediate),
@@ -3063,7 +3063,7 @@ class StandardsRep extends DataClass implements Insertable<StandardsRep> {
   StandardsRep copyWith({
     String? exercise,
     String? sex,
-    int? bodyweight,
+    double? bodyweight,
     int? beginner,
     int? novice,
     int? intermediate,
@@ -3139,7 +3139,7 @@ class StandardsRep extends DataClass implements Insertable<StandardsRep> {
 class StandardsRepsCompanion extends UpdateCompanion<StandardsRep> {
   final Value<String> exercise;
   final Value<String> sex;
-  final Value<int> bodyweight;
+  final Value<double> bodyweight;
   final Value<int> beginner;
   final Value<int> novice;
   final Value<int> intermediate;
@@ -3160,7 +3160,7 @@ class StandardsRepsCompanion extends UpdateCompanion<StandardsRep> {
   StandardsRepsCompanion.insert({
     required String exercise,
     required String sex,
-    required int bodyweight,
+    required double bodyweight,
     required int beginner,
     required int novice,
     required int intermediate,
@@ -3178,7 +3178,7 @@ class StandardsRepsCompanion extends UpdateCompanion<StandardsRep> {
   static Insertable<StandardsRep> custom({
     Expression<String>? exercise,
     Expression<String>? sex,
-    Expression<int>? bodyweight,
+    Expression<double>? bodyweight,
     Expression<int>? beginner,
     Expression<int>? novice,
     Expression<int>? intermediate,
@@ -3202,7 +3202,7 @@ class StandardsRepsCompanion extends UpdateCompanion<StandardsRep> {
   StandardsRepsCompanion copyWith({
     Value<String>? exercise,
     Value<String>? sex,
-    Value<int>? bodyweight,
+    Value<double>? bodyweight,
     Value<int>? beginner,
     Value<int>? novice,
     Value<int>? intermediate,
@@ -3233,7 +3233,7 @@ class StandardsRepsCompanion extends UpdateCompanion<StandardsRep> {
       map['sex'] = Variable<String>(sex.value);
     }
     if (bodyweight.present) {
-      map['bodyweight'] = Variable<int>(bodyweight.value);
+      map['bodyweight'] = Variable<double>(bodyweight.value);
     }
     if (beginner.present) {
       map['beginner'] = Variable<int>(beginner.value);
@@ -3894,6 +3894,49 @@ abstract class _$AppDb extends GeneratedDatabase {
     ).asyncMap(lift.mapFromRow);
   }
 
+  Selectable<CardioData> get_workout_cardio(int var1) {
+    return customSelect(
+      'SELECT * FROM Cardio WHERE workout = ?1',
+      variables: [Variable<int>(var1)],
+      readsFrom: {cardio},
+    ).asyncMap(cardio.mapFromRow);
+  }
+
+  Selectable<String> get_names_weight() {
+    return customSelect(
+      'SELECT DISTINCT exercise FROM StandardsWeight',
+      variables: [],
+      readsFrom: {standardsWeight},
+    ).map((QueryRow row) => row.read<String>('exercise'));
+  }
+
+  Selectable<String> get_names_reps() {
+    return customSelect(
+      'SELECT DISTINCT exercise FROM StandardsReps',
+      variables: [],
+      readsFrom: {standardsReps},
+    ).map((QueryRow row) => row.read<String>('exercise'));
+  }
+
+  Selectable<StandardsWeightData> get_standard_weight(
+    String var1,
+    String var2,
+  ) {
+    return customSelect(
+      'SELECT * FROM StandardsWeight WHERE sex = ?1 AND exercise = ?2 ORDER BY bodyweight ASC',
+      variables: [Variable<String>(var1), Variable<String>(var2)],
+      readsFrom: {standardsWeight},
+    ).asyncMap(standardsWeight.mapFromRow);
+  }
+
+  Selectable<StandardsRep> get_standard_reps(String var1, String var2) {
+    return customSelect(
+      'SELECT * FROM StandardsReps WHERE sex = ?1 AND exercise = ?2 ORDER BY bodyweight ASC',
+      variables: [Variable<String>(var1), Variable<String>(var2)],
+      readsFrom: {standardsReps},
+    ).asyncMap(standardsReps.mapFromRow);
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4111,15 +4154,15 @@ typedef $MuscleProcessedTableManager =
 typedef $EquipmentCreateCompanionBuilder =
     EquipmentCompanion Function({
       required String id,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 typedef $EquipmentUpdateCompanionBuilder =
     EquipmentCompanion Function({
       Value<String> id,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 
@@ -4160,12 +4203,12 @@ class $EquipmentFilterComposer extends Composer<_$AppDb, Equipment> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get createdAt => $composableBuilder(
+  ColumnFilters<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get updatedAt => $composableBuilder(
+  ColumnFilters<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
@@ -4209,12 +4252,12 @@ class $EquipmentOrderingComposer extends Composer<_$AppDb, Equipment> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get createdAt => $composableBuilder(
+  ColumnOrderings<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get updatedAt => $composableBuilder(
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
@@ -4231,10 +4274,10 @@ class $EquipmentAnnotationComposer extends Composer<_$AppDb, Equipment> {
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<double> get createdAt =>
+  GeneratedColumn<String> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<double> get updatedAt =>
+  GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> exercisesRefs<T extends Object>(
@@ -4292,8 +4335,8 @@ class $EquipmentTableManager
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => EquipmentCompanion(
                 id: id,
@@ -4304,8 +4347,8 @@ class $EquipmentTableManager
           createCompanionCallback:
               ({
                 required String id,
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => EquipmentCompanion.insert(
                 id: id,
@@ -4368,8 +4411,8 @@ typedef $ExercisesCreateCompanionBuilder =
       required String id,
       required String muscle,
       Value<String?> equipment,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 typedef $ExercisesUpdateCompanionBuilder =
@@ -4377,8 +4420,8 @@ typedef $ExercisesUpdateCompanionBuilder =
       Value<String> id,
       Value<String> muscle,
       Value<String?> equipment,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 
@@ -4537,12 +4580,12 @@ class $ExercisesFilterComposer extends Composer<_$AppDb, Exercises> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get createdAt => $composableBuilder(
+  ColumnFilters<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get updatedAt => $composableBuilder(
+  ColumnFilters<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
@@ -4732,12 +4775,12 @@ class $ExercisesOrderingComposer extends Composer<_$AppDb, Exercises> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get createdAt => $composableBuilder(
+  ColumnOrderings<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get updatedAt => $composableBuilder(
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
@@ -4800,10 +4843,10 @@ class $ExercisesAnnotationComposer extends Composer<_$AppDb, Exercises> {
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<double> get createdAt =>
+  GeneratedColumn<String> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<double> get updatedAt =>
+  GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $MuscleAnnotationComposer get muscle {
@@ -5017,8 +5060,8 @@ class $ExercisesTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> muscle = const Value.absent(),
                 Value<String?> equipment = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ExercisesCompanion(
                 id: id,
@@ -5033,8 +5076,8 @@ class $ExercisesTableManager
                 required String id,
                 required String muscle,
                 Value<String?> equipment = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ExercisesCompanion.insert(
                 id: id,
@@ -5244,19 +5287,19 @@ typedef $WorkoutsCreateCompanionBuilder =
     WorkoutsCompanion Function({
       Value<int> id,
       required String title,
-      required double startTime,
-      required double endTime,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      required int startTime,
+      required int endTime,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
     });
 typedef $WorkoutsUpdateCompanionBuilder =
     WorkoutsCompanion Function({
       Value<int> id,
       Value<String> title,
-      Value<double> startTime,
-      Value<double> endTime,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<int> startTime,
+      Value<int> endTime,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
     });
 
 final class $WorkoutsReferences
@@ -5319,22 +5362,22 @@ class $WorkoutsFilterComposer extends Composer<_$AppDb, Workouts> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get startTime => $composableBuilder(
+  ColumnFilters<int> get startTime => $composableBuilder(
     column: $table.startTime,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get endTime => $composableBuilder(
+  ColumnFilters<int> get endTime => $composableBuilder(
     column: $table.endTime,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get createdAt => $composableBuilder(
+  ColumnFilters<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get updatedAt => $composableBuilder(
+  ColumnFilters<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
@@ -5408,22 +5451,22 @@ class $WorkoutsOrderingComposer extends Composer<_$AppDb, Workouts> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get startTime => $composableBuilder(
+  ColumnOrderings<int> get startTime => $composableBuilder(
     column: $table.startTime,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get endTime => $composableBuilder(
+  ColumnOrderings<int> get endTime => $composableBuilder(
     column: $table.endTime,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get createdAt => $composableBuilder(
+  ColumnOrderings<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get updatedAt => $composableBuilder(
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
@@ -5443,16 +5486,16 @@ class $WorkoutsAnnotationComposer extends Composer<_$AppDb, Workouts> {
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
 
-  GeneratedColumn<double> get startTime =>
+  GeneratedColumn<int> get startTime =>
       $composableBuilder(column: $table.startTime, builder: (column) => column);
 
-  GeneratedColumn<double> get endTime =>
+  GeneratedColumn<int> get endTime =>
       $composableBuilder(column: $table.endTime, builder: (column) => column);
 
-  GeneratedColumn<double> get createdAt =>
+  GeneratedColumn<String> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<double> get updatedAt =>
+  GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> liftRefs<T extends Object>(
@@ -5536,10 +5579,10 @@ class $WorkoutsTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> title = const Value.absent(),
-                Value<double> startTime = const Value.absent(),
-                Value<double> endTime = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<int> startTime = const Value.absent(),
+                Value<int> endTime = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
               }) => WorkoutsCompanion(
                 id: id,
                 title: title,
@@ -5552,10 +5595,10 @@ class $WorkoutsTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required String title,
-                required double startTime,
-                required double endTime,
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                required int startTime,
+                required int endTime,
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
               }) => WorkoutsCompanion.insert(
                 id: id,
                 title: title,
@@ -5629,8 +5672,8 @@ typedef $LiftCreateCompanionBuilder =
       required int reps,
       Value<double?> weightKg,
       required int workout,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 typedef $LiftUpdateCompanionBuilder =
@@ -5641,8 +5684,8 @@ typedef $LiftUpdateCompanionBuilder =
       Value<int> reps,
       Value<double?> weightKg,
       Value<int> workout,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 
@@ -5714,12 +5757,12 @@ class $LiftFilterComposer extends Composer<_$AppDb, Lift> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get createdAt => $composableBuilder(
+  ColumnFilters<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get updatedAt => $composableBuilder(
+  ColumnFilters<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
@@ -5799,12 +5842,12 @@ class $LiftOrderingComposer extends Composer<_$AppDb, Lift> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get createdAt => $composableBuilder(
+  ColumnOrderings<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get updatedAt => $composableBuilder(
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
@@ -5876,10 +5919,10 @@ class $LiftAnnotationComposer extends Composer<_$AppDb, Lift> {
   GeneratedColumn<double> get weightKg =>
       $composableBuilder(column: $table.weightKg, builder: (column) => column);
 
-  GeneratedColumn<double> get createdAt =>
+  GeneratedColumn<String> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<double> get updatedAt =>
+  GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $ExercisesAnnotationComposer get exercise {
@@ -5963,8 +6006,8 @@ class $LiftTableManager
                 Value<int> reps = const Value.absent(),
                 Value<double?> weightKg = const Value.absent(),
                 Value<int> workout = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LiftCompanion(
                 exercise: exercise,
@@ -5985,8 +6028,8 @@ class $LiftTableManager
                 required int reps,
                 Value<double?> weightKg = const Value.absent(),
                 required int workout,
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LiftCompanion.insert(
                 exercise: exercise,
@@ -6083,8 +6126,8 @@ typedef $CardioCreateCompanionBuilder =
       Value<double?> distanceM,
       Value<double?> durationS,
       required int workout,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 typedef $CardioUpdateCompanionBuilder =
@@ -6094,8 +6137,8 @@ typedef $CardioUpdateCompanionBuilder =
       Value<double?> distanceM,
       Value<double?> durationS,
       Value<int> workout,
-      Value<double?> createdAt,
-      Value<double?> updatedAt,
+      Value<String?> createdAt,
+      Value<String?> updatedAt,
       Value<int> rowid,
     });
 
@@ -6163,12 +6206,12 @@ class $CardioFilterComposer extends Composer<_$AppDb, Cardio> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get createdAt => $composableBuilder(
+  ColumnFilters<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get updatedAt => $composableBuilder(
+  ColumnFilters<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
@@ -6243,12 +6286,12 @@ class $CardioOrderingComposer extends Composer<_$AppDb, Cardio> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get createdAt => $composableBuilder(
+  ColumnOrderings<String> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get updatedAt => $composableBuilder(
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
@@ -6317,10 +6360,10 @@ class $CardioAnnotationComposer extends Composer<_$AppDb, Cardio> {
   GeneratedColumn<double> get durationS =>
       $composableBuilder(column: $table.durationS, builder: (column) => column);
 
-  GeneratedColumn<double> get createdAt =>
+  GeneratedColumn<String> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<double> get updatedAt =>
+  GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $ExercisesAnnotationComposer get exercise {
@@ -6403,8 +6446,8 @@ class $CardioTableManager
                 Value<double?> distanceM = const Value.absent(),
                 Value<double?> durationS = const Value.absent(),
                 Value<int> workout = const Value.absent(),
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CardioCompanion(
                 exercise: exercise,
@@ -6423,8 +6466,8 @@ class $CardioTableManager
                 Value<double?> distanceM = const Value.absent(),
                 Value<double?> durationS = const Value.absent(),
                 required int workout,
-                Value<double?> createdAt = const Value.absent(),
-                Value<double?> updatedAt = const Value.absent(),
+                Value<String?> createdAt = const Value.absent(),
+                Value<String?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CardioCompanion.insert(
                 exercise: exercise,
@@ -6894,7 +6937,7 @@ typedef $StandardsRepsCreateCompanionBuilder =
     StandardsRepsCompanion Function({
       required String exercise,
       required String sex,
-      required int bodyweight,
+      required double bodyweight,
       required int beginner,
       required int novice,
       required int intermediate,
@@ -6906,7 +6949,7 @@ typedef $StandardsRepsUpdateCompanionBuilder =
     StandardsRepsCompanion Function({
       Value<String> exercise,
       Value<String> sex,
-      Value<int> bodyweight,
+      Value<double> bodyweight,
       Value<int> beginner,
       Value<int> novice,
       Value<int> intermediate,
@@ -6951,7 +6994,7 @@ class $StandardsRepsFilterComposer extends Composer<_$AppDb, StandardsReps> {
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get bodyweight => $composableBuilder(
+  ColumnFilters<double> get bodyweight => $composableBuilder(
     column: $table.bodyweight,
     builder: (column) => ColumnFilters(column),
   );
@@ -7018,7 +7061,7 @@ class $StandardsRepsOrderingComposer extends Composer<_$AppDb, StandardsReps> {
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get bodyweight => $composableBuilder(
+  ColumnOrderings<double> get bodyweight => $composableBuilder(
     column: $table.bodyweight,
     builder: (column) => ColumnOrderings(column),
   );
@@ -7084,7 +7127,7 @@ class $StandardsRepsAnnotationComposer
   GeneratedColumn<String> get sex =>
       $composableBuilder(column: $table.sex, builder: (column) => column);
 
-  GeneratedColumn<int> get bodyweight => $composableBuilder(
+  GeneratedColumn<double> get bodyweight => $composableBuilder(
     column: $table.bodyweight,
     builder: (column) => column,
   );
@@ -7160,7 +7203,7 @@ class $StandardsRepsTableManager
               ({
                 Value<String> exercise = const Value.absent(),
                 Value<String> sex = const Value.absent(),
-                Value<int> bodyweight = const Value.absent(),
+                Value<double> bodyweight = const Value.absent(),
                 Value<int> beginner = const Value.absent(),
                 Value<int> novice = const Value.absent(),
                 Value<int> intermediate = const Value.absent(),
@@ -7182,7 +7225,7 @@ class $StandardsRepsTableManager
               ({
                 required String exercise,
                 required String sex,
-                required int bodyweight,
+                required double bodyweight,
                 required int beginner,
                 required int novice,
                 required int intermediate,
