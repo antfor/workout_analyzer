@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/collection.dart';
-import 'package:workout_analyzer/data/local/drift/database.dart' as db;
 import 'package:workout_analyzer/data/local/drift/mapper/mapper.dart';
 import 'package:workout_analyzer/domain/cardio.dart';
 import 'package:workout_analyzer/domain/domain.dart';
@@ -10,6 +9,7 @@ import 'package:workout_analyzer/domain/standards/standards.dart';
 import 'package:workout_analyzer/domain/workout.dart';
 import 'package:workout_analyzer/repository/import/import.dart';
 import 'package:workout_analyzer/repository/import/map.dart';
+import 'package:workout_analyzer/data/local/drift/database.dart' as db;
 
 final repoProvider = Provider<Repo?>((ref) {
   return Repo.getRepo();
@@ -86,7 +86,7 @@ class Repo{
     final List<StandardTable> reps = [];
     for(final name in namesR){
       final data = await localDB.get_standard_reps(sex.string, name).get();
-      weight.add(StandardsRepsMapper.fromRows(name, data));
+      reps.add(StandardsRepsMapper.fromRows(name, data));
     }
     final List<StandardRatio> ratio = [];
 
