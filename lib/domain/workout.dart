@@ -5,6 +5,8 @@ import 'exercise.dart';
 
 class Workout implements Comparable<Workout>{
 
+
+  final int id;
   final String title;
   final DateTime startTime;
   final DateTime endTime;
@@ -12,6 +14,7 @@ class Workout implements Comparable<Workout>{
   final List<Exercise> exercises = [];
 
   Workout({
+    required this.id,
     required this.title,
     required this.startTime,
     required this.endTime,
