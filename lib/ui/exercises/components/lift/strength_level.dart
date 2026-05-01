@@ -40,20 +40,20 @@ class _StrengthLevel extends State<StrengthLevel>{
 
 }
 
-Widget dropdownWeight(double? bodyWeight, double realBw, Iterable<int> bws, void Function(double?) setWeight){
+Widget dropdownWeight(double? bodyWeight, double realBw, Iterable<num> bws, void Function(double?) setWeight){
 
   final controller = TextEditingController(text:'${bodyWeight ?? realBw} kg');
 
-  return DropdownMenu<double>(
+  return DropdownMenu<num>(
               controller: controller,
               requestFocusOnTap: false, // prevents keyboard from opening
               onSelected: (value) {
                 //controller.text = '$value kg'; 
-                setWeight(value);
+                setWeight(value?.toDouble());
               },
               initialSelection: realBw,
               menuHeight: 200,
-              dropdownMenuEntries: entries([realBw, ...bws.map((i)=>i.toDouble())]),
+              dropdownMenuEntries: entries(<num>[realBw, ...bws]),
             );
 }
 
