@@ -55,13 +55,13 @@ class Standards{
   final Sex sex;
   final List<StandardTable> weights;
   final List<StandardTable> reps;
-  final List<StandardRatio> ratios;
+  final List<StandardRatio> ratios;//TODO remove?
   final Map<String, String> mapNames;
 
   Standards._male({required this.weights, required this.reps, required this.ratios, required this.mapNames}):sex=Sex.male;
   Standards._female({required this.weights, required this.reps, required this.ratios, required this.mapNames}):sex=Sex.female;
 
-  factory Standards(Sex sex, {required weight, required reps, required ratio, required Map<String, String> mapNames}){
+  factory Standards(Sex sex, {required List<StandardTable> weight, required List<StandardTable> reps, required List<StandardRatio> ratio, required Map<String, String> mapNames}){
     if(sex == Sex.male){
       _male ??= Standards._male(weights: weight, reps: reps, ratios: ratio, mapNames: mapNames);
       return _male!; 
@@ -144,20 +144,24 @@ class StandardRatio {
 
 class StandardTable {
 
-  final List<int> bodyweight;
+  final List<num> bodyweight;
 
   final String id;
-  final List<int> beginner;
-  final List<int> novice;
-  final List<int> intermediate;
-  final List<int> advanced;
-  final List<int> elite;
+  final List<num> beginner;
+  final List<num> novice;
+  final List<num> intermediate;
+  final List<num> advanced;
+  final List<num> elite;
 
   StandardTable(this.id, this.bodyweight, this.beginner, this.novice, this.intermediate, this.advanced, this.elite);
+  
+  int getIndex(double bw){
+    int iwclass = bodyweight.indexWhere((b) => bw <= b);
+    return iwclass == -1 ? bodyweight.length-1 : iwclass;
+  }
 
-  int value(double bw, Level level) {
-    int wclass = bodyweight.firstWhere((b) => bw <= b);
-    wclass = wclass == -1 ? bodyweight.last : wclass;
+  num value(double bw, Level level) {
+    final wclass = getIndex(bw);
 
     switch(level){
       case Level.beginner: return beginner[wclass];
@@ -168,11 +172,10 @@ class StandardTable {
     }
   }
 
-  List<int> standrads(int index) => [beginner, novice, intermediate, advanced, elite].map((l)=>l[index]).toList();
+  List<num> standrads(int index) => [beginner, novice, intermediate, advanced, elite].map((l)=>l[index]).toList();
   
   Level level(double bw, double lift){
-    int iwclass = bodyweight.toList().indexWhere((b) => bw <= b);
-    iwclass = iwclass == -1 ? math.min(bodyweight.length-1,0) : iwclass;
+    final iwclass = getIndex(bw);
 
     int index = standrads(iwclass).indexWhere((sd) => lift < sd);
     index = index == -1 ? eliteIndex : index-1;
@@ -181,8 +184,7 @@ class StandardTable {
   }
 
   double levelValue(double bw, double lift){
-    int iwclass = bodyweight.toList().indexWhere((b) => bw <= b);
-    iwclass = iwclass == -1 ? bodyweight.length-1 : iwclass;
+    final iwclass = getIndex(bw);
 
     int index = standrads(iwclass).indexWhere((sd) => lift < sd);
     index = index == -1 ? eliteIndex : index;
