@@ -1,26 +1,33 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/domain/domain.dart';
-import '/domain/standards/muscle_group.dart';
-import '/domain/standards/standards.dart';
-import '/repository/import.dart';
+import 'package:workout_analyzer/repository/repo.dart';
 
-final domainProvider = FutureProvider.family<Domain, DomainArgs>((ref, args) async {
 
-  return await importDataFromCsv(args.muscles, args.male, args.female, args.filePath);
-});
+class DomainNotifier extends AsyncNotifier<Domain?> {
 
-class DomainArgs {
-  final Map<String, Muscle> muscles;
-  final Standards male;
-  final Standards female;
-  final String filePath;
-  
-  const DomainArgs(this.muscles, this.male, this.female, this.filePath);
+  @override Future<Domain?> build() async => ref.read(repoProvider)?.getDomain();
 
-  @override bool operator ==(Object other) => 
-    identical(this, other) || other is DomainArgs && other.filePath == filePath;
 
-  @override 
-  int get hashCode => Object.hash(muscles, male, female, filePath);
+  Future<void> setDomain(Domain? d) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async => d);
+  }
+
+  Future<void> importDomain(String filePath) async {
+    final repo = ref.read(repoProvider);
+    if (repo == null) return;
+
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final current = state.value;
+      return repo.importCSV(filePath, current);
+    });
+  }
 }
+
+
+final domainProvider = AsyncNotifierProvider<DomainNotifier, Domain?>(DomainNotifier.new);
+
+
