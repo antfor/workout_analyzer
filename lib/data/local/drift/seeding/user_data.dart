@@ -13,27 +13,26 @@ UserData userData(Iterable<Workout> workouts){
       for (final workout in workouts){
         workoutsInserts.add(
           db.WorkoutsCompanion.insert(
+            id: Value(workout.id),
             title: workout.title,
-            startTime: workout.startTime.millisecondsSinceEpoch.toDouble() ,
-            endTime: workout.endTime.millisecondsSinceEpoch.toDouble(),
+            startTime: workout.startTime.millisecondsSinceEpoch,
+            endTime: workout.endTime.millisecondsSinceEpoch,
           ),
         );
+
         //Lift
-        final ids = workout.exercises.map((e)=> e.id);
-        final setId = ids.toSet();
-        for(final id in setId){
-          int setOfSets = 1;
-          for(final lift in workout.exercises.where((e)=>e.id==id)){
+        final unique = workout.exercises.map((e)=>e.id).toSet();
+        for(final id in unique){
+          final exercises =  workout.exercises.where((e) => e.id == id);
+          int setOfSets = 0;
+          for(final lift in exercises){
+            if(lift.setIndex == 0) setOfSets +=1;
+
             liftInserts.add(
               db.LiftCompanion.insert(exercise:lift.id, setOfSets:setOfSets, setIndex:lift.setIndex, reps:lift.reps, weightKg: Value(lift.weightKg), workout:workout.id),);
-            setOfSets +=1;
           }
-        }/*
-        for(final lift in workout.exercises){
-          liftInserts.add(
-            db.LiftCompanion.insert(exercise:lift.id, setOfSets:1, setIndex:lift.setIndex, reps:lift.reps, weightKg: Value(lift.weightKg), workout:workout.id),);
         }
-        */
+      
         //cardio
         for(final cardio in workout.cardio){
           cardioInserts.add(

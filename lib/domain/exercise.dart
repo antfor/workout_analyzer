@@ -18,6 +18,7 @@ class Exercise implements Comparable<Exercise> {
   final double weightKg; //weight_kg[]
   final int reps; //reps[]
   final double volume;
+  final int setOfSets;
   //final List<ExerciseRecord> Records = []; //TODO add records
 
   Exercise({
@@ -26,6 +27,7 @@ class Exercise implements Comparable<Exercise> {
     required this.weightKg,
     required this.reps,
     required this.workout,
+    this.setOfSets = 1,
   }): volume = reps * weightKg;
   
   double get orm => epleyORM(weightKg, reps);

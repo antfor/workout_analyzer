@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_analyzer/state/domain.dart';
 import '/domain/standards/standards.dart';
 import '/state/settings.dart';
 import 'package:file_picker/file_picker.dart';
@@ -60,7 +61,7 @@ class Settings extends StatelessWidget {
 
 Widget importData(WidgetRef ref){
 
-  final editSettings = ref.read(settingsProvider.notifier);
+  final notifier = ref.read(domainProvider.notifier);
 
   void pickFile() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -72,7 +73,7 @@ Widget importData(WidgetRef ref){
     if(result != null && result.files.single.path != null ){
       final String path = result.files.single.path!;
       
-      editSettings.setFilePath(path);
+      notifier.importDomain(path);
     }
   }
 
