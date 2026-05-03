@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:workout_analyzer/data/local/drift/seeding/static_data.dart';
@@ -20,10 +19,9 @@ typedef DdError = (Object,StackTrace)?;
   // imports
   include: {'tables.drift', 'queries/test.drift'},
 )
-class AppDb extends _$AppDb {
+class SharedDatabase extends _$SharedDatabase {
 
-
-  AppDb(): super(_openConnection());
+  SharedDatabase(super.e);
 
   @override
   int get schemaVersion => 1;
@@ -90,18 +88,6 @@ class AppDb extends _$AppDb {
     return null;
   }
 
-}
-
-LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
-  return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-
-    return NativeDatabase(file);
-  });
 }
 
 Future<void> resetDatabase() async {

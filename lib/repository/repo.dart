@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/collection.dart';
 import 'package:workout_analyzer/data/local/drift/mapper/mapper.dart';
@@ -18,12 +20,12 @@ final repoProvider = Provider<Repo?>((ref) {
 class Repo{
 
 
-  final db.AppDb localDB;
+  final db.SharedDatabase localDB;
   final Cache cache = Cache.getCache();
 
   static Repo? _repo;
 
-  static Repo initRepo(db.AppDb localDB){
+  static Repo initRepo(db.SharedDatabase localDB){
 
     _repo ??= Repo._(localDB);
 
