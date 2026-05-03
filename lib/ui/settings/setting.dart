@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_analyzer/state/domain.dart';
@@ -68,12 +70,13 @@ Widget importData(WidgetRef ref){
       allowMultiple: true,
       type: FileType.custom,
       allowedExtensions: ['csv'],
+      withData: true, 
     );
 
-    if(result != null && result.files.single.path != null ){
-      final String path = result.files.single.path!;
+    if(result != null && result.files.single.bytes != null ){
+      final Uint8List data = result.files.single.bytes!;
       
-      notifier.importDomain(path);
+      notifier.importDomain(data);
     }
   }
 

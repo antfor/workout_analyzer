@@ -3850,9 +3850,9 @@ class StandardsCardioCompanion extends UpdateCompanion<StandardsCardioData> {
   }
 }
 
-abstract class _$AppDb extends GeneratedDatabase {
-  _$AppDb(QueryExecutor e) : super(e);
-  $AppDbManager get managers => $AppDbManager(this);
+abstract class _$SharedDatabase extends GeneratedDatabase {
+  _$SharedDatabase(QueryExecutor e) : super(e);
+  $SharedDatabaseManager get managers => $SharedDatabaseManager(this);
   late final Muscle muscle = Muscle(this);
   late final Equipment equipment = Equipment(this);
   late final Exercises exercises = Exercises(this);
@@ -3960,11 +3960,11 @@ typedef $MuscleUpdateCompanionBuilder =
     MuscleCompanion Function({Value<String> id, Value<int> rowid});
 
 final class $MuscleReferences
-    extends BaseReferences<_$AppDb, Muscle, MuscleData> {
+    extends BaseReferences<_$SharedDatabase, Muscle, MuscleData> {
   $MuscleReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<Exercises, List<Exercise>> _exercisesRefsTable(
-    _$AppDb db,
+    _$SharedDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.exercises,
     aliasName: $_aliasNameGenerator(db.muscle.id, db.exercises.muscle),
@@ -3983,7 +3983,7 @@ final class $MuscleReferences
   }
 }
 
-class $MuscleFilterComposer extends Composer<_$AppDb, Muscle> {
+class $MuscleFilterComposer extends Composer<_$SharedDatabase, Muscle> {
   $MuscleFilterComposer({
     required super.$db,
     required super.$table,
@@ -4022,7 +4022,7 @@ class $MuscleFilterComposer extends Composer<_$AppDb, Muscle> {
   }
 }
 
-class $MuscleOrderingComposer extends Composer<_$AppDb, Muscle> {
+class $MuscleOrderingComposer extends Composer<_$SharedDatabase, Muscle> {
   $MuscleOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4036,7 +4036,7 @@ class $MuscleOrderingComposer extends Composer<_$AppDb, Muscle> {
   );
 }
 
-class $MuscleAnnotationComposer extends Composer<_$AppDb, Muscle> {
+class $MuscleAnnotationComposer extends Composer<_$SharedDatabase, Muscle> {
   $MuscleAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4076,7 +4076,7 @@ class $MuscleAnnotationComposer extends Composer<_$AppDb, Muscle> {
 class $MuscleTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Muscle,
           MuscleData,
           $MuscleFilterComposer,
@@ -4088,7 +4088,7 @@ class $MuscleTableManager
           MuscleData,
           PrefetchHooks Function({bool exercisesRefs})
         > {
-  $MuscleTableManager(_$AppDb db, Muscle table)
+  $MuscleTableManager(_$SharedDatabase db, Muscle table)
     : super(
         TableManagerState(
           db: db,
@@ -4139,7 +4139,7 @@ class $MuscleTableManager
 
 typedef $MuscleProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Muscle,
       MuscleData,
       $MuscleFilterComposer,
@@ -4167,11 +4167,11 @@ typedef $EquipmentUpdateCompanionBuilder =
     });
 
 final class $EquipmentReferences
-    extends BaseReferences<_$AppDb, Equipment, EquipmentData> {
+    extends BaseReferences<_$SharedDatabase, Equipment, EquipmentData> {
   $EquipmentReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<Exercises, List<Exercise>> _exercisesRefsTable(
-    _$AppDb db,
+    _$SharedDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.exercises,
     aliasName: $_aliasNameGenerator(db.equipment.id, db.exercises.equipment),
@@ -4190,7 +4190,7 @@ final class $EquipmentReferences
   }
 }
 
-class $EquipmentFilterComposer extends Composer<_$AppDb, Equipment> {
+class $EquipmentFilterComposer extends Composer<_$SharedDatabase, Equipment> {
   $EquipmentFilterComposer({
     required super.$db,
     required super.$table,
@@ -4239,7 +4239,7 @@ class $EquipmentFilterComposer extends Composer<_$AppDb, Equipment> {
   }
 }
 
-class $EquipmentOrderingComposer extends Composer<_$AppDb, Equipment> {
+class $EquipmentOrderingComposer extends Composer<_$SharedDatabase, Equipment> {
   $EquipmentOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4263,7 +4263,8 @@ class $EquipmentOrderingComposer extends Composer<_$AppDb, Equipment> {
   );
 }
 
-class $EquipmentAnnotationComposer extends Composer<_$AppDb, Equipment> {
+class $EquipmentAnnotationComposer
+    extends Composer<_$SharedDatabase, Equipment> {
   $EquipmentAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4309,7 +4310,7 @@ class $EquipmentAnnotationComposer extends Composer<_$AppDb, Equipment> {
 class $EquipmentTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Equipment,
           EquipmentData,
           $EquipmentFilterComposer,
@@ -4321,7 +4322,7 @@ class $EquipmentTableManager
           EquipmentData,
           PrefetchHooks Function({bool exercisesRefs})
         > {
-  $EquipmentTableManager(_$AppDb db, Equipment table)
+  $EquipmentTableManager(_$SharedDatabase db, Equipment table)
     : super(
         TableManagerState(
           db: db,
@@ -4394,7 +4395,7 @@ class $EquipmentTableManager
 
 typedef $EquipmentProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Equipment,
       EquipmentData,
       $EquipmentFilterComposer,
@@ -4426,10 +4427,10 @@ typedef $ExercisesUpdateCompanionBuilder =
     });
 
 final class $ExercisesReferences
-    extends BaseReferences<_$AppDb, Exercises, Exercise> {
+    extends BaseReferences<_$SharedDatabase, Exercises, Exercise> {
   $ExercisesReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Muscle _muscleTable(_$AppDb db) => db.muscle.createAlias(
+  static Muscle _muscleTable(_$SharedDatabase db) => db.muscle.createAlias(
     $_aliasNameGenerator(db.exercises.muscle, db.muscle.id),
   );
 
@@ -4447,9 +4448,10 @@ final class $ExercisesReferences
     );
   }
 
-  static Equipment _equipmentTable(_$AppDb db) => db.equipment.createAlias(
-    $_aliasNameGenerator(db.exercises.equipment, db.equipment.id),
-  );
+  static Equipment _equipmentTable(_$SharedDatabase db) =>
+      db.equipment.createAlias(
+        $_aliasNameGenerator(db.exercises.equipment, db.equipment.id),
+      );
 
   $EquipmentProcessedTableManager? get equipment {
     final $_column = $_itemColumn<String>('equipment');
@@ -4465,11 +4467,12 @@ final class $ExercisesReferences
     );
   }
 
-  static MultiTypedResultKey<Lift, List<LiftData>> _liftRefsTable(_$AppDb db) =>
-      MultiTypedResultKey.fromTable(
-        db.lift,
-        aliasName: $_aliasNameGenerator(db.exercises.id, db.lift.exercise),
-      );
+  static MultiTypedResultKey<Lift, List<LiftData>> _liftRefsTable(
+    _$SharedDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.lift,
+    aliasName: $_aliasNameGenerator(db.exercises.id, db.lift.exercise),
+  );
 
   $LiftProcessedTableManager get liftRefs {
     final manager = $LiftTableManager(
@@ -4484,7 +4487,7 @@ final class $ExercisesReferences
   }
 
   static MultiTypedResultKey<Cardio, List<CardioData>> _cardioRefsTable(
-    _$AppDb db,
+    _$SharedDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.cardio,
     aliasName: $_aliasNameGenerator(db.exercises.id, db.cardio.exercise),
@@ -4503,13 +4506,14 @@ final class $ExercisesReferences
   }
 
   static MultiTypedResultKey<StandardsWeight, List<StandardsWeightData>>
-  _standardsWeightRefsTable(_$AppDb db) => MultiTypedResultKey.fromTable(
-    db.standardsWeight,
-    aliasName: $_aliasNameGenerator(
-      db.exercises.id,
-      db.standardsWeight.exercise,
-    ),
-  );
+  _standardsWeightRefsTable(_$SharedDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.standardsWeight,
+        aliasName: $_aliasNameGenerator(
+          db.exercises.id,
+          db.standardsWeight.exercise,
+        ),
+      );
 
   $StandardsWeightProcessedTableManager get standardsWeightRefs {
     final manager = $StandardsWeightTableManager(
@@ -4526,7 +4530,7 @@ final class $ExercisesReferences
   }
 
   static MultiTypedResultKey<StandardsReps, List<StandardsRep>>
-  _standardsRepsRefsTable(_$AppDb db) => MultiTypedResultKey.fromTable(
+  _standardsRepsRefsTable(_$SharedDatabase db) => MultiTypedResultKey.fromTable(
     db.standardsReps,
     aliasName: $_aliasNameGenerator(db.exercises.id, db.standardsReps.exercise),
   );
@@ -4544,13 +4548,14 @@ final class $ExercisesReferences
   }
 
   static MultiTypedResultKey<StandardsCardio, List<StandardsCardioData>>
-  _standardsCardioRefsTable(_$AppDb db) => MultiTypedResultKey.fromTable(
-    db.standardsCardio,
-    aliasName: $_aliasNameGenerator(
-      db.exercises.id,
-      db.standardsCardio.exercise,
-    ),
-  );
+  _standardsCardioRefsTable(_$SharedDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.standardsCardio,
+        aliasName: $_aliasNameGenerator(
+          db.exercises.id,
+          db.standardsCardio.exercise,
+        ),
+      );
 
   $StandardsCardioProcessedTableManager get standardsCardioRefs {
     final manager = $StandardsCardioTableManager(
@@ -4567,7 +4572,7 @@ final class $ExercisesReferences
   }
 }
 
-class $ExercisesFilterComposer extends Composer<_$AppDb, Exercises> {
+class $ExercisesFilterComposer extends Composer<_$SharedDatabase, Exercises> {
   $ExercisesFilterComposer({
     required super.$db,
     required super.$table,
@@ -4762,7 +4767,7 @@ class $ExercisesFilterComposer extends Composer<_$AppDb, Exercises> {
   }
 }
 
-class $ExercisesOrderingComposer extends Composer<_$AppDb, Exercises> {
+class $ExercisesOrderingComposer extends Composer<_$SharedDatabase, Exercises> {
   $ExercisesOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4832,7 +4837,8 @@ class $ExercisesOrderingComposer extends Composer<_$AppDb, Exercises> {
   }
 }
 
-class $ExercisesAnnotationComposer extends Composer<_$AppDb, Exercises> {
+class $ExercisesAnnotationComposer
+    extends Composer<_$SharedDatabase, Exercises> {
   $ExercisesAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5024,7 +5030,7 @@ class $ExercisesAnnotationComposer extends Composer<_$AppDb, Exercises> {
 class $ExercisesTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Exercises,
           Exercise,
           $ExercisesFilterComposer,
@@ -5044,7 +5050,7 @@ class $ExercisesTableManager
             bool standardsCardioRefs,
           })
         > {
-  $ExercisesTableManager(_$AppDb db, Exercises table)
+  $ExercisesTableManager(_$SharedDatabase db, Exercises table)
     : super(
         TableManagerState(
           db: db,
@@ -5263,7 +5269,7 @@ class $ExercisesTableManager
 
 typedef $ExercisesProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Exercises,
       Exercise,
       $ExercisesFilterComposer,
@@ -5303,14 +5309,15 @@ typedef $WorkoutsUpdateCompanionBuilder =
     });
 
 final class $WorkoutsReferences
-    extends BaseReferences<_$AppDb, Workouts, Workout> {
+    extends BaseReferences<_$SharedDatabase, Workouts, Workout> {
   $WorkoutsReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<Lift, List<LiftData>> _liftRefsTable(_$AppDb db) =>
-      MultiTypedResultKey.fromTable(
-        db.lift,
-        aliasName: $_aliasNameGenerator(db.workouts.id, db.lift.workout),
-      );
+  static MultiTypedResultKey<Lift, List<LiftData>> _liftRefsTable(
+    _$SharedDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.lift,
+    aliasName: $_aliasNameGenerator(db.workouts.id, db.lift.workout),
+  );
 
   $LiftProcessedTableManager get liftRefs {
     final manager = $LiftTableManager(
@@ -5325,7 +5332,7 @@ final class $WorkoutsReferences
   }
 
   static MultiTypedResultKey<Cardio, List<CardioData>> _cardioRefsTable(
-    _$AppDb db,
+    _$SharedDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.cardio,
     aliasName: $_aliasNameGenerator(db.workouts.id, db.cardio.workout),
@@ -5344,7 +5351,7 @@ final class $WorkoutsReferences
   }
 }
 
-class $WorkoutsFilterComposer extends Composer<_$AppDb, Workouts> {
+class $WorkoutsFilterComposer extends Composer<_$SharedDatabase, Workouts> {
   $WorkoutsFilterComposer({
     required super.$db,
     required super.$table,
@@ -5433,7 +5440,7 @@ class $WorkoutsFilterComposer extends Composer<_$AppDb, Workouts> {
   }
 }
 
-class $WorkoutsOrderingComposer extends Composer<_$AppDb, Workouts> {
+class $WorkoutsOrderingComposer extends Composer<_$SharedDatabase, Workouts> {
   $WorkoutsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -5472,7 +5479,7 @@ class $WorkoutsOrderingComposer extends Composer<_$AppDb, Workouts> {
   );
 }
 
-class $WorkoutsAnnotationComposer extends Composer<_$AppDb, Workouts> {
+class $WorkoutsAnnotationComposer extends Composer<_$SharedDatabase, Workouts> {
   $WorkoutsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5552,7 +5559,7 @@ class $WorkoutsAnnotationComposer extends Composer<_$AppDb, Workouts> {
 class $WorkoutsTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Workouts,
           Workout,
           $WorkoutsFilterComposer,
@@ -5564,7 +5571,7 @@ class $WorkoutsTableManager
           Workout,
           PrefetchHooks Function({bool liftRefs, bool cardioRefs})
         > {
-  $WorkoutsTableManager(_$AppDb db, Workouts table)
+  $WorkoutsTableManager(_$SharedDatabase db, Workouts table)
     : super(
         TableManagerState(
           db: db,
@@ -5652,7 +5659,7 @@ class $WorkoutsTableManager
 
 typedef $WorkoutsProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Workouts,
       Workout,
       $WorkoutsFilterComposer,
@@ -5689,12 +5696,12 @@ typedef $LiftUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-final class $LiftReferences extends BaseReferences<_$AppDb, Lift, LiftData> {
+final class $LiftReferences
+    extends BaseReferences<_$SharedDatabase, Lift, LiftData> {
   $LiftReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Exercises _exerciseTable(_$AppDb db) => db.exercises.createAlias(
-    $_aliasNameGenerator(db.lift.exercise, db.exercises.id),
-  );
+  static Exercises _exerciseTable(_$SharedDatabase db) => db.exercises
+      .createAlias($_aliasNameGenerator(db.lift.exercise, db.exercises.id));
 
   $ExercisesProcessedTableManager get exercise {
     final $_column = $_itemColumn<String>('exercise')!;
@@ -5710,7 +5717,7 @@ final class $LiftReferences extends BaseReferences<_$AppDb, Lift, LiftData> {
     );
   }
 
-  static Workouts _workoutTable(_$AppDb db) => db.workouts.createAlias(
+  static Workouts _workoutTable(_$SharedDatabase db) => db.workouts.createAlias(
     $_aliasNameGenerator(db.lift.workout, db.workouts.id),
   );
 
@@ -5729,7 +5736,7 @@ final class $LiftReferences extends BaseReferences<_$AppDb, Lift, LiftData> {
   }
 }
 
-class $LiftFilterComposer extends Composer<_$AppDb, Lift> {
+class $LiftFilterComposer extends Composer<_$SharedDatabase, Lift> {
   $LiftFilterComposer({
     required super.$db,
     required super.$table,
@@ -5814,7 +5821,7 @@ class $LiftFilterComposer extends Composer<_$AppDb, Lift> {
   }
 }
 
-class $LiftOrderingComposer extends Composer<_$AppDb, Lift> {
+class $LiftOrderingComposer extends Composer<_$SharedDatabase, Lift> {
   $LiftOrderingComposer({
     required super.$db,
     required super.$table,
@@ -5899,7 +5906,7 @@ class $LiftOrderingComposer extends Composer<_$AppDb, Lift> {
   }
 }
 
-class $LiftAnnotationComposer extends Composer<_$AppDb, Lift> {
+class $LiftAnnotationComposer extends Composer<_$SharedDatabase, Lift> {
   $LiftAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5975,7 +5982,7 @@ class $LiftAnnotationComposer extends Composer<_$AppDb, Lift> {
 class $LiftTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Lift,
           LiftData,
           $LiftFilterComposer,
@@ -5987,7 +5994,7 @@ class $LiftTableManager
           LiftData,
           PrefetchHooks Function({bool exercise, bool workout})
         > {
-  $LiftTableManager(_$AppDb db, Lift table)
+  $LiftTableManager(_$SharedDatabase db, Lift table)
     : super(
         TableManagerState(
           db: db,
@@ -6107,7 +6114,7 @@ class $LiftTableManager
 
 typedef $LiftProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Lift,
       LiftData,
       $LiftFilterComposer,
@@ -6143,12 +6150,11 @@ typedef $CardioUpdateCompanionBuilder =
     });
 
 final class $CardioReferences
-    extends BaseReferences<_$AppDb, Cardio, CardioData> {
+    extends BaseReferences<_$SharedDatabase, Cardio, CardioData> {
   $CardioReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Exercises _exerciseTable(_$AppDb db) => db.exercises.createAlias(
-    $_aliasNameGenerator(db.cardio.exercise, db.exercises.id),
-  );
+  static Exercises _exerciseTable(_$SharedDatabase db) => db.exercises
+      .createAlias($_aliasNameGenerator(db.cardio.exercise, db.exercises.id));
 
   $ExercisesProcessedTableManager get exercise {
     final $_column = $_itemColumn<String>('exercise')!;
@@ -6164,7 +6170,7 @@ final class $CardioReferences
     );
   }
 
-  static Workouts _workoutTable(_$AppDb db) => db.workouts.createAlias(
+  static Workouts _workoutTable(_$SharedDatabase db) => db.workouts.createAlias(
     $_aliasNameGenerator(db.cardio.workout, db.workouts.id),
   );
 
@@ -6183,7 +6189,7 @@ final class $CardioReferences
   }
 }
 
-class $CardioFilterComposer extends Composer<_$AppDb, Cardio> {
+class $CardioFilterComposer extends Composer<_$SharedDatabase, Cardio> {
   $CardioFilterComposer({
     required super.$db,
     required super.$table,
@@ -6263,7 +6269,7 @@ class $CardioFilterComposer extends Composer<_$AppDb, Cardio> {
   }
 }
 
-class $CardioOrderingComposer extends Composer<_$AppDb, Cardio> {
+class $CardioOrderingComposer extends Composer<_$SharedDatabase, Cardio> {
   $CardioOrderingComposer({
     required super.$db,
     required super.$table,
@@ -6343,7 +6349,7 @@ class $CardioOrderingComposer extends Composer<_$AppDb, Cardio> {
   }
 }
 
-class $CardioAnnotationComposer extends Composer<_$AppDb, Cardio> {
+class $CardioAnnotationComposer extends Composer<_$SharedDatabase, Cardio> {
   $CardioAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -6416,7 +6422,7 @@ class $CardioAnnotationComposer extends Composer<_$AppDb, Cardio> {
 class $CardioTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           Cardio,
           CardioData,
           $CardioFilterComposer,
@@ -6428,7 +6434,7 @@ class $CardioTableManager
           CardioData,
           PrefetchHooks Function({bool exercise, bool workout})
         > {
-  $CardioTableManager(_$AppDb db, Cardio table)
+  $CardioTableManager(_$SharedDatabase db, Cardio table)
     : super(
         TableManagerState(
           db: db,
@@ -6542,7 +6548,7 @@ class $CardioTableManager
 
 typedef $CardioProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       Cardio,
       CardioData,
       $CardioFilterComposer,
@@ -6580,12 +6586,14 @@ typedef $StandardsWeightUpdateCompanionBuilder =
     });
 
 final class $StandardsWeightReferences
-    extends BaseReferences<_$AppDb, StandardsWeight, StandardsWeightData> {
+    extends
+        BaseReferences<_$SharedDatabase, StandardsWeight, StandardsWeightData> {
   $StandardsWeightReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Exercises _exerciseTable(_$AppDb db) => db.exercises.createAlias(
-    $_aliasNameGenerator(db.standardsWeight.exercise, db.exercises.id),
-  );
+  static Exercises _exerciseTable(_$SharedDatabase db) =>
+      db.exercises.createAlias(
+        $_aliasNameGenerator(db.standardsWeight.exercise, db.exercises.id),
+      );
 
   $ExercisesProcessedTableManager get exercise {
     final $_column = $_itemColumn<String>('exercise')!;
@@ -6603,7 +6611,7 @@ final class $StandardsWeightReferences
 }
 
 class $StandardsWeightFilterComposer
-    extends Composer<_$AppDb, StandardsWeight> {
+    extends Composer<_$SharedDatabase, StandardsWeight> {
   $StandardsWeightFilterComposer({
     required super.$db,
     required super.$table,
@@ -6671,7 +6679,7 @@ class $StandardsWeightFilterComposer
 }
 
 class $StandardsWeightOrderingComposer
-    extends Composer<_$AppDb, StandardsWeight> {
+    extends Composer<_$SharedDatabase, StandardsWeight> {
   $StandardsWeightOrderingComposer({
     required super.$db,
     required super.$table,
@@ -6739,7 +6747,7 @@ class $StandardsWeightOrderingComposer
 }
 
 class $StandardsWeightAnnotationComposer
-    extends Composer<_$AppDb, StandardsWeight> {
+    extends Composer<_$SharedDatabase, StandardsWeight> {
   $StandardsWeightAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -6799,7 +6807,7 @@ class $StandardsWeightAnnotationComposer
 class $StandardsWeightTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           StandardsWeight,
           StandardsWeightData,
           $StandardsWeightFilterComposer,
@@ -6811,7 +6819,7 @@ class $StandardsWeightTableManager
           StandardsWeightData,
           PrefetchHooks Function({bool exercise})
         > {
-  $StandardsWeightTableManager(_$AppDb db, StandardsWeight table)
+  $StandardsWeightTableManager(_$SharedDatabase db, StandardsWeight table)
     : super(
         TableManagerState(
           db: db,
@@ -6921,7 +6929,7 @@ class $StandardsWeightTableManager
 
 typedef $StandardsWeightProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       StandardsWeight,
       StandardsWeightData,
       $StandardsWeightFilterComposer,
@@ -6959,12 +6967,13 @@ typedef $StandardsRepsUpdateCompanionBuilder =
     });
 
 final class $StandardsRepsReferences
-    extends BaseReferences<_$AppDb, StandardsReps, StandardsRep> {
+    extends BaseReferences<_$SharedDatabase, StandardsReps, StandardsRep> {
   $StandardsRepsReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Exercises _exerciseTable(_$AppDb db) => db.exercises.createAlias(
-    $_aliasNameGenerator(db.standardsReps.exercise, db.exercises.id),
-  );
+  static Exercises _exerciseTable(_$SharedDatabase db) =>
+      db.exercises.createAlias(
+        $_aliasNameGenerator(db.standardsReps.exercise, db.exercises.id),
+      );
 
   $ExercisesProcessedTableManager get exercise {
     final $_column = $_itemColumn<String>('exercise')!;
@@ -6981,7 +6990,8 @@ final class $StandardsRepsReferences
   }
 }
 
-class $StandardsRepsFilterComposer extends Composer<_$AppDb, StandardsReps> {
+class $StandardsRepsFilterComposer
+    extends Composer<_$SharedDatabase, StandardsReps> {
   $StandardsRepsFilterComposer({
     required super.$db,
     required super.$table,
@@ -7048,7 +7058,8 @@ class $StandardsRepsFilterComposer extends Composer<_$AppDb, StandardsReps> {
   }
 }
 
-class $StandardsRepsOrderingComposer extends Composer<_$AppDb, StandardsReps> {
+class $StandardsRepsOrderingComposer
+    extends Composer<_$SharedDatabase, StandardsReps> {
   $StandardsRepsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -7116,7 +7127,7 @@ class $StandardsRepsOrderingComposer extends Composer<_$AppDb, StandardsReps> {
 }
 
 class $StandardsRepsAnnotationComposer
-    extends Composer<_$AppDb, StandardsReps> {
+    extends Composer<_$SharedDatabase, StandardsReps> {
   $StandardsRepsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -7176,7 +7187,7 @@ class $StandardsRepsAnnotationComposer
 class $StandardsRepsTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           StandardsReps,
           StandardsRep,
           $StandardsRepsFilterComposer,
@@ -7188,7 +7199,7 @@ class $StandardsRepsTableManager
           StandardsRep,
           PrefetchHooks Function({bool exercise})
         > {
-  $StandardsRepsTableManager(_$AppDb db, StandardsReps table)
+  $StandardsRepsTableManager(_$SharedDatabase db, StandardsReps table)
     : super(
         TableManagerState(
           db: db,
@@ -7298,7 +7309,7 @@ class $StandardsRepsTableManager
 
 typedef $StandardsRepsProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       StandardsReps,
       StandardsRep,
       $StandardsRepsFilterComposer,
@@ -7338,12 +7349,14 @@ typedef $StandardsCardioUpdateCompanionBuilder =
     });
 
 final class $StandardsCardioReferences
-    extends BaseReferences<_$AppDb, StandardsCardio, StandardsCardioData> {
+    extends
+        BaseReferences<_$SharedDatabase, StandardsCardio, StandardsCardioData> {
   $StandardsCardioReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Exercises _exerciseTable(_$AppDb db) => db.exercises.createAlias(
-    $_aliasNameGenerator(db.standardsCardio.exercise, db.exercises.id),
-  );
+  static Exercises _exerciseTable(_$SharedDatabase db) =>
+      db.exercises.createAlias(
+        $_aliasNameGenerator(db.standardsCardio.exercise, db.exercises.id),
+      );
 
   $ExercisesProcessedTableManager get exercise {
     final $_column = $_itemColumn<String>('exercise')!;
@@ -7361,7 +7374,7 @@ final class $StandardsCardioReferences
 }
 
 class $StandardsCardioFilterComposer
-    extends Composer<_$AppDb, StandardsCardio> {
+    extends Composer<_$SharedDatabase, StandardsCardio> {
   $StandardsCardioFilterComposer({
     required super.$db,
     required super.$table,
@@ -7434,7 +7447,7 @@ class $StandardsCardioFilterComposer
 }
 
 class $StandardsCardioOrderingComposer
-    extends Composer<_$AppDb, StandardsCardio> {
+    extends Composer<_$SharedDatabase, StandardsCardio> {
   $StandardsCardioOrderingComposer({
     required super.$db,
     required super.$table,
@@ -7507,7 +7520,7 @@ class $StandardsCardioOrderingComposer
 }
 
 class $StandardsCardioAnnotationComposer
-    extends Composer<_$AppDb, StandardsCardio> {
+    extends Composer<_$SharedDatabase, StandardsCardio> {
   $StandardsCardioAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -7568,7 +7581,7 @@ class $StandardsCardioAnnotationComposer
 class $StandardsCardioTableManager
     extends
         RootTableManager<
-          _$AppDb,
+          _$SharedDatabase,
           StandardsCardio,
           StandardsCardioData,
           $StandardsCardioFilterComposer,
@@ -7580,7 +7593,7 @@ class $StandardsCardioTableManager
           StandardsCardioData,
           PrefetchHooks Function({bool exercise})
         > {
-  $StandardsCardioTableManager(_$AppDb db, StandardsCardio table)
+  $StandardsCardioTableManager(_$SharedDatabase db, StandardsCardio table)
     : super(
         TableManagerState(
           db: db,
@@ -7694,7 +7707,7 @@ class $StandardsCardioTableManager
 
 typedef $StandardsCardioProcessedTableManager =
     ProcessedTableManager<
-      _$AppDb,
+      _$SharedDatabase,
       StandardsCardio,
       StandardsCardioData,
       $StandardsCardioFilterComposer,
@@ -7707,9 +7720,9 @@ typedef $StandardsCardioProcessedTableManager =
       PrefetchHooks Function({bool exercise})
     >;
 
-class $AppDbManager {
-  final _$AppDb _db;
-  $AppDbManager(this._db);
+class $SharedDatabaseManager {
+  final _$SharedDatabase _db;
+  $SharedDatabaseManager(this._db);
   $MuscleTableManager get muscle => $MuscleTableManager(_db, _db.muscle);
   $EquipmentTableManager get equipment =>
       $EquipmentTableManager(_db, _db.equipment);

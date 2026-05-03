@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/collection.dart';
 import 'package:workout_analyzer/data/local/drift/mapper/mapper.dart';
@@ -18,12 +20,12 @@ final repoProvider = Provider<Repo?>((ref) {
 class Repo{
 
 
-  final db.AppDb localDB;
+  final db.SharedDatabase localDB;
   final Cache cache = Cache.getCache();
 
   static Repo? _repo;
 
-  static Repo initRepo(db.AppDb localDB){
+  static Repo initRepo(db.SharedDatabase localDB){
 
     _repo ??= Repo._(localDB);
 
@@ -40,15 +42,15 @@ class Repo{
 
   }
 
-  Future<Domain> importCSV(String filePath, Domain? old) async{
+  Future<Domain> importCSV(Uint8List bytes, Domain? old) async{
 
     final muscleMap = old?.muscleMap ?? await getMuscleMap();
     final maleStandards = old?.maleStandards ?? await getMaleStandards();
     final femaleStandards = old?.femaleStandards ?? await getFemaleStandards();
     
-    final newDomain = await importDataFromCsv(muscleMap, maleStandards, femaleStandards, filePath);
+    final newDomain = await importDataFromBytes(muscleMap, maleStandards, femaleStandards, bytes);
 
-    final error = await localDB.import(newDomain); //TODO can remove strength standarsd? import -> old -> new did not wor for abs?
+    final error = await localDB.import(newDomain);
 
     if(error != null){
       //return error; //TODO handel import error, like show msg why it faild.

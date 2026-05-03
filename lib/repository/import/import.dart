@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:workout_analyzer/domain/cardio.dart';
 
 import '/domain/domain.dart';
@@ -32,12 +34,16 @@ enum ColumnName{
 
 Future<Domain> importMockData(Map<String,Muscle> muscleMap, Standards male, Standards female) async {
   const mockData = 'assets/data/workout_data_new.csv';
-  return importDataFromCsv(muscleMap, male, female, mockData); 
+  final rows = await loadCsv(mockData);
+  return importDataFromRows(muscleMap, male, female, rows); 
 }
  
+Future<Domain> importDataFromBytes(Map<String,Muscle> muscleMap, Standards male, Standards female, Uint8List bytes) async {
+  final rows = await loadCsvBytes(bytes);
+  return importDataFromRows(muscleMap, male, female, rows);
+}
 
-Future<Domain> importDataFromCsv(Map<String,Muscle> muscleMap, Standards male, Standards female, String filePath) async {
-  final rows = await loadCsv(filePath);
+Future<Domain> importDataFromRows(Map<String,Muscle> muscleMap, Standards male, Standards female, List<List<dynamic>> rows) async {
 
   if(rows.length < 2){
     return Domain(workouts: [], exerciseMap: Multimap<String, Exercise>(), cardioMap:  Multimap<String, Cardio>(), maleStandards: male, femaleStandards: female, muscleMap:muscleMap);

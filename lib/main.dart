@@ -6,7 +6,7 @@ import 'package:workout_analyzer/state/domain.dart';
 import '/ui/exercises/exersise_page.dart';
 import '/ui/history/history_page.dart';
 import '/ui/summary/summary_page.dart';
-import '/data/local/drift/database.dart' as db;
+import 'package:workout_analyzer/data/local/drift/versions/shared.dart' as db;
 
 void main() async {
 
@@ -16,7 +16,7 @@ void main() async {
   //final muscles = await database.get_muscles().get();
 
   //await db.resetDatabase();//TODO remove
-  final localDB = db.AppDb();
+  final localDB = db.constructDb();
  
   Repo.initRepo(localDB);
 
