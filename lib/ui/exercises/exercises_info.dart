@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class ExerciseInfo extends ConsumerWidget {
 Widget _tabView(LiftInfo info, StrengthLevel strength, void Function() exit, BuildContext context){
   
   final history = info.history.map((e) => e.workout).toList();
-  void goTOHistory(workout) => Void; // TODO fix g to history view
+  void goTOHistory(workout){} // TODO fix g to history view
   final tabs = [
     _infoTab(info, strength), 
     History(history, null, goTOHistory, preview:true, filterId:info.id),
