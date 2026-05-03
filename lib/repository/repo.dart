@@ -40,15 +40,15 @@ class Repo{
 
   }
 
-  Future<Domain> importCSV(String filePath, Domain? old) async{
+  Future<Domain> importCSV(Uint8List bytes, Domain? old) async{
 
     final muscleMap = old?.muscleMap ?? await getMuscleMap();
     final maleStandards = old?.maleStandards ?? await getMaleStandards();
     final femaleStandards = old?.femaleStandards ?? await getFemaleStandards();
     
-    final newDomain = await importDataFromCsv(muscleMap, maleStandards, femaleStandards, filePath);
+    final newDomain = await importDataFromBytes(muscleMap, maleStandards, femaleStandards, bytes);
 
-    final error = await localDB.import(newDomain); //TODO can remove strength standarsd? import -> old -> new did not wor for abs?
+    final error = await localDB.import(newDomain);
 
     if(error != null){
       //return error; //TODO handel import error, like show msg why it faild.

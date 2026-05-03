@@ -1,4 +1,6 @@
 
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/domain/domain.dart';
 import 'package:workout_analyzer/repository/repo.dart';
@@ -14,7 +16,7 @@ class DomainNotifier extends AsyncNotifier<Domain?> {
     state = await AsyncValue.guard(() async => d);
   }
 
-  Future<void> importDomain(String filePath) async {
+  Future<void> importDomain(Uint8List data) async {
     final repo = ref.read(repoProvider);
     if (repo == null) return;
 
@@ -22,7 +24,7 @@ class DomainNotifier extends AsyncNotifier<Domain?> {
 
     state = await AsyncValue.guard(() async {
       final current = state.value;
-      return repo.importCSV(filePath, current);
+      return repo.importCSV(data, current);
     });
   }
 }
