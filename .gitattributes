@@ -1,2 +1,6 @@
 * text=auto eol=lf
 *.bat text eol=crlf
+
+# Ignore generated JS files
+web/drift_worker.js linguist-generated=true
+
