@@ -7,18 +7,18 @@ create policy "public read exercises"
 create policy "admin insert exercises"
   on public.exercises
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update exercises"
   on public.exercises
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete exercises"
   on public.exercises
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 -- equipment
 create policy "public read equipment"
@@ -29,18 +29,18 @@ create policy "public read equipment"
 create policy "admin insert equipment"
   on public.equipment
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update equipment"
   on public.equipment
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete equipment"
   on public.equipment
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 -- muscle
 create policy "public read muscle"
@@ -51,18 +51,18 @@ create policy "public read muscle"
 create policy "admin insert muscle"
   on public.muscle
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update muscle"
   on public.muscle
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete muscle"
   on public.muscle
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 -- standardsweight
 create policy "public read standardsweight"
@@ -73,18 +73,18 @@ create policy "public read standardsweight"
 create policy "admin insert standardsweight"
   on public.standardsweight
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update standardsweight"
   on public.standardsweight
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete standardsweight"
   on public.standardsweight
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 -- standardsreps
 create policy "public read standardsreps"
@@ -95,18 +95,18 @@ create policy "public read standardsreps"
 create policy "admin insert standardsreps"
   on public.standardsreps
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update standardsreps"
   on public.standardsreps
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete standardsreps"
   on public.standardsreps
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 -- standardscardio
 create policy "public read standardscardio"
@@ -117,18 +117,18 @@ create policy "public read standardscardio"
 create policy "admin insert standardscardio"
   on public.standardscardio
   for insert
-  with check ((SELECT auth.role()) = 'admin');
+  with check (internal.is_admin());
 
 create policy "admin update standardscardio"
   on public.standardscardio
   for update
-  using ((SELECT auth.role()) = 'admin')
-  with check ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin())
+  with check (internal.is_admin());
 
 create policy "admin delete standardscardio"
   on public.standardscardio
   for delete
-  using ((SELECT auth.role()) = 'admin');
+  using (internal.is_admin());
 
 
 
