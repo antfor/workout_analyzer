@@ -1,3 +1,10 @@
+--internal
+
+alter table internal.roles enable row level security;
+alter table internal.user_roles enable row level security;
+
+REVOKE all ON internal.roles FROM anon, authenticated;
+REVOKE all ON internal.user_roles FROM anon, authenticated;
 
 --public: exercises,equipment,muscle,standardsweight,standardsreps,standardscardio
 
