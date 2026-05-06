@@ -1,0 +1,1 @@
+[ -d "/opt/buildhome/flutter" ] || git clone https://github.com/flutter/flutter.git -b stable /opt/buildhome/flutter && export PATH="$PATH:/opt/buildhome/flutter/bin" && flutter doctor && flutter pub get && flutter build web --release --wasm --no-source-maps --base-href "/"

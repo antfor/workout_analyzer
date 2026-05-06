@@ -1,6 +1,7 @@
 // web.dart
 import 'package:drift/drift.dart';
 import 'package:drift/wasm.dart';
+import 'package:flutter/foundation.dart';
 import 'package:workout_analyzer/data/local/drift/database.dart';
 
 SharedDatabase constructDb() {
@@ -19,7 +20,7 @@ DatabaseConnection connectOnWeb() {
       // Depending how central local persistence is to your app, you may want
       // to show a warning to the user if only unrealiable implemetentations
       // are available.
-      print('Using ${result.chosenImplementation} due to missing browser '
+      debugPrint('Using ${result.chosenImplementation} due to missing browser '
           'features: ${result.missingFeatures}');
     }
 
