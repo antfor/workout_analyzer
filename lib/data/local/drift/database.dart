@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:workout_analyzer/data/local/drift/seeding/static_data.dart';
@@ -42,7 +43,7 @@ class SharedDatabase extends _$SharedDatabase {
         final (exercisesInserts, muscleInserts, equipmentInserts, swInserts) = staticData(domain);
 
         final (workoutsInserts,liftInserts,cardioInserts) = userData(domain.workouts);
-        print("seed");
+        debugPrint("seed");
         await batch((b) {
 
           //STAIC DATA
@@ -57,8 +58,8 @@ class SharedDatabase extends _$SharedDatabase {
           b.insertAll(cardio, cardioInserts); 
         });
       }catch (e, st) {
-        print("DB ERROR in seeding: $e");
-        print(st);
+        debugPrint("DB ERROR in seeding: $e");
+        debugPrint(st.toString());
       }
 
     },
@@ -67,7 +68,7 @@ class SharedDatabase extends _$SharedDatabase {
   Future<DdError> import(Domain domain) async {
     try{
       final (workoutsInserts,liftInserts,cardioInserts) = userData(domain.workouts);
-      print("import");
+      debugPrint("import");
       await batch((b) {
         // DELETE OLD USER DATA
         b.deleteAll(workouts);
@@ -80,8 +81,8 @@ class SharedDatabase extends _$SharedDatabase {
         b.insertAll(cardio, cardioInserts);
       });
     }catch (e, st) {
-      print("DB ERROR in import: $e");
-      print(st);
+      debugPrint("DB ERROR in import: $e");
+      debugPrint(st.toString());
       return (e, st);
     }
 
@@ -91,7 +92,7 @@ class SharedDatabase extends _$SharedDatabase {
 }
 
 Future<void> resetDatabase() async {
-  print("delete");
+  debugPrint("delete");
   final dbFolder = await getApplicationDocumentsDirectory();
   final file = File(p.join(dbFolder.path, 'db.sqlite'));
 

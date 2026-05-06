@@ -55,7 +55,7 @@ class BasicLineChart extends StatelessWidget {
                       if(value == meta.min || value == meta.max){
                          //return Text("");
                       }
-                      return Text(maxLines: 1, overflow: TextOverflow.clip ," "+textFormat(value, false));
+                      return Text(maxLines: 1, overflow: TextOverflow.clip ," ${textFormat(value, false)}");
                     },
                   ),) 
               ),
