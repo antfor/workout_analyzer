@@ -1,8 +1,7 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_analyzer/state/domain.dart';
+import 'package:workout_analyzer/ui/settings/login/account_settings.dart';
 import '/domain/standards/standards.dart';
 import '/state/settings.dart';
 import 'package:file_picker/file_picker.dart';
@@ -42,6 +41,7 @@ class Settings extends StatelessWidget {
         child: Column(
           spacing: 16,
           children: [ 
+          AccountSettings(), //TODO create logout widget if logged in
           importData(ref),
           util.dropdown<Sex>(
             selection: settings.sex,
@@ -65,22 +65,26 @@ Widget importData(WidgetRef ref){
 
   final notifier = ref.read(domainProvider.notifier);
 
-  void pickFile() async{
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['csv'],
-      withData: true, 
-    );
+  Future<void> pickFile() async{
+    try {
+      FilePickerResult? result = await FilePicker.pickFiles(
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['csv'],
+        withData: true, 
+      );
 
-    if(result != null && result.files.single.bytes != null ){
-      final Uint8List data = result.files.single.bytes!;
+      final file = result?.files.first;
       
-      notifier.importDomain(data);
-    }
+      if (file?.bytes case final data?) {
+        notifier.importDomain(data);
+      }
+    } catch (e) {
+    debugPrint('File pick failed: $e');
+  }
   }
 
-  return FilledButton(
+  return OutlinedButton(
     onPressed: pickFile, 
     child: const Text('Import Data'));
 
