@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/collection.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workout_analyzer/data/local/drift/mapper/mapper.dart';
 import 'package:workout_analyzer/domain/cardio.dart';
 import 'package:workout_analyzer/domain/domain.dart';
@@ -21,13 +22,14 @@ class Repo{
 
 
   final db.SharedDatabase localDB;
+  final SupabaseClient remoteDB;
   final Cache cache = Cache.getCache();
 
   static Repo? _repo;
 
-  static Repo initRepo(db.SharedDatabase localDB){
+  static Repo initRepo(db.SharedDatabase localDB, SupabaseClient remoteDB){
 
-    _repo ??= Repo._(localDB);
+    _repo ??= Repo._(localDB, remoteDB);
 
     return _repo!;
   }
@@ -36,7 +38,7 @@ class Repo{
     return _repo;
   }
 
-  Repo._(this.localDB);
+  Repo._(this.localDB, this.remoteDB);
 
   void clearUserData(){
 
@@ -149,6 +151,48 @@ class Repo{
     //return await importMockData(await getMuscleMap(), await getMaleStandards(), await getFemaleStandards());
   }
 
+
+  Future<AuthResult> logIn(String email, String password) async {
+    try {
+      final result = await remoteDB.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      return AuthResult(user: result.user);
+    }catch(e){ 
+      return AuthResult(error: e.toString());
+    }
+  }
+
+  Future<AuthResult> register(String email, String password) async {
+    try {
+
+      final result = await remoteDB.auth.signUp(
+        email: email,
+        password: password,);
+
+      return AuthResult(user: result.user);
+    }catch(e){ 
+      return AuthResult(error: e.toString());
+    }
+  }
+
+  Future<AuthResult> logOut() async {
+    try {
+      await remoteDB.auth.signOut();
+
+      return AuthResult(user: null);
+    }catch(e){ 
+      return AuthResult(error: e.toString());
+    }
+  }
+
+  AuthResult getUser() {
+    return AuthResult(user:remoteDB.auth.currentUser);
+  }
+
+
 }
 
 class Cache{
@@ -162,4 +206,11 @@ class Cache{
   Cache._();
   
   Map<String, String>? mapNames;
+}
+
+class AuthResult {
+  final User? user; //TODO create domain user not Supabase USer
+  final String? error;
+
+  AuthResult({this.user, this.error});
 }
