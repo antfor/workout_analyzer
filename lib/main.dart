@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:workout_analyzer/env.dart';
 import 'package:workout_analyzer/navigation.dart';
 import 'package:workout_analyzer/repository/repo.dart';
 import 'package:workout_analyzer/state/domain.dart';
@@ -17,8 +19,10 @@ void main() async {
 
   //await db.resetDatabase();//TODO remove
   final localDB = db.constructDb();
+  await Supabase.initialize(url: Env.supabaseUrl,anonKey: Env.supabaseAnonKey);
+  final remoteDB = Supabase.instance.client;
  
-  Repo.initRepo(localDB);
+  Repo.initRepo(localDB, remoteDB);
 
   runApp(ProviderScope(child:materialAppWithTheme(home: WorkoutAnalyzer()))); 
 }
