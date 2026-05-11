@@ -7,8 +7,8 @@ CREATE TABLE private.workouts(
     start_time TIMESTAMPTZ NOT NULL,
     end_time TIMESTAMPTZ NOT NULL,
 
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ,
 
     PRIMARY KEY (user_id, id),
@@ -26,8 +26,8 @@ CREATE TABLE private.lift(
     weight_kg FLOAT, --TODO replace with NUMERIC(6,2)?
     workout uuid NOT NULL,
 
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ,
 
     PRIMARY KEY (user_id, workout, exercise, set_of_sets, set_index),
@@ -49,8 +49,8 @@ CREATE TABLE private.cardio(
     duration_s FLOAT,
     workout uuid NOT NULL,
 
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ,
 
     PRIMARY KEY (user_id, workout, exercise, lap),
