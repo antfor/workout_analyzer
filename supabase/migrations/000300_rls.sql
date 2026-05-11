@@ -1,5 +1,9 @@
 --internal
 
+REVOKE ALL ON SCHEMA internal FROM anon, authenticated, public;
+REVOKE ALL ON ALL FUNCTIONS IN SCHEMA internal FROM anon, authenticated, public;
+REVOKE ALL ON ALL TABLES IN SCHEMA internal FROM PUBLIC, anon, authenticated;
+
 alter table internal.roles enable row level security;
 alter table internal.user_roles enable row level security;
 
