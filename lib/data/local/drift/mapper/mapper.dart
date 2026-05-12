@@ -9,8 +9,8 @@ extension WorkoutMapper on Workout {
     return domain.Workout(
       id: id,
       title: title,
-      startTime: DateTime.fromMillisecondsSinceEpoch(startTime),
-      endTime: DateTime.fromMillisecondsSinceEpoch(endTime),
+      startTime: DateTime.parse(startTime).toLocal(),
+      endTime: DateTime.parse(endTime).toLocal(),
     );
   }
 }

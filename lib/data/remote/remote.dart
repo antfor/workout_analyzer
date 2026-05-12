@@ -38,7 +38,7 @@ class Remote{
     if(uuid == null) return "Not logged in";
 
     try {
-      final now = DateTime.now().toIso8601String();
+      final now = DateTime.now().toUtc().toIso8601String();
       await remote.from(Table.lift.id).update({"deleted_at": now});
       await remote.from(Table.cardio.id).update({"deleted_at": now});
       await remote.from(Table.workout.id).update({"deleted_at": now});
@@ -64,8 +64,8 @@ class Remote{
     Map<String, Object> json(Workout w) => {
       "user_id":uuid, 
       "title":w.title, 
-      "start_time":w.startTime.toIso8601String(), 
-      "end_time":w.endTime.toIso8601String()
+      "start_time":w.startTime.toUtc().toIso8601String(), 
+      "end_time":w.endTime.toUtc().toIso8601String()
     };
 
     final package = workouts.map(json).toList();
@@ -123,10 +123,10 @@ class Remote{
   }
 
 
-  Future<String?> import(List<Workout> workouts)async{
+  Future<Result<String,String>> import(List<Workout> workouts)async{
 
     final uuid = this.uuid;
-    if(uuid == null) return "Not logged in";
+    if(uuid == null) return Result(error:"Not logged in");
 
     try {
       final wjson = workouts.map(workoutJson);
@@ -137,17 +137,24 @@ class Remote{
       final cardio = workouts.expand((w) => w.cardio).toList();
       final cjson = cardio.map(cardioJson);
 
-      await remote.rpc('import_workouts', params: {
-        '_user': uuid,
-        '_workouts': wjson,
-        '_exercises': ejson,
-        '_cardio': cjson,
+      final result = await remote.rpc('private.import_user_data', params: {
+        'workout_items': wjson,
+        'lift_items': ejson,
+        'cardio_items': cjson,
       });
-      return null;
 
+      return Result(result:result);
+
+    }on PostgrestException catch (e) {
+      debugPrint('RPC Error: ${e.message}');
+      debugPrint('Code: ${e.code}');
+      debugPrint('Details: ${e.details}');
+      debugPrint('Hint: ${e.hint}');
+
+      rethrow;
     }catch(e){
       debugPrint("Import failed: $e");
-      return e.toString();
+      return Result(error:e.toString());
     }
   }
 
@@ -173,9 +180,16 @@ class Remote{
 
   Map<String, Object?> workoutJson(Workout w) => {
       "user_id":uuid, 
-      "id": w.id, //TODO do not handle IDs in flutter
+      "id": w.id,
       "title":w.title, 
-      "start_time":w.startTime.toIso8601String(), 
-      "end_time":w.endTime.toIso8601String()
+      "start_time":w.startTime.toUtc().toIso8601String(), 
+      "end_time":w.endTime.toUtc().toIso8601String()
   };
+}
+
+class Result<T,Y>{
+  final T? result;
+  final Y? error;
+
+  Result({this.result, this.error});
 }

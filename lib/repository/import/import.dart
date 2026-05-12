@@ -68,11 +68,8 @@ Future<Domain> importDataFromRows(Map<String,Muscle> muscleMap, Standards male, 
   bool isCardio(List<dynamic> row){
     return (double.tryParse(row[distance].toString()) != null && double.tryParse(row[duration].toString()) != null);
   } 
-  int workoutID = 1;
-  int getID() => workoutID++;
 
   Workout workout = Workout(
-      id: getID(),
       endTime: toDateTime(rows[1][end].toString()),
       startTime: toDateTime(rows[1][start].toString()),
       title: rows[1][title].toString());
@@ -86,7 +83,6 @@ Future<Domain> importDataFromRows(Map<String,Muscle> muscleMap, Standards male, 
 
   for(List<dynamic> row in rows.skip(1)){
     final newWorkout =  Workout(
-      id: getID(),
       endTime: toDateTime(row[end].toString()),
       startTime: toDateTime(row[start].toString()),
       title: row[title].toString());
