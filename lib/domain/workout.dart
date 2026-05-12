@@ -1,12 +1,14 @@
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 import '/domain/orm/epely.dart';
 import 'cardio.dart';
 import 'exercise.dart';
 
 class Workout implements Comparable<Workout>{
 
+  static const uuid = Uuid();
 
-  int _id;
+  String _id = uuid.v7();
   final String title;
   final DateTime startTime;
   final DateTime endTime;
@@ -14,15 +16,17 @@ class Workout implements Comparable<Workout>{
   final List<Exercise> exercises = [];
 
   Workout({
-    required int id,
+    String? id,
     required this.title,
     required this.startTime,
     required this.endTime,
-  }):_id=id;
+  }){
+    if(id != null) setID(id);
+  }
 
-  int get id => _id;
+  String get id => _id;
   
-  void setID(int id){
+  void setID(String id){
     _id=id;
   }
 

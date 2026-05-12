@@ -25,7 +25,7 @@ Future<DateTime> getLastSync() async {
     try {
 
       SharedPreferencesWithCache prefsWithCache= await _prefsWithCache;
-      final iso8601String = prefsWithCache.getString(storage) ?? defaultDate.toIso8601String();
+      final iso8601String = prefsWithCache.getString(storage) ?? defaultDate.toUtc().toIso8601String();
       return  DateTime.parse(iso8601String);
     } catch (e) {
       debugPrint('Error getting last_sync_at value: $e');

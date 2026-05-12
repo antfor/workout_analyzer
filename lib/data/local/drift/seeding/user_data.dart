@@ -13,10 +13,10 @@ UserData userData(Iterable<Workout> workouts){
       for (final workout in workouts){
         workoutsInserts.add(
           db.WorkoutsCompanion.insert(
-            id: Value(workout.id),
+            id: workout.id,
             title: workout.title,
-            startTime: workout.startTime.millisecondsSinceEpoch,
-            endTime: workout.endTime.millisecondsSinceEpoch,
+            startTime: workout.startTime.toUtc().toIso8601String(),
+            endTime: workout.endTime.toUtc().toIso8601String(),
           ),
         );
 

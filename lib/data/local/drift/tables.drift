@@ -17,14 +17,16 @@ CREATE TABLE Exercises(
     equipment TEXT REFERENCES Equipment(id),
 
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TEXT
 );
 
 CREATE TABLE Equipment(
     id TEXT NOT NULL PRIMARY KEY,
 
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TEXT
 );
 
 CREATE TABLE Muscle(
@@ -37,10 +39,11 @@ CREATE TABLE Lift(
     set_index INT NOT NULL,
     reps INT NOT NULL,
     weight_kg FLOAT, 
-    workout INTEGER NOT NULL REFERENCES Workouts (id),
+    workout TEXT NOT NULL REFERENCES Workouts (id),
 
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TEXT,
 
     PRIMARY KEY (workout, exercise, set_of_sets, set_index),
     CHECK (reps > 0),
@@ -54,27 +57,28 @@ CREATE TABLE Cardio(
     lap INT NOT NULL, --TODO lap_of_laps
     distance_m FLOAT, 
     duration_s FLOAT,
-    workout INTEGER NOT NULL REFERENCES Workouts (id),
+    workout TEXT NOT NULL REFERENCES Workouts (id),
 
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TEXT,
 
     PRIMARY KEY (workout, exercise, lap),
 
     CHECK (lap >= 0),
     CHECK ((distance_m IS NULL AND duration_s IS NOT NULL) OR distance_m > 0),
     CHECK ((duration_s IS NULL AND distance_m IS NOT NULL) OR duration_s > 0)
-
 );
 
 CREATE TABLE Workouts(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id TEXT NOT NULL PRIMARY KEY,
     title TEXT NOT NULL,
-    start_time INT NOT NULL,
-    end_time INT NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
 
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TEXT,
 
     CHECK (start_time <= end_time)
 );
