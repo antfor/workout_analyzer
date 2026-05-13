@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/collection.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workout_analyzer/data/local/drift/mapper/mapper.dart';
+import 'package:workout_analyzer/data/remote/remote.dart';
+import 'package:workout_analyzer/data/sync/sync.dart';
+import 'package:workout_analyzer/data/util/result.dart';
 import 'package:workout_analyzer/domain/cardio.dart';
 import 'package:workout_analyzer/domain/domain.dart';
 import 'package:workout_analyzer/domain/exercise.dart';
@@ -23,13 +26,14 @@ class Repo{
 
   final db.SharedDatabase localDB;
   final SupabaseClient remoteDB;
+  final Sync sync;
   final Cache cache = Cache.getCache();
 
   static Repo? _repo;
 
   static Repo initRepo(db.SharedDatabase localDB, SupabaseClient remoteDB){
 
-    _repo ??= Repo._(localDB, remoteDB);
+    _repo ??= Repo._(localDB, remoteDB, Sync(localDB, Remote(localDB, remoteDB)));
 
     return _repo!;
   }
@@ -38,13 +42,14 @@ class Repo{
     return _repo;
   }
 
-  Repo._(this.localDB, this.remoteDB);
+  Repo._(this.localDB, this.remoteDB, this.sync);
 
   void clearUserData(){
 
   }
 
-  Future<Domain> importCSV(Uint8List bytes, Domain? old) async{
+
+  Future<Result<Domain, String>> importCSV(Uint8List bytes, Domain? old) async{
 
     final muscleMap = old?.muscleMap ?? await getMuscleMap();
     final maleStandards = old?.maleStandards ?? await getMaleStandards();
@@ -55,10 +60,17 @@ class Repo{
     final error = await localDB.import(newDomain);
 
     if(error != null){
-      //return error; //TODO handel import error, like show msg why it faild.
+      return Result(error:error.$1.toString());
     }
 
-    return newDomain;
+    final user = getUser();
+
+    if(user.user != null){
+      final error = await sync.import(newDomain);
+      return Result(result: newDomain, error: error);
+    }
+
+    return  Result(result:newDomain);
   }
 
   void exportCSV(String filePath){
