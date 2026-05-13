@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workout_analyzer/data/local/drift/database.dart' as db;
+import 'package:workout_analyzer/data/util/result.dart';
 import 'package:workout_analyzer/domain/cardio.dart';
 import 'package:workout_analyzer/domain/exercise.dart';
 import 'package:workout_analyzer/domain/workout.dart';
@@ -129,15 +130,15 @@ class Remote{
     if(uuid == null) return Result(error:"Not logged in");
 
     try {
-      final wjson = workouts.map(workoutJson);
+      final wjson = workouts.map(workoutJson).toList();
 
       final exercises = workouts.expand((w) => w.exercises);
-      final ejson = exercises.map(exerciseJson);
+      final ejson = exercises.map(exerciseJson).toList();
 
       final cardio = workouts.expand((w) => w.cardio).toList();
-      final cjson = cardio.map(cardioJson);
+      final cjson = cardio.map(cardioJson).toList();
 
-      final result = await remote.rpc('private.import_user_data', params: {
+      final result = await remote.rpc('import_user_data', params: {
         'workout_items': wjson,
         'lift_items': ejson,
         'cardio_items': cjson,
@@ -153,7 +154,7 @@ class Remote{
 
       rethrow;
     }catch(e){
-      debugPrint("Import failed: $e");
+      debugPrint("Remote Import failed: $e");
       return Result(error:e.toString());
     }
   }
@@ -185,11 +186,4 @@ class Remote{
       "start_time":w.startTime.toUtc().toIso8601String(), 
       "end_time":w.endTime.toUtc().toIso8601String()
   };
-}
-
-class Result<T,Y>{
-  final T? result;
-  final Y? error;
-
-  Result({this.result, this.error});
 }

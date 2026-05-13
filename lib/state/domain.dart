@@ -16,16 +16,27 @@ class DomainNotifier extends AsyncNotifier<Domain?> {
     state = await AsyncValue.guard(() async => d);
   }
 
-  Future<void> importDomain(Uint8List data) async {
+  Future<String?> importDomain(Uint8List data) async {
     final repo = ref.read(repoProvider);
-    if (repo == null) return;
+    if (repo == null) return "Error: No Repo";
 
+    final oldDomain = state.value;
     state = const AsyncLoading();
+    String? error;
 
     state = await AsyncValue.guard(() async {
-      final current = state.value;
-      return repo.importCSV(data, current);
+      final result = await repo.importCSV(data, oldDomain);
+      final domain = result.result;
+      error = result.error;
+    
+      if(domain != null){
+        return domain;
+      }
+
+      return oldDomain;
     });
+
+    return error;
   }
 }
 
