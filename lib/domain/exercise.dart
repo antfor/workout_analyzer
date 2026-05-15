@@ -18,7 +18,7 @@ class Exercise implements Comparable<Exercise> {
   final double weightKg; //weight_kg[]
   final int reps; //reps[]
   final double volume;
-  final int setOfSets;
+  int setOfSets;
   //final List<ExerciseRecord> Records = []; //TODO add records
 
   Exercise({

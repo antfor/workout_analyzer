@@ -10,6 +10,8 @@ import '/ui/util.dart' as util;
 
 class Settings extends StatelessWidget {
 
+  //String? importError; //TODO add import error msg State and give setState to pickFile
+
   const Settings({super.key});
 
   @override
@@ -77,11 +79,12 @@ Widget importData(WidgetRef ref){
       final file = result?.files.first;
       
       if (file?.bytes case final data?) {
-        notifier.importDomain(data);
+        final error = await notifier.importDomain(data);
+        if(error != null) debugPrint(error);
       }
     } catch (e) {
-    debugPrint('File pick failed: $e');
-  }
+      debugPrint('File pick failed: $e');
+    }
   }
 
   return OutlinedButton(
