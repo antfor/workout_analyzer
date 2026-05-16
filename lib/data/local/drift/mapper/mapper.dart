@@ -6,6 +6,7 @@ import 'package:workout_analyzer/domain/workout.dart' as domain;
 
 extension WorkoutMapper on Workout {
   domain.Workout toLocal() {
+
     return domain.Workout(
       id: id,
       title: title,

@@ -151,8 +151,7 @@ class Remote{
       debugPrint('Code: ${e.code}');
       debugPrint('Details: ${e.details}');
       debugPrint('Hint: ${e.hint}');
-
-      rethrow;
+      return Result(error:e.toString());
     }catch(e){
       debugPrint("Remote Import failed: $e");
       return Result(error:e.toString());

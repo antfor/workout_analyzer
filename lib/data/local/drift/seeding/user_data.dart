@@ -28,6 +28,8 @@ UserData userData(Iterable<Workout> workouts){
           for(final lift in exercises){
             if(lift.setIndex == 0) setOfSets +=1;
 
+            lift.setOfSets = setOfSets;//TODO shuld not do this here
+
             liftInserts.add(
               db.LiftCompanion.insert(exercise:lift.id, setOfSets:setOfSets, setIndex:lift.setIndex, reps:lift.reps, weightKg: Value(lift.weightKg), workout:workout.id),);
           }
