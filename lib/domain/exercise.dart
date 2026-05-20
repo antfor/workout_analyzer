@@ -31,6 +31,16 @@ class Exercise implements Comparable<Exercise> {
   }): volume = reps * weightKg;
   
   double get orm => epleyORM(weightKg, reps);
+/*
+  double exerciseORM({bool now = false}){//TDOD
+
+    return 91;
+  } 
+
+  double percantage({bool now = false}) {
+    return weightKg/exerciseORM(now:now);
+  }
+*/
   @override
   int compareTo(Exercise other) {
     int cmpW = workout.compareTo(other.workout);

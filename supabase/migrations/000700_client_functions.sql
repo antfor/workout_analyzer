@@ -1,10 +1,11 @@
 
 
 
-CREATE OR REPLACE FUNCTION private.import_user_data(workout_items jsonb, lift_items jsonb, cardio_items jsonb)
+CREATE OR REPLACE FUNCTION public.import_user_data(workout_items jsonb, lift_items jsonb, cardio_items jsonb)
 RETURNS timestamptz
 LANGUAGE plpgsql
-SET search_path = private, public
+SECURITY definer
+SET search_path = ''
 AS $$
 DECLARE
     v_user_id uuid;
@@ -23,6 +24,8 @@ BEGIN
     PERFORM pg_advisory_xact_lock(hashtextextended(v_user_id::TEXT, 0));
 
     DELETE FROM private.workouts WHERE user_id = v_user_id;
+    DELETE FROM private.lift WHERE user_id = v_user_id;
+    DELETE FROM private.cardio WHERE user_id = v_user_id;
 
     -- Insert Workouts
     INSERT INTO private.workouts(user_id, id, title, start_time, end_time) 
@@ -65,9 +68,9 @@ END;
 $$;
 
 REVOKE EXECUTE
-ON FUNCTION private.import_user_data(jsonb,jsonb,jsonb)
+ON FUNCTION public.import_user_data(jsonb,jsonb,jsonb)
 FROM anon;
 
 GRANT EXECUTE
-ON FUNCTION private.import_user_data(jsonb,jsonb,jsonb)
+ON FUNCTION public.import_user_data(jsonb,jsonb,jsonb)
 TO authenticated;

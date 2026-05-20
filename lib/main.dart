@@ -9,6 +9,7 @@ import '/ui/exercises/exersise_page.dart';
 import '/ui/history/history_page.dart';
 import '/ui/summary/summary_page.dart';
 import 'package:workout_analyzer/data/local/drift/versions/shared.dart' as db;
+//import 'package:workout_analyzer/data/local/drift/database.dart' as db;
 
 void main() async {
 
@@ -68,5 +69,12 @@ Widget materialAppWithTheme({required Widget home}){
         colorScheme: .fromSeed(seedColor: Colors.orange, brightness: Brightness.dark),
       ),
       home: home,
-      );
+  );
 }
+
+/*
+SelectableRegion(
+        selectionControls: materialTextSelectionControls,
+        child:home,
+      )s
+*/
